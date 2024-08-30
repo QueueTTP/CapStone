@@ -4,3 +4,6 @@ The primary goal of this project is to provide insight into the events that caus
 
 My MVP : pipeline some data of event, chart it in dashboard with key performance indicator and event log.
 We’ll do it using Python, Spark, Kafka, SQLite, SQLAlchemy, AWS S3, Jupyter NB?
+
+
+Google Slides： https://docs.google.com/presentation/d/1LovZz8jRA3o35g0QoMVcvK-BrXuQdeL8lBhNqMGhy0Q/edit?usp=sharing
