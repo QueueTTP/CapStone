@@ -1,2 +1,4 @@
 # Ignore all files with .env extension
 *.venv/
+
+README.md
