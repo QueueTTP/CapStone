@@ -1,16 +1,20 @@
 #this file only needs to run once! if you run multiple times, it will add more user(you don't want that)
 
 
+import dotenv
 import mysql.connector
 import random
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
 
 def create_connection():
     connection = mysql.connector.connect(
-        host="localhost",         
-        user="qian",     
-        password="zipcode0", 
-        database="starmeter"  
+    host = os.getenv('DB_HOST'),
+    user = os.getenv('DB_USER'),
+    password = os.getenv('DB_PASSWORD'),
+    database = os.getenv('DB_NAME')
     )
     return connection
 

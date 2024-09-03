@@ -4,10 +4,10 @@ import random
 
 def create_connection():
     connection = mysql.connector.connect(
-        host ="localhost",
-        user = "qian",
-        password = "zipcode0",
-        database = "starmeter"
+    host = os.getenv('DB_HOST'),
+    user = os.getenv('DB_USER'),
+    password = os.getenv('DB_PASSWORD'),
+    database = os.getenv('DB_NAME')
     )
     return connection
 
