@@ -137,6 +137,25 @@ def choose_event():
     return event
 
 
+def reset_probability_to_default(connection,user_id):
+    cursor = connection.cursor()
+
+    select_query = "select E1,E2,E3,E4,E5,E6,E7,E8,E9,E10,E11,E12,E13,E14,E15,E16,E17,E18,E19,E20,E21,E22,E23,E24,E25,E26,E27,E28,E29,SC1,SC2,SC3,SC4,SC5,SD1,SD2,SD3,SD4,SD5,T1,T2,T3,T4,L1,L2,L3,L4,L5,L6 from user_default_settings where user_id = %s"
+    cursor.execute(select_query, (user_id,))
+    default_probs = cursor.fetchone()
+
+    #uptade the user_dynamic_preferences table
+    update_query = """
+    update user_dynamic_preferences set
+    E1 = %s, E2 = %s, E3 = %s, E4 = %s, E5 = %s, E6 = %s, E7 = %s, E8 = %s, E9 = %s, E10 = %s, E11 = %s, E12 = %s, E13 = %s, E14 = %s, E15 = %s, E16 = %s, E17 = %s, E18 = %s, E19 = %s, E20 = %s, E21 = %s, E22 = %s, E23 = %s, E24 = %s, E25 = %s, E26 = %s, E27 = %s, E28 = %s, E29 = %s, SC1 = %s, SC2 = %s, SC3 = %s, SC4 = %s, SC5 = %s, SD1 = %s, SD2 = %s, SD3 = %s, SD4 = %s, SD5 = %s, T1 = %s, T2 = %s, T3 = %s, T4 = %s, L1 = %s, L2 = %s, L3 = %s, L4 = %s, L5 = %s, L6 = %s
+    where user_id = %s
+    """
+    cursor.execute(update_query, (*default_probs, user_id))
+    connection.commit()
+
+    print(f"User {user_id} probabilities reset to default")
+
+
 def situation_category_1_event(connection, event, associated_celebrity):
     cursor = connection.cursor()
 
@@ -154,6 +173,7 @@ def situation_category_1_event(connection, event, associated_celebrity):
             new_favorite = random.choice(celebrities)
             update_query = "update user_dynamic_preferences set current_favorite = %s where user_id = %s"
             cursor.execute(update_query, (new_favorite, user_id))
+            reset_probability_to_default(connection, user_id)
             print(f"User {user_id} changed favorite to {associated_celebrity} due to event {event_descriptions[event]}")
 
     connection.commit()
@@ -175,6 +195,7 @@ def situation_category_2_event(connection, event, associated_celebrity):
             new_favorite = random.choice([celeb for celeb in celebrities if celeb != associated_celebrity])
             update_query = "UPDATE user_dynamic_preferences SET current_favorite = %s WHERE user_id = %s"
             cursor.execute(update_query, (new_favorite, user_id))
+            reset_probability_to_default(connection, user_id)
             print(f"User {user_id} changed favorite from {associated_celebrity} to {new_favorite} due to event {event_descriptions[event]}")
 
     connection.commit()
@@ -195,6 +216,7 @@ def situation_category_3_event(connection, event, associated_celebrity):
             new_favorite = random.choice([celeb for celeb in celebrities if celeb != associated_celebrity])
             update_query = "UPDATE user_dynamic_preferences SET current_favorite = %s WHERE user_id = %s"
             cursor.execute(update_query, (new_favorite, user_id))
+            reset_probability_to_default(connection, user_id)
             print(f"User {user_id} changed favorite from {associated_celebrity} to {new_favorite} due to event {event}")
         else:
             new_prob = min(event_prob + 0.15, 1.0)
