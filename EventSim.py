@@ -148,7 +148,30 @@ def situation_category_3_event(connection, event, associated_celebrity):
 
 
 def run_event_sum(connection, num_days = (6*30)):
+    for day in range(num_days):
+        print(f"Simulating day {day+1}...")
 
+        event = choose_event()
+        associated_celebrity = random.choice(celebrities)
+        print(f"Event {event} occurred, associated with {associated_celebrity}")
+
+        if event in category_1_events:
+            situation_category_1_event(conn, event, associated_celebrity)
+        elif event in category_2_events:
+            situation_category_2_event(conn, event, associated_celebrity)
+        elif event in category_3_events:
+            situation_category_3_event(conn, event, associated_celebrity)
+
+
+        time.sleep(10)
 
 
 if __name__ == "__main__":
+    conn = create_connection()
+    if conn.is_connected():
+        print("Connected to the database")
+        run_event_sum(conn, num_days=180)
+        conn.close()
+        print("Database connection closed")
+    else:
+        print("Connection failed")
