@@ -2,3 +2,8 @@
 *.venv/
 *.vscode
 README.md
+
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=new_password
+DB_NAME=starmeter
