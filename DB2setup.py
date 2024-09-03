@@ -82,15 +82,14 @@ def populate_user_dynamic_preferences(connection):
     select_query = "SELECT * FROM user_default_settings;"
     insert_query = """
     INSERT INTO user_dynamic_preferences (
-        E1, E2, E3, E4, E5, E6, E7, E8, E9, E10, E11, E12, E13, E14, E15, 
-        E16, E17, E18, E19, E20, E21, E22, E23, E24, E25, E26, E27, E28, 
-        E29, SC1, SC2, SC3, SC4, SC5, SD1, SD2, SD3, SD4, SD5, T1, T2, 
-        T3, T4, L1, L2, L3, L4, L5, L6
-    ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
-            %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
-            %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
-            %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
-            %s, %s, %s, %s, %s, %s, %s, %s, %s);
+        user_id, current_favorite, E1, E2, E3, E4, E5, E6, E7, E8, E9, E10, 
+        E11, E12, E13, E14, E15, E16, E17, E18, E19, E20, E21, E22, E23, 
+        E24, E25, E26, E27, E28, E29, SC1, SC2, SC3, SC4, SC5, SD1, SD2, 
+        SD3, SD4, SD5, T1, T2, T3, T4, L1, L2, L3, L4, L5, L6
+    ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 
+              %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 
+              %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 
+              %s, %s, %s, %s, %s, %s);
     """
     
     cursor = connection.cursor()
@@ -102,11 +101,19 @@ def populate_user_dynamic_preferences(connection):
         probs = user[1:]
         current_favorite = random.choice(celebrities)
         
+        # Include user_id and current_favorite in the values tuple
         values = (user_id, current_favorite) + probs
+
+        # Debug: Print the number of values and placeholders
+        #print(f"Number of placeholders: {insert_query.count('%s')}")
+        #print(f"Number of values: {len(values)}")
+        #print(f"Values: {values}")
+
         cursor.execute(insert_query, values)
     
     connection.commit()
     print("User Dynamic Preferences populated with initial data")
+
 
 
 if __name__ == "__main__":
