@@ -154,7 +154,7 @@ def situation_category_1_event(connection, event, associated_celebrity):
             new_favorite = random.choice(celebrities)
             update_query = "update user_dynamic_preferences set current_favorite = %s where user_id = %s"
             cursor.execute(update_query, (new_favorite, user_id))
-            print(f"User {user_id} changed favorite to {associated_celebrity} due to event {event}")
+            print(f"User {user_id} changed favorite to {associated_celebrity} due to event {event_descriptions[event]}")
 
     connection.commit()
 
@@ -175,7 +175,7 @@ def situation_category_2_event(connection, event, associated_celebrity):
             new_favorite = random.choice([celeb for celeb in celebrities if celeb != associated_celebrity])
             update_query = "UPDATE user_dynamic_preferences SET current_favorite = %s WHERE user_id = %s"
             cursor.execute(update_query, (new_favorite, user_id))
-            print(f"User {user_id} changed favorite from {associated_celebrity} to {new_favorite} due to event {event}")
+            print(f"User {user_id} changed favorite from {associated_celebrity} to {new_favorite} due to event {event_descriptions[event]}")
 
     connection.commit()
 
@@ -200,7 +200,7 @@ def situation_category_3_event(connection, event, associated_celebrity):
             new_prob = min(event_prob + 0.15, 1.0)
             update_prob_query = f"UPDATE user_dynamic_preferences SET {event} = %s WHERE user_id = %s"
             cursor.execute(update_prob_query, (new_prob, user_id))
-            print(f"User {user_id}'s probability for event {event} increased to {new_prob}")
+            print(f"User {user_id}'s probability for event {event_descriptions[event]} increased to {new_prob}")
 
     connection.commit()
 
