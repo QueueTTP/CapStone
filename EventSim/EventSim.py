@@ -127,6 +127,7 @@ print(sum(event_probabilities.values()))
 category_1_events = {'E2', 'E3', 'E4', 'E5', 'E11', 'E12', 'E13', 'E14','E15', 'E16', 'E17', 'E18', 'E19', 'E20', 'E21', 'E22', 'E25', 'E26' }
 category_2_events = {'E1', 'E10', 'E16', 'E24', 'E27', 'E28'}
 category_3_events = {'E6', 'E7', 'E8', 'E9', 'E23', 'E29'}
+category_4_events = {'SC1', 'SC2', 'SC3', 'SC4', 'SC5', 'SD1', 'SD2', 'SD3', 'SD4', 'SD5', 'T1', 'T2', 'T3', 'T4', 'L1', 'L2', 'L3', 'L4', 'L5', 'L6'}
 
 celebrities = ['Sabrina Carpenter', 'Snoop Dogg', 'Tony Stark', 'LeBron James']
 
@@ -225,6 +226,25 @@ def situation_category_3_event(connection, event, associated_celebrity):
             print(f"User {user_id}'s probability for event {event_descriptions[event]} increased to {new_prob}")
 
     connection.commit()
+    
+def stuation_category_4_event(connection, event, associated_celebrity):
+    cursor = connection.cursor()
+
+    select_query = f"SELECT user_id, current_favorite, {event} FROM user_dynamic_preferences WHERE current_favorite = %s"
+    cursor.execute(select_query, (associated_celebrity,))
+    users = cursor.fetchall()
+
+    for user in users:
+        user_id = user[0]
+        event_prob = user[2]
+
+        #should change or not, Dice rolling!!!
+        if random.random() < event_prob:
+            new_favorite = random.choice([celeb for celeb in celebrities if celeb!= associated_celebrity])
+            update_query = "UPDATE user_dynamic_preferences SET current_favorite = %s WHERE user_id = %s"
+            cursor.execute(update_query, (new_favorite, user_id))
+            reset_probability_to_default(connection, user_id)
+            print(f"User {user_id} changed favorite from {associated_celebrity} to {new_favorite} due to event {event}")
 
 
 def run_event_sum(connection, num_days = (6*30)):
