@@ -101,13 +101,11 @@ def populate_user_dynamic_preferences(connection):
         probs = user[1:]
         current_favorite = random.choice(celebrities)
         
-        # Include user_id and current_favorite in the values tuple
+
         values = (user_id, current_favorite) + probs
 
-        # Debug: Print the number of values and placeholders
         #print(f"Number of placeholders: {insert_query.count('%s')}")
         #print(f"Number of values: {len(values)}")
-        #print(f"Values: {values}")
 
         cursor.execute(insert_query, values)
     
