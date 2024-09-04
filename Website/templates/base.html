@@ -1,0 +1,94 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>{% block title %}Starmeter{% endblock %}</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}" />
+</head>
+<body class="is-preload">
+
+    <!-- Wrapper -->
+    <div id="wrapper">
+        <!-- Main -->
+        <div id="main">
+            <div class="inner">
+                <!-- Header -->
+                <header id="header">
+                    <a href="/" class="logo"><strong>Starmeter</strong> by QTTP</a>
+                    <a href="#" class="image"><img src="{{ url_for('static', filename='images/Star.png') }}" alt="Starmeter Logo" style="width: 60px; height: auto;" /></a>
+                    <ul class="icons">
+                        <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+                        <li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+                        <li><a href="#" class="icon brands fa-snapchat-ghost"><span class="label">Snapchat</span></a></li>
+                        <li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+                        <li><a href="#" class="icon brands fa-medium-m"><span class="label">Medium</span></a></li>
+                    </ul>
+                </header>
+
+                <!-- Dynamic content from child templates -->
+                {% block content %}
+                {% endblock %}
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div id="sidebar">
+            <div class="inner">
+                <!-- Search -->
+                <section id="search" class="alt">
+                    <form method="post" action="#">
+                        <input type="text" name="query" id="query" placeholder="Search" />
+                    </form>
+                </section>
+
+                <!-- Menu -->
+                <nav id="menu">
+                    <header class="major">
+                        <h2>Menu</h2>
+                    </header>
+                    <ul>
+                        <li><a href="{{ url_for('views.home') }}">Homepage</a></li>
+                        <li><a href="{{ url_for('routes.markets') }}">Market</a></li>
+                        <li><a href="{{ url_for('routes.about_us') }}">About Us</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+    </div>
+
+	<style>
+		#header {
+			position: relative; /* Set the header to relative so the image can be positioned within it */
+		}
+		
+		#header .logo {
+			position: relative; /* Ensure the logo stays in place */
+			font-size: 24px; /* You can adjust this size */
+			z-index: 1; /* Make sure the logo stays behind the image */
+		}
+		
+		#header .image {
+			position: absolute; /* Make the image positionable relative to the header */
+			left: 225px; /* Adjust to control horizontal overlap */
+			z-index: 2; /* Ensure the image appears above the logo */
+		}
+		
+		#header .image img {
+			width: 50px; /* You can adjust the size */
+			height: auto; /* Maintain the aspect ratio */
+		}
+		
+	</style>
+
+
+
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='assets/js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/browser.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/breakpoints.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/util.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+</body>
+</html>
