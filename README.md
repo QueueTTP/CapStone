@@ -33,11 +33,9 @@ Getting Started
 To get started with Starmeter, you'll need to have the following installed:
 
 Python 3.8+
-Apache Spark
-Apache Kafka
+
 SQLite
 SQLAlchemy
-AWS CLI (for S3 integration)
 Jupyter Notebook
 Clone the repository and install the required dependencies:
 
