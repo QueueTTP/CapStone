@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <!-- Display the notebook HTML content -->
+    <div class="notebook-content">
+        {{ notebook_html | safe }}
+    </div>
+
+
+{% endblock %}

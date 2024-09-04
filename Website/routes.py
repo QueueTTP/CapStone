@@ -1,4 +1,8 @@
-from flask import Blueprint, views 
+import os
+from flask import Blueprint, render_template, views 
+from .functions import convert_notebook_to_html
+
+
 
 routes = Blueprint('routes', __name__)
 
@@ -8,4 +12,8 @@ def about_us():
 
 @routes.route('/markets')
 def markets():
-    return 'Markets Page'
+    notebook_path = os.path.join(os.getcwd(), 'test.ipynb')
+
+    notebook_html = convert_notebook_to_html(notebook_path)
+    
+    return render_template('markets.html')

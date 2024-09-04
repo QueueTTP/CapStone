@@ -4,7 +4,6 @@ from flask_migrate import Migrate
 from dotenv import load_dotenv
 from sqlalchemy import text
 import os
-from Website.routes import routes
 
 load_dotenv()
 
