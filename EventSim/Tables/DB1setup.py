@@ -11,10 +11,10 @@ load_dotenv()
 
 def create_connection():
     connection = mysql.connector.connect(
-    host = os.getenv('DB_HOST'),
-    user = os.getenv('DB_USER'),
-    password = os.getenv('DB_PASSWORD'),
-    database = os.getenv('DB_NAME')
+    host = 'test-db.c3u680mys7w2.us-east-1.rds.amazonaws.com',
+    user = 'admin',
+    password = 'zip.code123!',
+    database = 'starmeter'
     )
     return connection
 
@@ -27,8 +27,8 @@ conn = create_connection()
 def create_user_default_table(connection):
     create_table_query = """
     CREATE TABLE IF NOT EXISTS user_default_settings (
-        user_id INT AUTO_INCREMENT PRIMARY KEY,
-        E1 FLOAT,
+        user_id INT  PRIMARY KEY,
+        E1 FLOAT,AUTO_INCREMENT
         E2 FLOAT,
         E3 FLOAT,
         E4 FLOAT,
