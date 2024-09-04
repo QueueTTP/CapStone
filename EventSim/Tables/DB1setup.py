@@ -27,8 +27,8 @@ conn = create_connection()
 def create_user_default_table(connection):
     create_table_query = """
     CREATE TABLE IF NOT EXISTS user_default_settings (
-        user_id INT AUTO_INCREMENT PRIMARY KEY,
-        E1 FLOAT,
+        user_id INT  PRIMARY KEY,
+        E1 FLOAT,AUTO_INCREMENT
         E2 FLOAT,
         E3 FLOAT,
         E4 FLOAT,
