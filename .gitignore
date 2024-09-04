@@ -1,4 +1,5 @@
 # Ignore all files with .env extension
 *.venv/
-
+*.vscode
 README.md
+.env

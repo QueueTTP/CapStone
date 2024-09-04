@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="container">
+    <header class="main-header text-center">
+        <h1>Welcome to <strong>Starmeter</strong></h1>
+        <p>Your one-stop destination for tracking the popularity of your favorite stars!</p>
+    </header>
+
+    <section class="features">
+        <div class="row text-center">
+            <div class="col-md-4">
+                <i class="fa fa-star fa-4x"></i>
+                <h3>Star Rankings</h3>
+                <p>Discover the most popular stars in real-time. Stay updated on trending celebrities across various fields.</p>
+            </div>
+            <div class="col-md-4">
+                <i class="fa fa-chart-line fa-4x"></i>
+                <h3>Trending Now</h3>
+                <p>Check out what's trending today and who is making waves in the world of entertainment, sports, and more!</p>
+            </div>
+            <div class="col-md-4">
+                <i class="fa fa-user-circle fa-4x"></i>
+                <h3>Create an Account</h3>
+                <p>Sign up to track your favorite stars, set custom alerts, and never miss an update on their rankings!</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="how-it-works">
+        <h2 class="text-center">How It Works</h2>
+        <p>At Starmeter, we use sophisticated algorithms to calculate the popularity of celebrities based on a variety of data sources such as social media buzz, news appearances, and more.</p>
+        <div class="text-center">
+            <img src="{{ url_for('static', filename='images/how-it-works.png') }}" alt="How Starmeter Works" class="img-fluid">
+        </div>
+    </section>
+
+    <section class="cta text-center">
+        <h2>Stay Connected</h2>
+        <p>Follow us on social media and stay updated with the latest trends and rankings!</p>
+        <ul class="icons">
+            <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+            <li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+            <li><a href="#" class="icon brands fa-snapchat-ghost"><span class="label">Snapchat</span></a></li>
+            <li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+            <li><a href="#" class="icon brands fa-medium-m"><span class="label">Medium</span></a></li>
+        </ul>
+    </section>
+</div>
+{% endblock %}
