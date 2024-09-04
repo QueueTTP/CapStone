@@ -11,10 +11,10 @@ load_dotenv()
 
 def create_connection():
     connection = mysql.connector.connect(
-    host = os.getenv('DB_HOST'),
-    user = os.getenv('DB_USER'),
-    password = os.getenv('DB_PASSWORD'),
-    database = os.getenv('DB_NAME')
+    host = 'test-db.c3u680mys7w2.us-east-1.rds.amazonaws.com',
+    user = 'admin',
+    password = 'zip.code123!',
+    database = 'starmeter'
     )
     return connection
 
