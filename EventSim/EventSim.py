@@ -1,18 +1,21 @@
 import os
-import random
-import sys
 import time
-from flask import Flask
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from Website.models import db, UserDefaultSettings, UserDynamicPreferences
+import mysql.connector
+import random
 from dotenv import load_dotenv
 
 load_dotenv()
 
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db.init_app(app)
+def create_connection():
+    connection = mysql.connector.connect(
+    host = os.getenv('DB_HOST'),
+    user = os.getenv('DB_USER'),
+    password = os.getenv('DB_PASSWORD'),
+    database = os.getenv('DB_NAME')
+    )
+    return connection
+
+conn = create_connection()
 
 event_probabilities={
         'E1' :0.23,
@@ -128,84 +131,123 @@ category_4_events = {'SC1', 'SC2', 'SC3', 'SC4', 'SC5', 'SD1', 'SD2', 'SD3', 'SD
 
 celebrities = ['Sabrina Carpenter', 'Snoop Dogg', 'Tony Stark', 'LeBron James']
 
-# Utility functions
 def choose_event():
-    """Randomly select an event based on predefined probabilities."""
-    events = list(event_probabilities.keys())
+    events=list(event_probabilities.keys())
     probabilities = list(event_probabilities.values())
-    event = random.choices(events, probabilities)[0]
+    event = random.choices(events,probabilities)[0]
     return event
 
 
-def reset_probability_to_default(user_id):
-    """Reset user probabilities in `user_dynamic_preferences` to the defaults."""
-    user_default = UserDefaultSettings.query.get(user_id)
-    
-    if user_default:
-        user_dynamic = UserDynamicPreferences.query.get(user_id)
-        if user_dynamic:
-            for field in event_probabilities.keys():
-                setattr(user_dynamic, field, getattr(user_default, field))
-            db.session.commit()
-            print(f"User {user_id}'s probabilities reset to default.")
-        else:
-            print(f"No dynamic preferences found for user {user_id}.")
-    else:
-        print(f"No default settings found for user {user_id}.")
+def reset_probability_to_default(connection,user_id):
+    cursor = connection.cursor()
+
+    select_query = "select E1,E2,E3,E4,E5,E6,E7,E8,E9,E10,E11,E12,E13,E14,E15,E16,E17,E18,E19,E20,E21,E22,E23,E24,E25,E26,E27,E28,E29,SC1,SC2,SC3,SC4,SC5,SD1,SD2,SD3,SD4,SD5,T1,T2,T3,T4,L1,L2,L3,L4,L5,L6 from user_default_settings where user_id = %s"
+    cursor.execute(select_query, (user_id,))
+    default_probs = cursor.fetchone()
+
+    #uptade the user_dynamic_preferences table
+    update_query = """
+    update user_dynamic_preferences set
+    E1 = %s, E2 = %s, E3 = %s, E4 = %s, E5 = %s, E6 = %s, E7 = %s, E8 = %s, E9 = %s, E10 = %s, E11 = %s, E12 = %s, E13 = %s, E14 = %s, E15 = %s, E16 = %s, E17 = %s, E18 = %s, E19 = %s, E20 = %s, E21 = %s, E22 = %s, E23 = %s, E24 = %s, E25 = %s, E26 = %s, E27 = %s, E28 = %s, E29 = %s, SC1 = %s, SC2 = %s, SC3 = %s, SC4 = %s, SC5 = %s, SD1 = %s, SD2 = %s, SD3 = %s, SD4 = %s, SD5 = %s, T1 = %s, T2 = %s, T3 = %s, T4 = %s, L1 = %s, L2 = %s, L3 = %s, L4 = %s, L5 = %s, L6 = %s
+    where user_id = %s
+    """
+    cursor.execute(update_query, (*default_probs, user_id))
+    connection.commit()
+
+    print(f"User {user_id} probabilities reset to default")
 
 
-# Situation Functions
-def situation_category_1_event(event, associated_celebrity):
-    users = UserDynamicPreferences.query.all()
+def situation_category_1_event(connection, event, associated_celebrity):
+    cursor = connection.cursor()
+
+    select_query = f"select user_id, current_favorite, {event} from user_dynamic_preferences"
+    cursor.execute(select_query)
+    users = cursor.fetchall()
 
     for user in users:
-        event_prob = getattr(user, event)
+        user_id = user[0]
+        current_favorite = user[1]
+        event_prob = user[2]
 
+        #should change or not, Dice rolling!!!
         if random.random() < event_prob:
             new_favorite = random.choice(celebrities)
-            user.current_favorite = new_favorite
-            reset_probability_to_default(user.user_id)
-            print(f"User {user.user_id} changed favorite to {associated_celebrity} due to event {event_descriptions[event]}")
+            update_query = "update user_dynamic_preferences set current_favorite = %s where user_id = %s"
+            cursor.execute(update_query, (new_favorite, user_id))
+            reset_probability_to_default(connection, user_id)
+            print(f"User {user_id} changed favorite to {associated_celebrity} due to event {event_descriptions[event]}")
 
-    db.session.commit()
-
-
-def situation_category_2_event(event, associated_celebrity):
-    users = UserDynamicPreferences.query.filter_by(current_favorite=associated_celebrity).all()
-
-    for user in users:
-        event_prob = getattr(user, event)
-
-        if random.random() < event_prob:
-            new_favorite = random.choice([celeb for celeb in celebrities if celeb != associated_celebrity])
-            user.current_favorite = new_favorite
-            reset_probability_to_default(user.user_id)
-            print(f"User {user.user_id} changed favorite from {associated_celebrity} to {new_favorite} due to event {event_descriptions[event]}")
-
-    db.session.commit()
+    connection.commit()
 
 
-def situation_category_3_event(event, associated_celebrity):
-    users = UserDynamicPreferences.query.filter_by(current_favorite=associated_celebrity).all()
+def situation_category_2_event(connection, event, associated_celebrity):
+    cursor = connection.cursor()
+
+    select_query = f"SELECT user_id, current_favorite, {event} FROM user_dynamic_preferences WHERE current_favorite = %s"
+    cursor.execute(select_query, (associated_celebrity,))
+    users = cursor.fetchall()
 
     for user in users:
-        event_prob = getattr(user, event)
+        user_id = user[0]
+        event_prob = user[2]
 
+        #should change or not, Dice rolling!!!
         if random.random() < event_prob:
             new_favorite = random.choice([celeb for celeb in celebrities if celeb != associated_celebrity])
-            user.current_favorite = new_favorite
-            reset_probability_to_default(user.user_id)
-            print(f"User {user.user_id} changed favorite from {associated_celebrity} to {new_favorite} due to event {event}")
+            update_query = "UPDATE user_dynamic_preferences SET current_favorite = %s WHERE user_id = %s"
+            cursor.execute(update_query, (new_favorite, user_id))
+            reset_probability_to_default(connection, user_id)
+            print(f"User {user_id} changed favorite from {associated_celebrity} to {new_favorite} due to event {event_descriptions[event]}")
+
+    connection.commit()
+
+def situation_category_3_event(connection, event, associated_celebrity):
+    cursor = connection.cursor()
+
+    select_query = f"SELECT user_id, current_favorite, {event} FROM user_dynamic_preferences WHERE current_favorite = %s"
+    cursor.execute(select_query, (associated_celebrity,))
+    users = cursor.fetchall()
+
+    for user in users:
+        user_id = user[0]
+        event_prob = user[2]
+
+        #should change or not, Dice rolling!!!
+        if random.random() < event_prob:
+            new_favorite = random.choice([celeb for celeb in celebrities if celeb != associated_celebrity])
+            update_query = "UPDATE user_dynamic_preferences SET current_favorite = %s WHERE user_id = %s"
+            cursor.execute(update_query, (new_favorite, user_id))
+            reset_probability_to_default(connection, user_id)
+            print(f"User {user_id} changed favorite from {associated_celebrity} to {new_favorite} due to event {event}")
         else:
             new_prob = min(event_prob + 0.15, 1.0)
-            setattr(user, event, new_prob)
-            print(f"User {user.user_id}'s probability for event {event_descriptions[event]} increased to {new_prob}")
+            update_prob_query = f"UPDATE user_dynamic_preferences SET {event} = %s WHERE user_id = %s"
+            cursor.execute(update_prob_query, (new_prob, user_id))
+            print(f"User {user_id}'s probability for event {event_descriptions[event]} increased to {new_prob}")
 
-    db.session.commit()
+    connection.commit()
+    
+def stuation_category_4_event(connection, event, associated_celebrity):
+    cursor = connection.cursor()
+
+    select_query = f"SELECT user_id, current_favorite, {event} FROM user_dynamic_preferences WHERE current_favorite = %s"
+    cursor.execute(select_query, (associated_celebrity,))
+    users = cursor.fetchall()
+
+    for user in users:
+        user_id = user[0]
+        event_prob = user[2]
+
+        #should change or not, Dice rolling!!!
+        if random.random() < event_prob:
+            new_favorite = random.choice([celeb for celeb in celebrities if celeb!= associated_celebrity])
+            update_query = "UPDATE user_dynamic_preferences SET current_favorite = %s WHERE user_id = %s"
+            cursor.execute(update_query, (new_favorite, user_id))
+            reset_probability_to_default(connection, user_id)
+            print(f"User {user_id} changed favorite from {associated_celebrity} to {new_favorite} due to event {event}")
 
 
-# Main Simulation Function
-def run_event_sum(num_days=180):
+def run_event_sum(connection, num_days = (6*30)):
     for day in range(num_days):
         print(f"Simulating day {day+1}...")
 
@@ -215,16 +257,22 @@ def run_event_sum(num_days=180):
         print(f"Event {event} occurred ({event_description}), associated with {associated_celebrity}")
 
         if event in category_1_events:
-            situation_category_1_event(event, associated_celebrity)
+            situation_category_1_event(conn, event, associated_celebrity)
         elif event in category_2_events:
-            situation_category_2_event(event, associated_celebrity)
+            situation_category_2_event(conn, event, associated_celebrity)
         elif event in category_3_events:
-            situation_category_3_event(event, associated_celebrity)
-
-        time.sleep(10)  # Simulate a delay between events
+            situation_category_3_event(conn, event, associated_celebrity)
 
 
-# Running the Simulation
+        time.sleep(10)
+
+
 if __name__ == "__main__":
-    with app.app_context():
-        run_event_sum(num_days=180)
+    conn = create_connection()
+    if conn.is_connected():
+        print("Connected to the database")
+        run_event_sum(conn, num_days=180)
+        conn.close()
+        print("Database connection closed")
+    else:
+        print("Connection failed")
