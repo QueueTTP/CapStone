@@ -1,13 +1,14 @@
 from kafka import KafkaProducer
 import json
 
+
 #create a producer object
 producer = KafkaProducer(bootstrap_servers='localhost:9092',
                         value_serializer=lambda v: json.dumps(v).encode('utf-8'))
 
 #send event
 def send_event(event_data):
-    producer.send('event-simulator', event_data)
+    producer.send('event-simulation', event_data)
     print(f'Event sent: {event_data}')
 
 #example usage
