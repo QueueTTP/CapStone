@@ -3,6 +3,7 @@ import time
 import mysql.connector
 import random
 from dotenv import load_dotenv
+import datetime
 
 load_dotenv()
 
@@ -246,15 +247,41 @@ def stuation_category_4_event(connection, event, associated_celebrity):
             reset_probability_to_default(connection, user_id)
             print(f"User {user_id} changed favorite from {associated_celebrity} to {new_favorite} due to event {event}")
 
+def log_event(connection, event, associated_celebrity, fans_gained, fans_lost):
+    cursor = connection.cursor()
+    insert_query = """
+    INSERT INTO event_log (event_date, celebrity, event_description, fans_gained, fans_lost)
+    VALUES (CURDATE(), %s, %s, %s, %s);
+    """
+    cursor.execute(insert_query, (associated_celebrity, event_descriptions[event], fans_gained, fans_lost))
+    connection.commit()
+    print(f"Event {event} with {associated_celebrity} logged.")
 
-def run_event_sum(connection, num_days = (6*30)):
+
+start_date = datetime.date(2024, 3, 12)
+
+def run_event_sum(connection, num_days=180):
+    # store day/iteragtion number and correspondin date
+    event_log_dict = {}
+
     for day in range(num_days):
-        print(f"Simulating day {day+1}...")
+        # Calculate the date for the current day
+        current_date = start_date + datetime.timedelta(days=day)
+
+        print(f"Simulating day {day+1}... ({current_date})")
 
         event = choose_event()
         event_description = event_descriptions.get(event, "Unknown event")
         associated_celebrity = random.choice(celebrities)
         print(f"Event {event} occurred ({event_description}), associated with {associated_celebrity}")
+
+        # Add event details to the dictionary
+        event_log_dict[day + 1] = {
+            'date': current_date,
+            'event': event,
+            'event_description': event_description,
+            'celebrity': associated_celebrity,
+        }
 
         if event in category_1_events:
             situation_category_1_event(conn, event, associated_celebrity)
@@ -263,8 +290,11 @@ def run_event_sum(connection, num_days = (6*30)):
         elif event in category_3_events:
             situation_category_3_event(conn, event, associated_celebrity)
 
-
         time.sleep(10)
+
+    # After the simulation, print or return the event log dictionary
+    print("Event simulation complete.")
+    return event_log_dict
 
 
 if __name__ == "__main__":
