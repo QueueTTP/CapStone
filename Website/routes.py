@@ -1,8 +1,11 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import time
 from flask import Blueprint, current_app, render_template
 =======
 import os
+=======
+>>>>>>> 6ee767fd (stock ticker added)
 import time
 from flask import Blueprint, current_app, render_template
 from flask_socketio import emit

@@ -58,6 +58,7 @@ Copy code
 python main.py
 This will start the Flask server, and you can view the dashboard in your browser by navigating to http://localhost:5000.
 
+<<<<<<< HEAD
 # Create Venv
 
 python3 -m venv venv
@@ -86,6 +87,8 @@ docker run -p 5000:5000 flask-app-python3.12
 
 pip3 install -r requirements.txt
 
+=======
+>>>>>>> 6ee767fd (stock ticker added)
 # Demo
 For a quick demo, check out our Google Slides presentation: Starmeter Presentation
 

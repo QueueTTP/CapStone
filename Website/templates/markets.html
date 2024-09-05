@@ -3,6 +3,9 @@
 {% block content %}
 <h1>Real-Time Fan Count of Celebrities</h1>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 6ee767fd (stock ticker added)
 
 <!-- Stock ticker for real-time fan counts -->
 <div id="fan-count-ticker" style="width: 100%; font-size: 1.5rem; white-space: nowrap; overflow: hidden; background-color: #f8f9fa; padding: 10px; border: 1px solid #ccc; margin-bottom: 20px;">
@@ -51,10 +54,15 @@
         var currentTime = new Date().getTime() / 1000;  // Time in seconds
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         var tickerText = "";  // To update the stock ticker text
 
 =======
 >>>>>>> d1a44570 (live updating chart on markets.html)
+=======
+        var tickerText = "";  // To update the stock ticker text
+
+>>>>>>> 6ee767fd (stock ticker added)
         fanCounts.forEach(function(fanCount) {
             var celebrity = fanCount.current_favorite;
             var count = fanCount.fan_count;
@@ -71,6 +79,9 @@
                     y: [[count]]
                 }, [Object.keys(plotData).indexOf(celebrity)]);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 6ee767fd (stock ticker added)
 
                 // Add to the ticker text
                 tickerText += celebrity + ": " + count + " fans | ";
@@ -79,10 +90,13 @@
 
         // Update the stock ticker text
         document.getElementById('fan-count-marquee').innerHTML = tickerText;
+<<<<<<< HEAD
 =======
             }
         });
 >>>>>>> d1a44570 (live updating chart on markets.html)
+=======
+>>>>>>> 6ee767fd (stock ticker added)
     });
 </script>
 {% endblock %}
