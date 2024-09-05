@@ -13,7 +13,7 @@ routes = Blueprint('routes', __name__)
 
 @routes.route('/about-us')
 def about_us():
-    return 'About Us Page'
+    return render_template('about-us.html')
 
 @routes.route('/markets')
 def markets():
