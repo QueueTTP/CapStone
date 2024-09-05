@@ -1,4 +1,3 @@
-import os
 import time
 from flask import Blueprint, current_app, render_template
 from flask_socketio import emit
