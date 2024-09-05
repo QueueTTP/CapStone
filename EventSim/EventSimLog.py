@@ -2,6 +2,7 @@ import os
 import time
 import mysql.connector
 import random
+import pandas as pd
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -121,6 +122,9 @@ event_descriptions = {
     'L6': 'Sits out for rest'
 }
 
+#Source
+event_types = ['Social Network', 'Forum', 'News']
+
 #make sure the sum of the probability it's 1
 print(sum(event_probabilities.values()))
 
@@ -138,31 +142,72 @@ def choose_event():
     return event
 
 
+def get_fan_counts(connection):
+    try:
+        query = """
+        SELECT current_favorite, COUNT(*) as fan_count 
+        FROM user_dynamic_preferences 
+        GROUP BY current_favorite;
+        """
+        df = pd.read_sql(query, con=connection)
+        return df
+    except Exception as e:
+        print(f"Error retrieving data: {e}")
+        return pd.DataFrame(columns=['current_favorite', 'fan_count'])
+    
+previous_fan_counts = {}
 
 
-def reset_probability_to_default(connection,user_id):
+def calculate_fan_shifts(current_fan_counts, celebrity):
+    previous_count = previous_fan_counts.get(celebrity, 0)
+    current_count = current_fan_counts.get(celebrity, 0)
+    shift_amount = current_count - previous_count
+    shift_type = 'increase' if shift_amount > 0 else 'decrease' if shift_amount < 0 else 'no change'
+    return {'shift': shift_amount, 'amount': abs(shift_amount), 'shift_type': shift_type}
+
+
+
+def log_event(connection, event_description, event_date, shift, amount, source=None, sentiment=None):
+    try:
+        cursor = connection.cursor()
+        event_string = f"{event_description} ({source})" if source else event_description
+
+        insert_query = """
+        INSERT INTO event_log (event, event_date, shift, amount, source, sentiment)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        """
+        cursor.execute(insert_query, (event_string, event_date, shift, amount, source, sentiment))
+        connection.commit()
+    except mysql.connector.Error as err:
+        print(f"Error logging event: {err}")
+    finally:
+        cursor.close()
+
+
+
+def reset_probability_to_default(connection, user_id):
     cursor = connection.cursor()
-
-    select_query = "select E1,E2,E3,E4,E5,E6,E7,E8,E9,E10,E11,E12,E13,E14,E15,E16,E17,E18,E19,E20,E21,E22,E23,E24,E25,E26,E27,E28,E29,SC1,SC2,SC3,SC4,SC5,SD1,SD2,SD3,SD4,SD5,T1,T2,T3,T4,L1,L2,L3,L4,L5,L6 from user_default_settings where user_id = %s"
+    select_query = """
+    SELECT E1,E2,E3,E4,E5,E6,E7,E8,E9,E10,E11,E12,E13,E14,E15,E16,E17,E18,E19,E20,E21,E22,E23,E24,E25,E26,E27,E28,E29,SC1,SC2,SC3,SC4,SC5,SD1,SD2,SD3,SD4,SD5,T1,T2,T3,T4,L1,L2,L3,L4,L5,L6
+    FROM user_default_settings
+    WHERE user_id = %s
+    """
     cursor.execute(select_query, (user_id,))
     default_probs = cursor.fetchone()
-
-    #uptade the user_dynamic_preferences table
-    update_query = """
-    update user_dynamic_preferences set
-    E1 = %s, E2 = %s, E3 = %s, E4 = %s, E5 = %s, E6 = %s, E7 = %s, E8 = %s, E9 = %s, E10 = %s, E11 = %s, E12 = %s, E13 = %s, E14 = %s, E15 = %s, E16 = %s, E17 = %s, E18 = %s, E19 = %s, E20 = %s, E21 = %s, E22 = %s, E23 = %s, E24 = %s, E25 = %s, E26 = %s, E27 = %s, E28 = %s, E29 = %s, SC1 = %s, SC2 = %s, SC3 = %s, SC4 = %s, SC5 = %s, SD1 = %s, SD2 = %s, SD3 = %s, SD4 = %s, SD5 = %s, T1 = %s, T2 = %s, T3 = %s, T4 = %s, L1 = %s, L2 = %s, L3 = %s, L4 = %s, L5 = %s, L6 = %s
-    where user_id = %s
-    """
-    cursor.execute(update_query, (*default_probs, user_id))
-    connection.commit()
-
-    #print(f"User {user_id} probabilities reset to default")
-
+    
+    if default_probs:
+        update_query = """
+        UPDATE user_dynamic_preferences SET
+        E1 = %s, E2 = %s, E3 = %s, E4 = %s, E5 = %s, E6 = %s, E7 = %s, E8 = %s, E9 = %s, E10 = %s, E11 = %s, E12 = %s, E13 = %s, E14 = %s, E15 = %s, E16 = %s, E17 = %s, E18 = %s, E19 = %s, E20 = %s, E21 = %s, E22 = %s, E23 = %s, E24 = %s, E25 = %s, E26 = %s, E27 = %s, E28 = %s, E29 = %s, SC1 = %s, SC2 = %s, SC3 = %s, SC4 = %s, SC5 = %s, SD1 = %s, SD2 = %s, SD3 = %s, SD4 = %s, SD5 = %s, T1 = %s, T2 = %s, T3 = %s, T4 = %s, L1 = %s, L2 = %s, L3 = %s, L4 = %s, L5 = %s, L6 = %s
+        WHERE user_id = %s
+        """
+        cursor.execute(update_query, (*default_probs, user_id))
+        connection.commit()
 
 def situation_category_1_event(connection, event, associated_celebrity):
     cursor = connection.cursor()
 
-    select_query = f"select user_id, current_favorite, {event} from user_dynamic_preferences"
+    select_query = f"SELECT user_id, current_favorite, {event} FROM user_dynamic_preferences"
     cursor.execute(select_query)
     users = cursor.fetchall()
 
@@ -171,13 +216,23 @@ def situation_category_1_event(connection, event, associated_celebrity):
         current_favorite = user[1]
         event_prob = user[2]
 
-        #should change or not, Dice rolling!!!
         if random.random() < event_prob:
             new_favorite = random.choice(celebrities)
-            update_query = "update user_dynamic_preferences set current_favorite = %s where user_id = %s"
+            update_query = "UPDATE user_dynamic_preferences SET current_favorite = %s WHERE user_id = %s"
             cursor.execute(update_query, (new_favorite, user_id))
             reset_probability_to_default(connection, user_id)
-            #print(f"User {user_id} changed favorite to {associated_celebrity} due to event {event_descriptions[event]}")
+
+            # Log the event
+            log_event(
+                connection, 
+                event, 
+                time.strftime('%Y-%m-%d'), 
+                'no change', 
+                0, 
+                associated_celebrity, 
+                'pos'
+            )
+            print(f"User {user_id} changed favorite to {new_favorite} due to event {event_descriptions[event]}")
 
     connection.commit()
 
@@ -193,15 +248,26 @@ def situation_category_2_event(connection, event, associated_celebrity):
         user_id = user[0]
         event_prob = user[2]
 
-        #should change or not, Dice rolling!!!
         if random.random() < event_prob:
             new_favorite = random.choice([celeb for celeb in celebrities if celeb != associated_celebrity])
             update_query = "UPDATE user_dynamic_preferences SET current_favorite = %s WHERE user_id = %s"
             cursor.execute(update_query, (new_favorite, user_id))
             reset_probability_to_default(connection, user_id)
-            #print(f"User {user_id} changed favorite from {associated_celebrity} to {new_favorite} due to event {event_descriptions[event]}")
+
+            # Log the event
+            log_event(
+                connection, 
+                event, 
+                time.strftime('%Y-%m-%d'), 
+                'no change', 
+                0, 
+                associated_celebrity, 
+                'pos'
+            )
+            print(f"User {user_id} changed favorite from {associated_celebrity} to {new_favorite} due to event {event_descriptions[event]}")
 
     connection.commit()
+
 
 def situation_category_3_event(connection, event, associated_celebrity):
     cursor = connection.cursor()
@@ -214,22 +280,43 @@ def situation_category_3_event(connection, event, associated_celebrity):
         user_id = user[0]
         event_prob = user[2]
 
-        #should change or not, Dice rolling!!!
         if random.random() < event_prob:
             new_favorite = random.choice([celeb for celeb in celebrities if celeb != associated_celebrity])
             update_query = "UPDATE user_dynamic_preferences SET current_favorite = %s WHERE user_id = %s"
             cursor.execute(update_query, (new_favorite, user_id))
             reset_probability_to_default(connection, user_id)
-            #print(f"User {user_id} changed favorite from {associated_celebrity} to {new_favorite} due to event {event}")
+
+            # Log the event
+            log_event(
+                connection, 
+                event, 
+                time.strftime('%Y-%m-%d'), 
+                'no change', 
+                0, 
+                associated_celebrity, 
+                'pos'
+            )
+            print(f"User {user_id} changed favorite from {associated_celebrity} to {new_favorite} due to event {event}")
         else:
             new_prob = min(event_prob + 0.15, 1.0)
             update_prob_query = f"UPDATE user_dynamic_preferences SET {event} = %s WHERE user_id = %s"
             cursor.execute(update_prob_query, (new_prob, user_id))
-            #print(f"User {user_id}'s probability for event {event_descriptions[event]} increased to {new_prob}")
+
+            # Log the event
+            log_event(
+                connection, 
+                event, 
+                time.strftime('%Y-%m-%d'), 
+                'probability change', 
+                new_prob, 
+                associated_celebrity, 
+                'neutral'
+            )
+            print(f"User {user_id}'s probability for event {event_descriptions[event]} increased to {new_prob}")
 
     connection.commit()
-    
-def stuation_category_4_event(connection, event, associated_celebrity):
+
+def situation_category_4_event(connection, event, associated_celebrity):
     cursor = connection.cursor()
 
     select_query = f"SELECT user_id, current_favorite, {event} FROM user_dynamic_preferences WHERE current_favorite = %s"
@@ -240,38 +327,67 @@ def stuation_category_4_event(connection, event, associated_celebrity):
         user_id = user[0]
         event_prob = user[2]
 
-        #should change or not, Dice rolling!!!
         if random.random() < event_prob:
-            new_favorite = random.choice([celeb for celeb in celebrities if celeb!= associated_celebrity])
+            new_favorite = random.choice([celeb for celeb in celebrities if celeb != associated_celebrity])
             update_query = "UPDATE user_dynamic_preferences SET current_favorite = %s WHERE user_id = %s"
             cursor.execute(update_query, (new_favorite, user_id))
             reset_probability_to_default(connection, user_id)
-            #print(f"User {user_id} changed favorite from {associated_celebrity} to {new_favorite} due to event {event}")
+
+            # Log the event
+            log_event(
+                connection, 
+                event, 
+                time.strftime('%Y-%m-%d'), 
+                'no change', 
+                0, 
+                associated_celebrity, 
+                'pos'
+            )
+            print(f"User {user_id} changed favorite from {associated_celebrity} to {new_favorite} due to event {event}")
+
+    connection.commit()
 
 
-def run_event_sum(connection, num_days = (6*30)):
+def run_event_sum(connection, num_days=180):
+    global previous_fan_counts
+    start_date = pd.Timestamp('2024-03-01')
+
     for day in range(num_days):
-        print(f"Simulating day {day+1}...")
+        current_date = start_date + pd.Timedelta(days=day)
+        print(f"Simulating day {day + 1} on {current_date}...")
 
-        event = choose_event()
-        event_description = event_descriptions.get(event, "Unknown event")
-        associated_celebrity = random.choice(celebrities)
-        # print(f"Event {event} occurred ({event_description}), associated with {associated_celebrity}")
+        for celebrity in celebrities:
+            event = choose_event()
+            event_description = event_descriptions.get(event, "Unknown event")
 
-        if event in category_1_events:
-            situation_category_1_event(conn, event, associated_celebrity)
-        elif event in category_2_events:
-            situation_category_2_event(conn, event, associated_celebrity)
-        elif event in category_3_events:
-            situation_category_3_event(conn, event, associated_celebrity)
+            # Retrieve and calculate fan counts and shifts
+            current_fan_counts = get_fan_counts(connection)
+            fan_shift = calculate_fan_shifts(current_fan_counts, celebrity)
 
+            # Extract shift_type, amount
+            shift_type = fan_shift['shift_type']
+            amount = fan_shift['amount']
+
+            # Log the event
+            log_event(
+                connection,
+                f"{event_description} ({celebrity})",
+                current_date.strftime('%Y-%m-%d'),
+                shift_type,
+                amount,
+                celebrity,
+                'neutral'
+            )
+            print(f"Logged event for {celebrity}: Shift {shift_type}, Amount {amount}")
 
         time.sleep(1)
 
 
+
+
 if __name__ == "__main__":
     conn = create_connection()
-    if conn.is_connected():
+    if conn and conn.is_connected():
         print("Connected to the database")
         run_event_sum(conn, num_days=180)
         conn.close()
