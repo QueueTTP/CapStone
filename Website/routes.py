@@ -1,5 +1,12 @@
+<<<<<<< HEAD
 import time
 from flask import Blueprint, current_app, render_template
+=======
+import os
+import time
+from flask import Blueprint, current_app, render_template
+from flask_socketio import emit
+>>>>>>> d1a44570 (live updating chart on markets.html)
 from . import socketio
 from .functions import get_fan_counts
 import eventlet
