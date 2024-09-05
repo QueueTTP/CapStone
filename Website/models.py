@@ -114,3 +114,5 @@ class UserDynamicPreferences(db.Model):
     L6 = db.Column(db.Float)
 
     user_default = db.relationship('UserDefaultSettings', backref=db.backref('dynamic_preferences', lazy=True))
+    
+    
