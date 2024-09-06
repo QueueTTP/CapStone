@@ -5,6 +5,9 @@ FROM python:3.12
 ENV DEBIAN_FRONTEND=noninteractive
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 30fa1389 (updated docker file)
 # Define your environment variables here
 ENV FLASK_APP=main.py \
     FLASK_ENV=development \
@@ -12,11 +15,17 @@ ENV FLASK_APP=main.py \
     DB_USER=root \
     DB_PASSWORD=new_password \
     DB_NAME=starmeter \
+<<<<<<< HEAD
     DATABASE_URL='mysql://admin:zip.code123%21@test-db.c3u680mys7w2.us-east-1.rds.amazonaws.com:3306/starmeter' \
     SECRET_KEY="baconandeggs"
 
 =======
 >>>>>>> 4e772dca (docker image created)
+=======
+    DATABASE_URL='mysql://admin:zip.code123!@test-db.c3u680mys7w2.us-east-1.rds.amazonaws.com:3306/starmeter' \
+    SECRET_KEY="baconandeggs"
+
+>>>>>>> 30fa1389 (updated docker file)
 # Update and install necessary system dependencies
 RUN apt-get update && apt-get install -y \
     build-essential \

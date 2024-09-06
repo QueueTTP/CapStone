@@ -1,7 +1,19 @@
+<<<<<<< HEAD
+=======
+import random
+import sys
+from flask import Flask
+from dotenv import load_dotenv
+>>>>>>> 30fa1389 (updated docker file)
 import os
 import time
 import mysql.connector
 import random
+<<<<<<< HEAD
+=======
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from Website.models import UserDefaultSettings, UserDynamicPreferences, db
+>>>>>>> 30fa1389 (updated docker file)
 
 
 def create_connection():

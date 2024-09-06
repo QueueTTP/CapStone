@@ -8,8 +8,11 @@ import os
 >>>>>>> 6ee767fd (stock ticker added)
 import time
 from flask import Blueprint, current_app, render_template
+<<<<<<< HEAD
 from flask_socketio import emit
 >>>>>>> d1a44570 (live updating chart on markets.html)
+=======
+>>>>>>> 30fa1389 (updated docker file)
 from . import socketio
 from .functions import get_fan_counts
 import eventlet
