@@ -58,6 +58,16 @@ Copy code
 python main.py
 This will start the Flask server, and you can view the dashboard in your browser by navigating to http://localhost:5000.
 
+# Create Venv
+
+python3 -m venv venv
+
+source venv/bin/activate
+
+# Install From Requirments.txt
+
+pip3 install -r requirements.txt
+
 # Demo
 For a quick demo, check out our Google Slides presentation: Starmeter Presentation
 
