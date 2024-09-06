@@ -4,9 +4,13 @@ venv/
 *.vscode
 README.md
 <<<<<<< HEAD
+<<<<<<< HEAD
 myenv
 test.ipynb
 =======
 .env
 myenv
 >>>>>>> bd771c5b (requrments & venv)
+=======
+myenv
+>>>>>>> 329cd1d0 (requirments update)
