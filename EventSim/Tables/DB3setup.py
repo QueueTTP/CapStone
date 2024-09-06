@@ -23,7 +23,8 @@ def create_event_log_table(connection):
     celebrity VARCHAR(50),
     event_description VARCHAR(255),
     fans_gained INT,
-    fans_lost INT
+    fans_lost INT,
+    current_fan_count INT
     );
     """
     

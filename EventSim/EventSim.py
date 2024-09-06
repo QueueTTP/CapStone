@@ -157,14 +157,6 @@ def reset_probability_to_default(connection,user_id):
 
     print(f"User {user_id} probabilities reset to default")
 
-def calculate_fans_affected(connection, event, associated_celebrity):
-    cursor = connection.cursor()
-    
-    # Count fans before the event
-    cursor.execute("SELECT COUNT(*) FROM user_dynamic_preferences WHERE current_favorite = %s", (associated_celebrity,))
-    fans_before = cursor.fetchone()[0]
-    
-    return fans_before
 
 def situation_category_1_event(connection, event, associated_celebrity):
     cursor = connection.cursor()
@@ -172,8 +164,6 @@ def situation_category_1_event(connection, event, associated_celebrity):
     select_query = f"SELECT user_id, current_favorite, {event} FROM user_dynamic_preferences"
     cursor.execute(select_query)
     users = cursor.fetchall()
-
-    fans_gained = 0
 
     for user in users:
         user_id, current_favorite, event_prob = user
@@ -184,10 +174,8 @@ def situation_category_1_event(connection, event, associated_celebrity):
                 update_query = "UPDATE user_dynamic_preferences SET current_favorite = %s WHERE user_id = %s"
                 cursor.execute(update_query, (associated_celebrity, user_id))
                 reset_probability_to_default(connection, user_id)
-                fans_gained += 1
 
     connection.commit()
-    return fans_gained, 0 
 
 
 def situation_category_2_event(connection, event, associated_celebrity):
@@ -196,8 +184,6 @@ def situation_category_2_event(connection, event, associated_celebrity):
     select_query = f"SELECT user_id, current_favorite, {event} FROM user_dynamic_preferences WHERE current_favorite = %s"
     cursor.execute(select_query, (associated_celebrity,))
     users = cursor.fetchall()
-
-    fans_lost = 0
 
     for user in users:
         user_id, current_favorite, event_prob = user
@@ -208,10 +194,8 @@ def situation_category_2_event(connection, event, associated_celebrity):
             update_query = "UPDATE user_dynamic_preferences SET current_favorite = %s WHERE user_id = %s"
             cursor.execute(update_query, (new_favorite, user_id))
             reset_probability_to_default(connection, user_id)
-            fans_lost += 1
 
     connection.commit()
-    return 0, fans_lost  # Return fans gained, fans lost
 
 
 def situation_category_3_event(connection, event, associated_celebrity):
@@ -221,8 +205,6 @@ def situation_category_3_event(connection, event, associated_celebrity):
     cursor.execute(select_query, (associated_celebrity,))
     users = cursor.fetchall()
 
-    fans_lost = 0
-
     for user in users:
         user_id, current_favorite, event_prob = user
 
@@ -231,14 +213,12 @@ def situation_category_3_event(connection, event, associated_celebrity):
             update_query = "UPDATE user_dynamic_preferences SET current_favorite = %s WHERE user_id = %s"
             cursor.execute(update_query, (new_favorite, user_id))
             reset_probability_to_default(connection, user_id)
-            fans_lost += 1
         else:
             new_prob = min(event_prob + 0.15, 1.0)  # Increase event probability for the future
             update_prob_query = f"UPDATE user_dynamic_preferences SET {event} = %s WHERE user_id = %s"
             cursor.execute(update_prob_query, (new_prob, user_id))
 
     connection.commit()
-    return 0, fans_lost  # Return fans gained, fans lost
     
 def situation_category_4_event(connection, event, associated_celebrity):
     cursor = connection.cursor()
@@ -247,8 +227,6 @@ def situation_category_4_event(connection, event, associated_celebrity):
     cursor.execute(select_query, (associated_celebrity,))
     users = cursor.fetchall()
 
-    fans_lost = 0
-
     for user in users:
         user_id, current_favorite, event_prob = user
 
@@ -257,50 +235,42 @@ def situation_category_4_event(connection, event, associated_celebrity):
             update_query = "UPDATE user_dynamic_preferences SET current_favorite = %s WHERE user_id = %s"
             cursor.execute(update_query, (new_favorite, user_id))
             reset_probability_to_default(connection, user_id)
-            fans_lost += 1
 
     connection.commit()
-    return 0, fans_lost
 
-def get_follower_counts(connection):
+def get_total_fans(connection):
     cursor = connection.cursor(dictionary=True)
-    follower_counts = {celeb: 0 for celeb in celebrities}
+    fan_counts = {celeb: 0 for celeb in celebrities}
     
     cursor.execute("SELECT current_favorite, COUNT(*) as count FROM user_dynamic_preferences GROUP BY current_favorite")
     results = cursor.fetchall()
     
     for row in results:
-        if row['current_favorite'] in follower_counts:
-            follower_counts[row['current_favorite']] = row['count']
+        if row['current_favorite'] in fan_counts:
+            fan_counts[row['current_favorite']] = row['count']
     
-    return follower_counts
+    return fan_counts
+    print("fan_counts")
 
-def log_event(connection, event_date, event, associated_celebrity, follower_changes):
+def log_event(connection, event_date, event, associated_celebrity):
     cursor = connection.cursor()
+    
+    # Get the current fan count for the celebrity
+    fan_counts = get_total_fans(connection)
+    current_fan_count = fan_counts.get(associated_celebrity, 0)
+    
     insert_query = """
-    INSERT INTO event_log (event_date, celebrity, event_description, fans_gained, fans_lost)
-    VALUES (%s, %s, %s, %s, %s);
+    INSERT INTO event_log (event_date, celebrity, event_description, current_fan_count)
+    VALUES (%s, %s, %s, %s);
     """
     
-    fans_gained = max(0, follower_changes[associated_celebrity])
-    fans_lost = max(0, -follower_changes[associated_celebrity])
-    
-    cursor.execute(insert_query, (event_date, associated_celebrity, event_descriptions[event], fans_gained, fans_lost))
-    
-    # Log changes for other celebrities as well
-    for celeb, change in follower_changes.items():
-        if celeb != associated_celebrity:
-            fans_gained = max(0, change)
-            fans_lost = max(0, -change)
-            cursor.execute(insert_query, (event_date, celeb, f"Indirect effect, nothing happened for this celebrity", fans_gained, fans_lost))
+    cursor.execute(insert_query, (event_date, associated_celebrity, event_descriptions[event], current_fan_count))
     
     connection.commit()
-    print(f"Event {event} with {associated_celebrity} logged. Follower changes: {follower_changes}")
+    print(f"Event {event} with {associated_celebrity} logged. Current fan count: {current_fan_count}")
 
 
 def run_event_sum(connection, start_date, num_days=180):
-    event_log_dict = {}
-
     for day in range(num_days):
         current_date = start_date + datetime.timedelta(days=day)
         print(f"Simulating day {day+1}... ({current_date})")
@@ -309,8 +279,6 @@ def run_event_sum(connection, start_date, num_days=180):
         event_description = event_descriptions.get(event, "Unknown event")
         associated_celebrity = random.choice(celebrities)
         print(f"Event {event} occurred ({event_description}), associated with {associated_celebrity}")
-
-        follower_counts_before = get_follower_counts(connection)
 
         if event in category_1_events:
             situation_category_1_event(conn, event, associated_celebrity)
@@ -321,13 +289,10 @@ def run_event_sum(connection, start_date, num_days=180):
         elif event in category_4_events:
             situation_category_4_event(conn, event, associated_celebrity)
 
-        follower_counts_after = get_follower_counts(connection)
+        log_event(connection, current_date, event, associated_celebrity)
 
-        follower_changes = {celeb: follower_counts_after[celeb] - follower_counts_before[celeb] for celeb in celebrities}
-
-        log_event(connection, current_date, event, associated_celebrity, follower_changes)
-
-        print(f"Follower changes: {follower_changes}")
+        fan_counts = get_total_fans(connection)
+        print(f"Current fan counts: {fan_counts}")
 
         time.sleep(10)
 
