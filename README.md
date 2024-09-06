@@ -69,9 +69,12 @@ python3 -m venv venv
 source venv/bin/activate
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Install requirements
 
 
+=======
+>>>>>>> 8281f828 (readme updated)
 # Run Docker Container
 
 To run the Flask app inside the Docker container, follow these steps:
@@ -87,8 +90,11 @@ Once the image is built, you can run the Docker container with the following com
 
 docker run -p 5000:5000 flask-app-python3.12
 
+<<<<<<< HEAD
 =======
 >>>>>>> bd771c5b (requrments & venv)
+=======
+>>>>>>> 8281f828 (readme updated)
 # Install From Requirments.txt
 
 pip3 install -r requirements.txt
