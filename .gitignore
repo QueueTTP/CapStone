@@ -4,3 +4,8 @@
 README.md
 .env
 venv
+.ipynb_checkpoints
+your_database.db
+test1.ipynb
+NewDash.ipynb
+Capstone.ipynb
