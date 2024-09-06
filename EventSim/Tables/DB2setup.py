@@ -7,9 +7,9 @@ load_dotenv()
 
 def create_connection():
     connection = mysql.connector.connect(
-    host = 'test-db.c3u680mys7w2.us-east-1.rds.amazonaws.com',
-    user = 'admin',
-    password = 'zip.code123!',
+    host = 'localhost',
+    user = 'timlinkous',
+    password = 'zipcode1',
     database = 'starmeter'
     )
     return connection
@@ -115,7 +115,6 @@ def populate_user_dynamic_preferences(connection):
     
     connection.commit()
     print("User Dynamic Preferences populated with initial data")
-
 
 
 if __name__ == "__main__":

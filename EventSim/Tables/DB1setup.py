@@ -7,13 +7,13 @@ import random
 import os
 from dotenv import load_dotenv
 
-load_dotenv()
+#load_dotenv()
 
 def create_connection():
     connection = mysql.connector.connect(
-    host = 'test-db.c3u680mys7w2.us-east-1.rds.amazonaws.com',
-    user = 'admin',
-    password = 'zip.code123!',
+    host = 'localhost',
+    user = 'timlinkous',
+    password = 'zipcode1',
     database = 'starmeter'
     )
     return connection
@@ -27,8 +27,8 @@ conn = create_connection()
 def create_user_default_table(connection):
     create_table_query = """
     CREATE TABLE IF NOT EXISTS user_default_settings (
-        user_id INT  PRIMARY KEY,
-        E1 FLOAT,AUTO_INCREMENT
+        user_id INT  PRIMARY KEY AUTO_INCREMENT,
+        E1 FLOAT,
         E2 FLOAT,
         E3 FLOAT,
         E4 FLOAT,
