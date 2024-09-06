@@ -13,7 +13,8 @@ import nbformat
 =======
 >>>>>>> 30fa1389 (updated docker file)
 import pandas as pd
-from . import UserDynamicPreferences, db
+from .models import UserDynamicPreferences
+from . import db
 
 def reset_session():
     db.session.remove()

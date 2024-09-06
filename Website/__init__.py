@@ -21,6 +21,7 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 <<<<<<< HEAD
+<<<<<<< HEAD
     app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
     socketio.init_app(app)
     db = SQLAlchemy(app)
@@ -29,6 +30,12 @@ def create_app():
     socketio.init_app(app)
     db.init_app(app)
 >>>>>>> d1a44570 (live updating chart on markets.html)
+=======
+    app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+    socketio.init_app(app)
+    db = SQLAlchemy(app)
+        
+>>>>>>> 659b17bd (dockerfile updated)
     migrate.init_app(app, db)
     
     from .routes import routes

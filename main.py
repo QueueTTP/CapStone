@@ -4,12 +4,14 @@ import eventlet
 
 eventlet.monkey_patch()
 
-
+import os
+import logging
 from Website import create_app, db, socketio
 
 
 >>>>>>> d1a44570 (live updating chart on markets.html)
 
+<<<<<<< HEAD
 eventlet.monkey_patch()
 
 import os
@@ -18,6 +20,8 @@ from Website import create_app, db, socketio
 
 
 
+=======
+>>>>>>> 659b17bd (dockerfile updated)
 # Create and configure the app
 app = create_app()
 
@@ -31,8 +35,13 @@ with app.app_context():
 
 if __name__ == "__main__":
 <<<<<<< HEAD
+<<<<<<< HEAD
     port = int(os.environ.get("PORT", 5000))
     socketio.run(app, debug=True, host='0.0.0.0', port=port, use_reloader=False)
 =======
     socketio.run(app, debug=True, host='0.0.0.0', port=5000, use_reloader=False)
 >>>>>>> d1a44570 (live updating chart on markets.html)
+=======
+    port = int(os.environ.get("PORT", 5000))
+    socketio.run(app, debug=True, host='0.0.0.0', port=port, use_reloader=False)
+>>>>>>> 659b17bd (dockerfile updated)
