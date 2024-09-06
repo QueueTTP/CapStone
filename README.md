@@ -59,12 +59,16 @@ python main.py
 This will start the Flask server, and you can view the dashboard in your browser by navigating to http://localhost:5000.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> bd771c5b (requrments & venv)
 # Create Venv
 
 python3 -m venv venv
 
 source venv/bin/activate
 
+<<<<<<< HEAD
 # Install requirements
 
 
@@ -83,12 +87,17 @@ Once the image is built, you can run the Docker container with the following com
 
 docker run -p 5000:5000 flask-app-python3.12
 
+=======
+>>>>>>> bd771c5b (requrments & venv)
 # Install From Requirments.txt
 
 pip3 install -r requirements.txt
 
+<<<<<<< HEAD
 =======
 >>>>>>> 6ee767fd (stock ticker added)
+=======
+>>>>>>> bd771c5b (requrments & venv)
 # Demo
 For a quick demo, check out our Google Slides presentation: Starmeter Presentation
 
