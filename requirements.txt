@@ -1,11 +1,11 @@
 Flask==2.0.1
-Flask-SocketIO==5.1.0
-pandas==1.3.0
+Flask-SocketIO==4.3.1  # Compatible with python-socketio 4.6.1
+python-socketio==4.6.1
+numpy
+pandas==1.3.5  # Or another version that works for your project
 plotly==5.1.0
 eventlet==0.31.0
-python-socketio==4.6.1
 SQLAlchemy==1.4.20
 setuptools==65.5.1
 distlib
-numpy
 wheel

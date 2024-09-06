@@ -1,6 +1,6 @@
-# Ignore all files with .env extension
-*.venv/
+# Ignore virtual environment folder
+venv/
+.env
 *.vscode
 README.md
-.env
 myenv
