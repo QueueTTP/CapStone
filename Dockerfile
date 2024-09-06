@@ -11,7 +11,7 @@ ENV FLASK_APP=main.py \
     DB_USER=root \
     DB_PASSWORD=new_password \
     DB_NAME=starmeter \
-    DATABASE_URL='mysql://admin:zip.code123!@test-db.c3u680mys7w2.us-east-1.rds.amazonaws.com:3306/starmeter' \
+    DATABASE_URL='mysql://admin:zip.code123%21@test-db.c3u680mys7w2.us-east-1.rds.amazonaws.com:3306/starmeter' \
     SECRET_KEY="baconandeggs"
 
 # Update and install necessary system dependencies
@@ -44,8 +44,8 @@ RUN python -m pip install --upgrade pip 'setuptools>=67' wheel
 RUN python -m pip install --no-cache-dir numpy==1.26.4
 RUN python -m pip install Flask==2.2.5 Flask-SocketIO==5.3.4 python-socketio==5.5.2
 RUN python -m pip install --prefer-binary pandas==2.0.0
-RUN python -m pip install plotly==5.15.0 eventlet==0.36.1 SQLAlchemy==2.0.10 distlib==0.3.6 wheel==0.40.0
-RUN python -m pip install Flask-Migrate==4.0.4 mysqlclient==2.1.1 nbconvert==7.8.0 python-dotenv==1.0.0
+RUN python -m pip install plotly==5.15.0 eventlet==0.36.1 SQLAlchemy==2.0.10 distlib==0.3.6 wheel==0.40.0 mysqlclient==2.1.1
+RUN python -m pip install Flask-Migrate==4.0.4 mysqlclient==2.1.1 nbconvert==7.8.0 python-dotenv==1.0.0 Flask-SQLAlchemy==3.1.1
 
 # Expose the default Flask port
 EXPOSE 5000
