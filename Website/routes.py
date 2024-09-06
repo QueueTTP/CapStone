@@ -1,6 +1,5 @@
 import time
 from flask import Blueprint, current_app, render_template
-from flask_socketio import emit
 from . import socketio
 from .functions import get_fan_counts
 import eventlet

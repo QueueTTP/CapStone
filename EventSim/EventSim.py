@@ -1,14 +1,10 @@
 import random
 import sys
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv
 import os
-import pandas as pd
-import matplotlib.pyplot as plt
 import time
 import random
-from IPython.display import clear_output, display
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from Website.models import UserDefaultSettings, UserDynamicPreferences, db
 

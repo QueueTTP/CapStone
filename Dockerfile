@@ -4,6 +4,16 @@ FROM python:3.12
 # Set environment variables to non-interactive for apt-get
 ENV DEBIAN_FRONTEND=noninteractive
 
+# Define your environment variables here
+ENV FLASK_APP=main.py \
+    FLASK_ENV=development \
+    DB_HOST=localhost \
+    DB_USER=root \
+    DB_PASSWORD=new_password \
+    DB_NAME=starmeter \
+    DATABASE_URL='mysql://admin:zip.code123!@test-db.c3u680mys7w2.us-east-1.rds.amazonaws.com:3306/starmeter' \
+    SECRET_KEY="baconandeggs"
+
 # Update and install necessary system dependencies
 RUN apt-get update && apt-get install -y \
     build-essential \

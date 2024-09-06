@@ -1,8 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-import random
-import time
-
-db = SQLAlchemy()
+from . import db
 
 class UserDefaultSettings(db.Model):
     __tablename__ = 'user_default_settings'
