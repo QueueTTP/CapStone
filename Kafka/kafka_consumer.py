@@ -62,19 +62,7 @@ def consume_events():
         connection.close()
         print('Connection closed')
 
-        
-"""     if connection.is_connected():
-        print('Connected to MySQL database')
-    
-        for message in consumer:
-            event = message.value
-            print(f"received event: {event}")
-            update_db_kafka(connection, event)
 
-            connection.close()
-            print('Connection closed')
-    else:
-        print('Connection to MySQL database failed') """
 
 if __name__ == "__main__":
     consume_events()
