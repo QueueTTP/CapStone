@@ -64,6 +64,21 @@ python3 -m venv venv
 
 source venv/bin/activate
 
+# Run Docker Container
+
+To run the Flask app inside the Docker container, follow these steps:
+
+# 1. Build the Docker Image
+Ensure that you have Docker installed and running on your machine. Use the following command to build the Docker image for your Flask app:
+
+docker build -t flask-app-python3.12 .
+This command will use the Dockerfile to create the image and tag it as flask-app-python3.12.
+
+# 2. Run the Docker Container
+Once the image is built, you can run the Docker container with the following command:
+
+docker run -p 5000:5000 flask-app-python3.12
+
 # Install From Requirments.txt
 
 pip3 install -r requirements.txt
