@@ -70,11 +70,17 @@ source venv/bin/activate
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Install requirements
 
 
 =======
 >>>>>>> 8281f828 (readme updated)
+=======
+# Install requirements
+
+
+>>>>>>> 68f22435 (requirments.txt)
 # Run Docker Container
 
 To run the Flask app inside the Docker container, follow these steps:

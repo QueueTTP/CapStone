@@ -1,9 +1,13 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 68f22435 (requirments.txt)
 Flask==2.2.5
 Flask-SocketIO==5.3.4
 python-socketio==5.5.2
 pandas==2.0.0
+<<<<<<< HEAD
 numpy==1.26.4
 plotly==5.15.0
 eventlet==0.36.1
@@ -40,3 +44,16 @@ SQLAlchemy==2.0.10  # Latest stable version supporting Python 3.12
 distlib==0.3.6  # Latest version
 wheel==0.40.0  # Required for proper wheel handling
 >>>>>>> 4e772dca (docker image created)
+=======
+numpy==1.26.4
+plotly==5.15.0
+eventlet==0.36.1
+SQLAlchemy==2.0.10
+distlib==0.3.6
+wheel==0.40.0
+setuptools>=67
+Flask-Migrate==4.0.4
+mysqlclient==2.1.1
+nbconvert==7.8.0
+python-dotenv==1.0.0
+>>>>>>> 68f22435 (requirments.txt)
