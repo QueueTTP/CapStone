@@ -71,51 +71,51 @@ event_probabilities={
 }
 
 event_descriptions = {
-    'E1': 'Nothing happen',
+    'E1': 'Editorial Article',
     'E2': 'Public appearance',
-    'E3': 'Got Award',
+    'E3': 'Wins Award',
     'E4': 'Philanthropy/donation',
-    'E5': 'New post on social media (positive)',
-    'E6': 'New post on social media (negative)',
+    'E5': 'Social media post (pos)',
+    'E6': 'Social media post (neg)',
     'E7': 'Public argument/feud',
-    'E8': 'Legal issue',
+    'E8': 'Legal issues',
     'E9': 'Poor performance',
     'E10': 'Controversial statement',
     'E11': 'Attends high profile event',
     'E12': 'Cameo appearance',
-    'E13': 'New project or franchise',
-    'E14': 'Gets married/has child',
+    'E13': 'New project and franchise',
+    'E14': 'Gets married',
     'E15': 'New social media platform',
     'E16': 'Major news story',
     'E17': 'Celebrity collaboration',
-    'E18': 'Health decline',
+    'E18': 'Health declines',
     'E19': 'Podcast appearance',
-    'E20': 'Health fitness',
+    'E20': 'Health & fitness photo',
     'E21': 'Talk show appearance',
-    'E22': 'Feature film',
+    'E22': 'New Feature film',
     'E23': 'Scandalous clothing',
     'E24': 'Bizarre fashion choice',
-    'E25': 'Mysterious post/teaser',
-    'E26': 'Book/memoir',
-    'E27': 'Candid photograph / normal day',
-    'E28': 'Request of fans',
-    'E29': 'Political alignment',
+    'E25': 'Teaser released',
+    'E26': 'Book/memoir released',
+    'E27': 'Candid public photos',
+    'E28': 'Reacts to fan requests',
+    'E29': 'Political statements',
     'SC1': 'Releases new album/tour',
     'SC2': 'Hosts SNL',
     'SC3': 'Relationship drama',
-    'SC4': 'Hit Song',
-    'SC5': 'Launching a fashion line',
-    'SD1': 'Carry torch at Olympics',
+    'SC4': 'Hit Song tops charts',
+    'SC5': 'Launches fashion line',
+    'SD1': 'Carries Olympic torch',
     'SD2': 'Music Performance',
     'SD3': 'Offensive comments',
-    'SD4': 'Newfound public friendship with Bill Gates',
+    'SD4': 'Public friendship with ...',
     'SD5': 'Featured in a new song',
-    'T1': 'Developed new suit',
-    'T2': 'Saved the world',
-    'T3': 'Become a villain',
-    'T4': 'Public appearance with iron man suit',
+    'T1': 'Develops new suit',
+    'T2': 'Saves the world',
+    'T3': 'Becomes a villain',
+    'T4': 'Wears new Iron Man suit',
     'L1': 'Losses in NBA playoffs',
-    'L2': 'Son gets drafted onto same team',
+    'L2': 'Son drafted same team',
     'L3': 'Wins Olympic Gold Medal',
     'L4': 'Releases new shoe/product',
     'L5': 'Gets Injured',
@@ -267,53 +267,50 @@ def get_total_fans(connection):
 def log_event(connection, event_date, event, associated_celebrity):
     cursor = connection.cursor()
     
-    # Get the current fan count for all celebrities
+    # Get the current fan count for the associated celebrity
     fan_counts = get_total_fans(connection)
+    fan_count = fan_counts[associated_celebrity]
     
     insert_query = """
     INSERT INTO event_log (event_date, celebrity, event_description, current_fan_count)
     VALUES (%s, %s, %s, %s);
     """
     
-    for celebrity, fan_count in fan_counts.items():
-        if celebrity == associated_celebrity:
-            event_desc = event_descriptions[event]
-        else:
-            event_desc = "No direct event"
-        
-        cursor.execute(insert_query, (
-            event_date, 
-            celebrity,
-            event_desc,
-            fan_count
-        ))
+    event_desc = event_descriptions[event]
+    
+    cursor.execute(insert_query, (
+        event_date, 
+        associated_celebrity,
+        event_desc,
+        fan_count
+    ))
     
     connection.commit()
-    print(f"Event {event} logged for all celebrities. Associated celebrity: {associated_celebrity}")
-    print(f"Current fan counts: {fan_counts}")
+    print(f"Event {event} logged for {associated_celebrity}.")
+    print(f"Current fan count for {associated_celebrity}: {fan_count}")
 
 def run_event_sum(connection, start_date, num_days=180):
     for day in range(num_days):
         current_date = start_date + datetime.timedelta(days=day)
         print(f"Simulating day {day+1}... ({current_date})")
 
-        event = choose_event()
-        event_description = event_descriptions.get(event, "Unknown event")
-        associated_celebrity = random.choice(celebrities)
-        print(f"Event {event} occurred ({event_description}), associated with {associated_celebrity}")
+        for celebrity in celebrities:
+            event = choose_event()
+            event_description = event_descriptions.get(event, "Unknown event")
+            print(f"Event {event} occurred ({event_description}), associated with {celebrity}")
 
-        if event in category_1_events:
-            situation_category_1_event(conn, event, associated_celebrity)
-        elif event in category_2_events:
-            situation_category_2_event(conn, event, associated_celebrity)
-        elif event in category_3_events:
-            situation_category_3_event(conn, event, associated_celebrity)
-        elif event in category_4_events:
-            situation_category_4_event(conn, event, associated_celebrity)
+            if event in category_1_events:
+                situation_category_1_event(conn, event, celebrity)
+            elif event in category_2_events:
+                situation_category_2_event(conn, event, celebrity)
+            elif event in category_3_events:
+                situation_category_3_event(conn, event, celebrity)
+            elif event in category_4_events:
+                situation_category_4_event(conn, event, celebrity)
 
-        log_event(connection, current_date, event, associated_celebrity)
+            log_event(connection, current_date, event, celebrity)
 
-        time.sleep(1)
+        time.sleep(1)  # Sleep for 1 second after processing all celebrities for a day
 
     print("Event simulation complete.")
 

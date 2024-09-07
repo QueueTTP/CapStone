@@ -23,12 +23,10 @@ def create_event_log_table(connection):
         event_date DATE,
         celebrity VARCHAR(50),
         event_description VARCHAR(255),
-        fans_gained INT,
-        fans_lost INT,
         current_fan_count INT
     );
     """
-    
+
     cursor = connection.cursor()
     cursor.execute(create_table_query)
     connection.commit()
