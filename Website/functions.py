@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
 import pandas as pd
 from .models import UserDynamicPreferences
 from . import db
@@ -5,6 +7,24 @@ from . import db
 def reset_session():
     db.session.remove()
     
+=======
+from nbconvert import HTMLExporter
+import nbformat
+=======
+>>>>>>> 30fa1389 (updated docker file)
+import pandas as pd
+from .models import UserDynamicPreferences
+from . import db
+
+def reset_session():
+    db.session.remove()
+<<<<<<< HEAD
+    db.session.configure(bind=db.engine)  # Rebind the engine if necessary
+
+>>>>>>> d1a44570 (live updating chart on markets.html)
+=======
+    
+>>>>>>> 30fa1389 (updated docker file)
 def get_fan_counts():
     reset_session()  # Reset the session to avoid stale data
     
