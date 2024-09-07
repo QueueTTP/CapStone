@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Real-Time Fan Count of Celebrities</h1>
+
+<!-- Stock ticker for real-time fan counts -->
+<div id="fan-count-ticker" style="width: 100%; font-size: 1.5rem; white-space: nowrap; overflow: hidden; background-color: #f8f9fa; padding: 10px; border: 1px solid #ccc; margin-bottom: 20px;">
+    <marquee behavior="scroll" direction="left" id="fan-count-marquee" style="width: 100%; display: inline-block;">
+        <!-- Marquee content will be updated dynamically via JavaScript -->
+        Tracking celebrities...
+    </marquee>
+</div>
+
+<div id="fan-count-plot" style="width: 100%; height: 600px;"></div>
+
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+
+<script type="text/javascript">
+    // Connect to the Flask-SocketIO server
+    var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+    // Log when connected
+    socket.on('connect', function() {
+        console.log('Connected to WebSocket!');
+    });
+
+    // Initial empty data for Plotly
+    var plotData = {
+        'Sabrina Carpenter': {x: [], y: [], name: 'Sabrina Carpenter', mode: 'lines'},
+        'Snoop Dogg': {x: [], y: [], name: 'Snoop Dogg', mode: 'lines'},
+        'Tony Stark': {x: [], y: [], name: 'Tony Stark', mode: 'lines'},
+        'LeBron James': {x: [], y: [], name: 'LeBron James', mode: 'lines'}
+    };
+
+    // Create the initial empty plot
+    Plotly.newPlot('fan-count-plot', Object.values(plotData));
+
+    // Listen for 'updateFanCounts' event from the server
+    socket.on('updateFanCounts', function(fanCounts) {
+        console.log('Received fan counts:', fanCounts);  // Debug: log the received data
+        
+        var currentTime = new Date().getTime() / 1000;  // Time in seconds
+
+        var tickerText = "";  // To update the stock ticker text
+
+        fanCounts.forEach(function(fanCount) {
+            var celebrity = fanCount.current_favorite;
+            var count = fanCount.fan_count;
+
+            // Make sure count is non-negative before adding it
+            if (count >= 0 && plotData[celebrity]) {
+                // Update data for the celebrity
+                plotData[celebrity].x.push(currentTime);
+                plotData[celebrity].y.push(count);
+
+                // Extend the traces with the new data
+                Plotly.extendTraces('fan-count-plot', {
+                    x: [[currentTime]],
+                    y: [[count]]
+                }, [Object.keys(plotData).indexOf(celebrity)]);
+
+                // Add to the ticker text
+                tickerText += celebrity + ": " + count + " fans | ";
+            }
+        });
+
+        // Update the stock ticker text
+        document.getElementById('fan-count-marquee').innerHTML = tickerText;
+    });
+</script>
+{% endblock %}
