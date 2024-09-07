@@ -1,4 +1,5 @@
 import mysql.connector
+from mysql.connector import Error
 from dotenv import load_dotenv
 import os
 
@@ -18,13 +19,13 @@ def create_connection():
 def create_event_log_table(connection):
     create_table_query = """
     CREATE TABLE IF NOT EXISTS event_log (
-    event_id INT AUTO_INCREMENT PRIMARY KEY,
-    event_date DATE,
-    celebrity VARCHAR(50),
-    event_description VARCHAR(255),
-    fans_gained INT,
-    fans_lost INT,
-    current_fan_count INT
+        event_id INT AUTO_INCREMENT PRIMARY KEY,
+        event_date DATE,
+        celebrity VARCHAR(50),
+        event_description VARCHAR(255),
+        fans_gained INT,
+        fans_lost INT,
+        current_fan_count INT
     );
     """
     
