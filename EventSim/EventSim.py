@@ -313,7 +313,7 @@ def run_event_sum(connection, start_date, num_days=180):
 
         log_event(connection, current_date, event, associated_celebrity)
 
-        time.sleep(10)
+        time.sleep(1)
 
     print("Event simulation complete.")
 
