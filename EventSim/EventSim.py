@@ -132,11 +132,28 @@ category_4_events = {'SC1', 'SC2', 'SC3', 'SC4', 'SC5', 'SD1', 'SD2', 'SD3', 'SD
 
 celebrities = ['Sabrina Carpenter', 'Snoop Dogg', 'Tony Stark', 'LeBron James']
 
-def choose_event():
-    events=list(event_probabilities.keys())
-    probabilities = list(event_probabilities.values())
-    event = random.choices(events,probabilities)[0]
-    return event
+# updated to include unique events for only those celebs
+def choose_event(celebrity):
+    if celebrity == 'Sabrina Carpenter':
+        events = list(event_probabilities.keys())
+        events = [e for e in events if e.startswith('E') or e.startswith('SC')]
+    elif celebrity == 'Snoop Dogg':
+        events = list(event_probabilities.keys())
+        events = [e for e in events if e.startswith('E') or e.startswith('SD')]
+    elif celebrity == 'Tony Stark':
+        events = list(event_probabilities.keys())
+        events = [e for e in events if e.startswith('E') or e.startswith('T')]
+    elif celebrity == 'LeBron James':
+        events = list(event_probabilities.keys())
+        events = [e for e in events if e.startswith('E') or e.startswith('L')]
+    else:
+        events = [e for e in event_probabilities.keys() if e.startswith('E')]
+    
+    probabilities = [event_probabilities[e] for e in events]
+    total_prob = sum(probabilities)
+    normalized_probabilities = [p / total_prob for p in probabilities]
+    
+    return random.choices(events, normalized_probabilities)[0]
 
 
 def reset_probability_to_default(connection,user_id):
@@ -295,24 +312,24 @@ def run_event_sum(connection, start_date, num_days=180):
         print(f"Simulating day {day+1}... ({current_date})")
 
         for celebrity in celebrities:
-            event = choose_event()
+            event = choose_event(celebrity)
             event_description = event_descriptions.get(event, "Unknown event")
             print(f"Event {event} occurred ({event_description}), associated with {celebrity}")
 
-            if event in category_1_events:
-                situation_category_1_event(conn, event, celebrity)
-            elif event in category_2_events:
-                situation_category_2_event(conn, event, celebrity)
-            elif event in category_3_events:
-                situation_category_3_event(conn, event, celebrity)
-            elif event in category_4_events:
+            if event.startswith('E'):
+                if event in category_1_events:
+                    situation_category_1_event(conn, event, celebrity)
+                elif event in category_2_events:
+                    situation_category_2_event(conn, event, celebrity)
+                elif event in category_3_events:
+                    situation_category_3_event(conn, event, celebrity)
+            # unique events
+            elif event.startswith(('SC', 'SD', 'T', 'L')):
                 situation_category_4_event(conn, event, celebrity)
 
             log_event(connection, current_date, event, celebrity)
 
         time.sleep(1)  # Sleep for 1 second after processing all celebrities for a day
-
-    print("Event simulation complete.")
 
 if __name__ == "__main__":
     conn = create_connection()
