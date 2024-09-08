@@ -6,7 +6,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # Define your environment variables here
 ENV FLASK_APP=main.py \
-    FLASK_ENV=development \
+    FLASK_DEBUG=1 \
     DB_HOST=localhost \
     DB_USER=root \
     DB_PASSWORD=new_password \
