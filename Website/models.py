@@ -1,8 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-import random
-import time
-
-db = SQLAlchemy()
+from . import db
 
 class UserDefaultSettings(db.Model):
     __tablename__ = 'user_default_settings'
@@ -114,3 +111,5 @@ class UserDynamicPreferences(db.Model):
     L6 = db.Column(db.Float)
 
     user_default = db.relationship('UserDefaultSettings', backref=db.backref('dynamic_preferences', lazy=True))
+    
+    

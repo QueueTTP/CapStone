@@ -9,14 +9,15 @@
         <p>Your one-stop destination for tracking the popularity of your favorite stars!</p>
     </header>
 
-    <section class="features">
+    <!-- Features Section with indentation -->
+    <section class="features ml-md-3">  <!-- Added ml-md-3 for indentation -->
         <div class="row text-center">
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <i class="fa fa-star fa-4x"></i>
                 <h3>Star Rankings</h3>
                 <p>Discover the most popular stars in real-time. Stay updated on trending celebrities across various fields.</p>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <i class="fa fa-chart-line fa-4x"></i>
                 <h3>Trending Now</h3>
                 <p>Check out what's trending today and who is making waves in the world of entertainment, sports, and more!</p>
@@ -24,6 +25,7 @@
         </div>
     </section>
 
+    <!-- How It Works Section -->
     <section class="how-it-works">
         <h2 class="text-center">How It Works</h2>
         <p>At Starmeter, we use sophisticated algorithms to calculate the popularity of celebrities based on a variety of data sources such as social media buzz, news appearances, and more.</p>
@@ -32,6 +34,7 @@
         </div>
     </section>
 
+    <!-- Call-to-Action Section -->
     <section class="cta text-center">
         <h2>Stay Connected</h2>
         <p>Follow us on social media and stay updated with the latest trends and rankings!</p>
@@ -44,4 +47,11 @@
         </ul>
     </section>
 </div>
+
+<style>
+    /* Indent the features section */
+    .features {
+        padding-left: 50px; /* Adjust the value to change the level of indentation */
+    }
+</style>
 {% endblock %}
