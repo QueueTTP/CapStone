@@ -132,11 +132,28 @@ category_4_events = {'SC1', 'SC2', 'SC3', 'SC4', 'SC5', 'SD1', 'SD2', 'SD3', 'SD
 
 celebrities = ['Sabrina Carpenter', 'Snoop Dogg', 'Tony Stark', 'LeBron James']
 
-def choose_event():
-    events=list(event_probabilities.keys())
-    probabilities = list(event_probabilities.values())
-    event = random.choices(events,probabilities)[0]
-    return event
+# updated to include unique events for only those celebs
+def choose_event(celebrity):
+    if celebrity == 'Sabrina Carpenter':
+        events = list(event_probabilities.keys())
+        events = [e for e in events if e.startswith('E') or e.startswith('SC')]
+    elif celebrity == 'Snoop Dogg':
+        events = list(event_probabilities.keys())
+        events = [e for e in events if e.startswith('E') or e.startswith('SD')]
+    elif celebrity == 'Tony Stark':
+        events = list(event_probabilities.keys())
+        events = [e for e in events if e.startswith('E') or e.startswith('T')]
+    elif celebrity == 'LeBron James':
+        events = list(event_probabilities.keys())
+        events = [e for e in events if e.startswith('E') or e.startswith('L')]
+    else:
+        events = [e for e in event_probabilities.keys() if e.startswith('E')]
+    
+    probabilities = [event_probabilities[e] for e in events]
+    total_prob = sum(probabilities)
+    normalized_probabilities = [p / total_prob for p in probabilities]
+    
+    return random.choices(events, normalized_probabilities)[0]
 
 
 def reset_probability_to_default(connection,user_id):
@@ -267,55 +284,52 @@ def get_total_fans(connection):
 def log_event(connection, event_date, event, associated_celebrity):
     cursor = connection.cursor()
     
-    # Get the current fan count for all celebrities
+    # Get the current fan count for the associated celebrity
     fan_counts = get_total_fans(connection)
+    fan_count = fan_counts[associated_celebrity]
     
     insert_query = """
     INSERT INTO event_log (event_date, celebrity, event_description, current_fan_count)
     VALUES (%s, %s, %s, %s);
     """
     
-    for celebrity, fan_count in fan_counts.items():
-        if celebrity == associated_celebrity:
-            event_desc = event_descriptions[event]
-        else:
-            event_desc = "......"
-        
-        cursor.execute(insert_query, (
-            event_date, 
-            celebrity,
-            event_desc,
-            fan_count
-        ))
+    event_desc = event_descriptions[event]
+    
+    cursor.execute(insert_query, (
+        event_date, 
+        associated_celebrity,
+        event_desc,
+        fan_count
+    ))
     
     connection.commit()
-    print(f"Event {event} logged for all celebrities. Associated celebrity: {associated_celebrity}")
-    print(f"Current fan counts: {fan_counts}")
+    print(f"Event {event} logged for {associated_celebrity}.")
+    print(f"Current fan count for {associated_celebrity}: {fan_count}")
 
 def run_event_sum(connection, start_date, num_days=180):
     for day in range(num_days):
         current_date = start_date + datetime.timedelta(days=day)
         print(f"Simulating day {day+1}... ({current_date})")
 
-        event = choose_event()
-        event_description = event_descriptions.get(event, "Unknown event")
-        associated_celebrity = random.choice(celebrities)
-        print(f"Event {event} occurred ({event_description}), associated with {associated_celebrity}")
+        for celebrity in celebrities:
+            event = choose_event(celebrity)
+            event_description = event_descriptions.get(event, "Unknown event")
+            print(f"Event {event} occurred ({event_description}), associated with {celebrity}")
 
-        if event in category_1_events:
-            situation_category_1_event(conn, event, associated_celebrity)
-        elif event in category_2_events:
-            situation_category_2_event(conn, event, associated_celebrity)
-        elif event in category_3_events:
-            situation_category_3_event(conn, event, associated_celebrity)
-        elif event in category_4_events:
-            situation_category_4_event(conn, event, associated_celebrity)
+            if event.startswith('E'):
+                if event in category_1_events:
+                    situation_category_1_event(conn, event, celebrity)
+                elif event in category_2_events:
+                    situation_category_2_event(conn, event, celebrity)
+                elif event in category_3_events:
+                    situation_category_3_event(conn, event, celebrity)
+            # unique events
+            elif event.startswith(('SC', 'SD', 'T', 'L')):
+                situation_category_4_event(conn, event, celebrity)
 
-        log_event(connection, current_date, event, associated_celebrity)
+            log_event(connection, current_date, event, celebrity)
 
-        time.sleep(1)
-
-    print("Event simulation complete.")
+        time.sleep(1)  # Sleep for 1 second after processing all celebrities for a day
 
 if __name__ == "__main__":
     conn = create_connection()
