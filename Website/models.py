@@ -114,4 +114,14 @@ class UserDynamicPreferences(db.Model):
 
     user_default = db.relationship('UserDefaultSettings', backref=db.backref('dynamic_preferences', lazy=True))
     
+class EventLog(db.Model):
+    __tablename__ = 'event_log'
+
+    event_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    event_date = db.Column(db.Date, nullable=False)
+    celebrity = db.Column(db.String(50), nullable=False)
+    event_description = db.Column(db.String(255), nullable=False)
+    current_fan_count = db.Column(db.Integer, nullable=False)
+
+    
     

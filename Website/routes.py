@@ -29,6 +29,7 @@ def background_fan_count_task(app):
     """Background task to emit fan counts every 5 seconds."""
     with app.app_context():  # Ensure the task runs inside the app context
         while True:
+
             # Fetch fan counts from the database
             fan_counts = get_fan_counts().to_dict(orient='records')
 
