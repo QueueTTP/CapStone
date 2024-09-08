@@ -5,6 +5,7 @@ from flask_migrate import Migrate
 from flask_socketio import SocketIO
 from dotenv import load_dotenv
 import os
+from sqlalchemy import text
 
 load_dotenv()
 
@@ -22,7 +23,7 @@ def create_app():
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
     socketio.init_app(app)
-    db = SQLAlchemy(app)
+    db.init_app(app)
         
     migrate.init_app(app, db)
     

@@ -1,6 +1,8 @@
 from flask_sqlalchemy import SQLAlchemy
 from . import db
 
+
+
 class UserDefaultSettings(db.Model):
     __tablename__ = 'user_default_settings'
     
