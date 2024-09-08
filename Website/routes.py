@@ -1,7 +1,7 @@
 import time
 from flask import Blueprint, current_app, render_template
 from . import socketio
-from .functions import get_fan_counts
+from .functions import get_fan_counts, fetch_and_calculate_changes
 import eventlet
 
 # Ensure eventlet is monkey patched for concurrency
@@ -38,6 +38,13 @@ def background_fan_count_task(app):
 
             # Emit data to all connected clients
             socketio.emit('updateFanCounts', fan_counts)
+            
+            # Fetch event log changes
+            event_log_changes = fetch_and_calculate_changes().to_dict(orient='records')
+
+            # Emit event log data to all connected clients
+            socketio.emit('updateEventLog', event_log_changes)
+
 
             # Sleep for 5 seconds before the next update
             time.sleep(5)  # Emit data every 5 seconds

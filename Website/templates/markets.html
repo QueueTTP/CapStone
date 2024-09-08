@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Real-Time Fan Count of Celebrities</h1>
+<h1>Real-Time Fan Count of Celebrities and Event Logs</h1>
 
 <!-- Stock ticker for real-time fan counts -->
 <div id="fan-count-ticker" style="width: 100%; font-size: 1.5rem; white-space: nowrap; overflow: hidden; background-color: #f8f9fa; padding: 10px; border: 1px solid #ccc; margin-bottom: 20px;">
@@ -11,7 +11,16 @@
     </marquee>
 </div>
 
+<!-- Fan count plot for real-time updates -->
 <div id="fan-count-plot" style="width: 100%; height: 600px;"></div>
+
+<!-- Stock ticker for real-time event logs -->
+<div id="event-log-ticker" style="width: 100%; font-size: 1.5rem; white-space: nowrap; overflow: hidden; background-color: #f8f9fa; padding: 10px; border: 1px solid #ccc; margin-bottom: 20px;">
+    <marquee behavior="scroll" direction="left" id="event-log-marquee" style="width: 100%; display: inline-block;">
+        <!-- Event log marquee content will be updated dynamically via JavaScript -->
+        Fetching event log updates...
+    </marquee>
+</div>
 
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
@@ -67,6 +76,26 @@
 
         // Update the stock ticker text
         document.getElementById('fan-count-marquee').innerHTML = tickerText;
+    });
+
+    // Listen for 'updateEventLog' event from the server
+    socket.on('updateEventLog', function(eventLog) {
+        console.log('Received event log:', eventLog);  // Debug: log the received data
+
+        var eventLogText = "";  // To update the event log ticker text
+
+        eventLog.forEach(function(event) {
+            var eventDate = new Date(event.event_date).toLocaleDateString();
+            var celebrity = event.celebrity;
+            var description = event.event_description;
+            var change = event.fan_count_change > 0 ? `+${event.fan_count_change}` : event.fan_count_change;
+
+            // Append event information to the ticker text
+            eventLogText += `${eventDate} - ${celebrity}: ${description} (${change} fans) | `;
+        });
+
+        // Update the event log ticker text
+        document.getElementById('event-log-marquee').innerHTML = eventLogText;
     });
 </script>
 {% endblock %}
