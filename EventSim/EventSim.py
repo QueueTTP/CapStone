@@ -2,16 +2,14 @@ import os
 import time
 import mysql.connector
 import random
-from dotenv import load_dotenv
 
-load_dotenv()
 
 def create_connection():
     connection = mysql.connector.connect(
-    host = os.getenv('DB_HOST'),
-    user = os.getenv('DB_USER'),
-    password = os.getenv('DB_PASSWORD'),
-    database = os.getenv('DB_NAME')
+    host = 'test-db.c3u680mys7w2.us-east-1.rds.amazonaws.com',
+    user = 'admin',
+    password = 'zip.code123!',
+    database = 'starmeter'
     )
     return connection
 
@@ -154,7 +152,7 @@ def reset_probability_to_default(connection,user_id):
     cursor.execute(update_query, (*default_probs, user_id))
     connection.commit()
 
-    print(f"User {user_id} probabilities reset to default")
+    #print(f"User {user_id} probabilities reset to default")
 
 
 def situation_category_1_event(connection, event, associated_celebrity):
@@ -175,7 +173,7 @@ def situation_category_1_event(connection, event, associated_celebrity):
             update_query = "update user_dynamic_preferences set current_favorite = %s where user_id = %s"
             cursor.execute(update_query, (new_favorite, user_id))
             reset_probability_to_default(connection, user_id)
-            print(f"User {user_id} changed favorite to {associated_celebrity} due to event {event_descriptions[event]}")
+            #print(f"User {user_id} changed favorite to {associated_celebrity} due to event {event_descriptions[event]}")
 
     connection.commit()
 
@@ -197,7 +195,7 @@ def situation_category_2_event(connection, event, associated_celebrity):
             update_query = "UPDATE user_dynamic_preferences SET current_favorite = %s WHERE user_id = %s"
             cursor.execute(update_query, (new_favorite, user_id))
             reset_probability_to_default(connection, user_id)
-            print(f"User {user_id} changed favorite from {associated_celebrity} to {new_favorite} due to event {event_descriptions[event]}")
+            #print(f"User {user_id} changed favorite from {associated_celebrity} to {new_favorite} due to event {event_descriptions[event]}")
 
     connection.commit()
 
@@ -218,16 +216,16 @@ def situation_category_3_event(connection, event, associated_celebrity):
             update_query = "UPDATE user_dynamic_preferences SET current_favorite = %s WHERE user_id = %s"
             cursor.execute(update_query, (new_favorite, user_id))
             reset_probability_to_default(connection, user_id)
-            print(f"User {user_id} changed favorite from {associated_celebrity} to {new_favorite} due to event {event}")
+            #print(f"User {user_id} changed favorite from {associated_celebrity} to {new_favorite} due to event {event}")
         else:
             new_prob = min(event_prob + 0.15, 1.0)
             update_prob_query = f"UPDATE user_dynamic_preferences SET {event} = %s WHERE user_id = %s"
             cursor.execute(update_prob_query, (new_prob, user_id))
-            print(f"User {user_id}'s probability for event {event_descriptions[event]} increased to {new_prob}")
+            #print(f"User {user_id}'s probability for event {event_descriptions[event]} increased to {new_prob}")
 
     connection.commit()
     
-def stuation_category_4_event(connection, event, associated_celebrity):
+def situation_category_4_event(connection, event, associated_celebrity):
     cursor = connection.cursor()
 
     select_query = f"SELECT user_id, current_favorite, {event} FROM user_dynamic_preferences WHERE current_favorite = %s"
@@ -244,8 +242,9 @@ def stuation_category_4_event(connection, event, associated_celebrity):
             update_query = "UPDATE user_dynamic_preferences SET current_favorite = %s WHERE user_id = %s"
             cursor.execute(update_query, (new_favorite, user_id))
             reset_probability_to_default(connection, user_id)
-            print(f"User {user_id} changed favorite from {associated_celebrity} to {new_favorite} due to event {event}")
+            #print(f"User {user_id} changed favorite from {associated_celebrity} to {new_favorite} due to event {event}")
 
+        connection.commit()
 
 def run_event_sum(connection, num_days = (6*30)):
     for day in range(num_days):
@@ -275,4 +274,4 @@ if __name__ == "__main__":
         conn.close()
         print("Database connection closed")
     else:
-        print("Connection failed")
+        print("Connection failed") 
