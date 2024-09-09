@@ -85,13 +85,14 @@
         var eventLogText = "";  // To update the event log ticker text
 
         eventLog.forEach(function(event) {
-            var eventDate = new Date(event.event_date).toLocaleDateString();
-            var celebrity = event.celebrity;
-            var description = event.event_description;
-            var change = event.fan_count_change > 0 ? `+${event.fan_count_change}` : event.fan_count_change;
+            // Extract data from the event log
+            var eventDate = new Date(event.event_date).toLocaleDateString();  // Format the date
+            var celebrity = event.celebrity;  // Celebrity name
+            var description = event.event_description;  // Event description
+            var fanCount = event.current_fan_count;  // Current fan count for this event
 
             // Append event information to the ticker text
-            eventLogText += `${eventDate} - ${celebrity}: ${description} (${change} fans) | `;
+            eventLogText += `${eventDate} - ${celebrity}: ${description} (Fans: ${fanCount}) | `;
         });
 
         // Update the event log ticker text

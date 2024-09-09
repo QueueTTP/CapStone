@@ -122,6 +122,3 @@ class EventLog(db.Model):
     celebrity = db.Column(db.String(50), nullable=False)
     event_description = db.Column(db.String(255), nullable=False)
     current_fan_count = db.Column(db.Integer, nullable=False)
-
-    
-    

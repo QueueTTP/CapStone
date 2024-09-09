@@ -7,7 +7,7 @@ import sys
 import os
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from EventSim import EventSim
+from EventSim import EventSimSQLA2
 
 # create a producer object
 producer = KafkaProducer(bootstrap_servers='localhost:9092',
@@ -24,9 +24,9 @@ def run_event_sim_kafka(num_days = 180):
     for day in range(num_days):
         print(f"Simulating Day: {day+1}...")
 
-        event = EventSim.choose_event()
-        event_description = EventSim.event_descriptions.get(event,"Unknown Event")
-        associated_celebrity = random.choice(EventSim.celebrities)
+        event = EventSimSQLA2.choose_event()
+        event_description = EventSimSQLA2.event_descriptions.get(event,"Unknown Event")
+        associated_celebrity = random.choice(EventSimSQLA2.celebrities)
 
         event_data = {'event': event,
                       'event_description': event_description,

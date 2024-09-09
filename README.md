@@ -68,8 +68,6 @@ source venv/bin/activate
 
 pip install -r requirements.txt
 
-
-
 # Run Docker Container
 
 To run the Flask app inside the Docker container, follow these steps:
@@ -91,9 +89,6 @@ pip3 install -r requirements.txt
 
 # Demo
 For a quick demo, check out our Google Slides presentation: Starmeter Presentation
-
-# Contributing
-We welcome contributions! Please read our CONTRIBUTING.md for more information on how to get involved.
 
 # License
 This project is licensed under the MIT License - see the LICENSE file for details.

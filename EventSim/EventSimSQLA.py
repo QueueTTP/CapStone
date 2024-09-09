@@ -1,3 +1,7 @@
+from datetime import date
+import eventlet
+eventlet.monkey_patch()
+
 import random
 import sys
 from flask import Flask
@@ -6,7 +10,7 @@ import os
 import time
 import random
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from Website.models import UserDefaultSettings, UserDynamicPreferences, db
+from Website.models import UserDefaultSettings, UserDynamicPreferences, EventLog, db
 
 # Load environment variables from the .env file
 load_dotenv()
@@ -67,6 +71,32 @@ def choose_event():
     event = random.choices(events, probabilities)[0]
     return event
 
+def get_current_fan_count(celebrity):
+    """Query to get the current fan count for the celebrity."""
+    count = db.session.query(db.func.count(UserDynamicPreferences.user_id)).filter_by(current_favorite=celebrity).scalar()
+    return count if count else 0
+
+def log_event(event, event_description, associated_celebrity, day):
+    """Log the event details to the EventLog table and console."""
+    print(f"Simulating day {day+1}...", flush=True)  # Force flush the output to console
+    print(f"Event {event} occurred ({event_description}), associated with {associated_celebrity}", flush=True)
+
+    # Fetch the current fan count for the associated celebrity
+    current_fan_count = get_current_fan_count(associated_celebrity)
+
+    # Insert the event into the EventLog table
+    new_event = EventLog(
+        event_date=date.today(),
+        celebrity=associated_celebrity,
+        event_description=event_description,
+        current_fan_count=current_fan_count
+    )
+    db.session.add(new_event)
+    db.session.commit()
+
+    print(f"Logged event for {associated_celebrity} on {date.today()} with {current_fan_count} fans.", flush=True)
+
+
 def reset_probability_to_default(user_id):
     """Reset user probabilities in `user_dynamic_preferences` to the defaults."""
     user_default = UserDefaultSettings.query.get(user_id)
@@ -77,7 +107,6 @@ def reset_probability_to_default(user_id):
             for field in event_probabilities.keys():
                 setattr(user_dynamic, field, getattr(user_default, field))
             db.session.commit()
-            print(f"User {user_id}'s probabilities reset to default.")
         else:
             print(f"No dynamic preferences found for user {user_id}.")
     else:
@@ -94,8 +123,7 @@ def situation_category_1_event(event, associated_celebrity):
             new_favorite = random.choice(celebrities)
             user.current_favorite = new_favorite
             reset_probability_to_default(user.user_id)
-            print(f"User {user.user_id} changed favorite to {associated_celebrity} due to event {event_descriptions[event]}")
-
+            
     db.session.commit()
 
 def situation_category_2_event(event, associated_celebrity):
@@ -108,7 +136,6 @@ def situation_category_2_event(event, associated_celebrity):
             new_favorite = random.choice([celeb for celeb in celebrities if celeb != associated_celebrity])
             user.current_favorite = new_favorite
             reset_probability_to_default(user.user_id)
-            print(f"User {user.user_id} changed favorite from {associated_celebrity} to {new_favorite} due to event {event_descriptions[event]}")
 
     db.session.commit()
 
@@ -122,23 +149,20 @@ def situation_category_3_event(event, associated_celebrity):
             new_favorite = random.choice([celeb for celeb in celebrities if celeb != associated_celebrity])
             user.current_favorite = new_favorite
             reset_probability_to_default(user.user_id)
-            print(f"User {user.user_id} changed favorite from {associated_celebrity} to {new_favorite} due to event {event}")
         else:
             new_prob = min(event_prob + 0.15, 1.0)
             setattr(user, event, new_prob)
-            print(f"User {user.user_id}'s probability for event {event_descriptions[event]} increased to {new_prob}")
 
     db.session.commit()
 
-# Main Simulation Function
 def run_event_sum(num_days=180):
     for day in range(num_days):
-        print(f"Simulating day {day+1}...")
-
         event = choose_event()
         event_description = event_descriptions.get(event, "Unknown event")
         associated_celebrity = random.choice(celebrities)
-        print(f"Event {event} occurred ({event_description}), associated with {associated_celebrity}")
+
+        # Log the event with the new logging function
+        log_event(event, event_description, associated_celebrity, day)
 
         if event in category_1_events:
             situation_category_1_event(event, associated_celebrity)
