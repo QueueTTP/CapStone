@@ -5,3 +5,5 @@ README.md
 .env
 mysql-connector-j-9.0.0
 mysql-connector-j-9.0.0.tar.gz
+StarmeterSparkLog copy.ipynb
+pinecone.py
