@@ -12,7 +12,7 @@
 </div>
 
 <!-- Fan count plot for real-time updates -->
-<div id="fan-count-plot" style="width: 100%; height: 600px;"></div>
+<div id="fan-count-plot" style="width: 100%; height: 800px;"></div>
 
 <!-- Stock ticker for real-time event logs -->
 <div id="event-log-ticker" style="width: 100%; font-size: 1.5rem; white-space: nowrap; overflow: hidden; background-color: #f8f9fa; padding: 10px; border: 1px solid #ccc; margin-bottom: 20px;">
@@ -42,8 +42,22 @@
         'LeBron James': {x: [], y: [], name: 'LeBron James', mode: 'lines'}
     };
 
+    var layout = {
+        autosize: true,
+        margin: {
+          l: 100,
+          r: 50,
+          b: 150,
+          t: 75,
+          pad: 4
+        },
+        font: {
+            size: 24
+        },
+      };
+
     // Create the initial empty plot
-    Plotly.newPlot('fan-count-plot', Object.values(plotData));
+    Plotly.newPlot('fan-count-plot', Object.values(plotData), layout);
 
     // Listen for 'updateFanCounts' event from the server
     socket.on('updateFanCounts', function(fanCounts) {
