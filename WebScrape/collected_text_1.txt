@@ -1,0 +1,1817 @@
+import pyautogui
+import pyperclip
+import time
+from wordcloud import WordCloud
+import matplotlib.pyplot as plt
+import os
+
+# Function to copy text from the active Chrome tab
+def copy_text_from_tab():
+    # Select all text (Command+A for Mac)
+    pyautogui.hotkey('command', 'a')
+    time.sleep(2)  # Small delay to ensure action is registered
+    # Copy the selected text (Command+C for Mac)
+    pyautogui.hotkey('command', 'c')
+    time.sleep(2)  # Wait for clipboard to update
+    # Get text from clipboard
+    return pyperclip.paste()
+
+# Function to generate a unique filename if the file already exists
+def get_unique_filename(base_name):
+    counter = 1
+    filename = f"{base_name}.txt"
+    while os.path.exists(filename):
+        filename = f"{base_name}_{counter}.txt"
+        counter += 1
+    return filename
+
+# Define words to ignore in the word cloud
+ignore_words = {
+    'the', 'and', 'to', 'of', 'a', 'in', 'that', 'it', 'is', 'was', 'i', 'for', 'on', 
+    'you', 'he', 'with', 'as', 'at', 'his', 'by', 'an', 'be', 'this', 'which', 'or', 
+    'from', 'but', 'not', 'are', 'they', 'we', 'all', 'can', 'one', 'your', 'their', 
+    'has', 'more', 'have', 'will', 'if', 'about', 'no', 'my', 'so', 'what'
+}
+
+# Initialize an empty string to accumulate text from all tabs
+all_text = ""
+
+# Number of tabs you want to process
+num_tabs = 11  # Set to the actual number of tabs you have open
+
+# Ensure Chrome is active window before running the loop
+print("Switch to Chrome and ensure it is the active window. You have 5 seconds...")
+time.sleep(5)
+
+# Iterate over each tab to grab the content
+for i in range(num_tabs):
+    # Copy text from the current tab
+    tab_text = copy_text_from_tab()
+    all_text += tab_text + "\n"
+    # Switch to the next tab (Command + Option + Right Arrow)
+    pyautogui.hotkey('command', 'option', 'right')  # Adjust if needed
+    time.sleep(2)  # Wait a moment to switch tabs
+
+# Save all text to a unique file
+filename = get_unique_filename('collected_text')
+with open(filename, 'w', encoding='utf-8') as f:
+    f.write(all_text)
+
+# Generate and display the word cloud, ignoring specified words
+wordcloud = WordCloud(width=1500, height=900, background_color='white', stopwords=ignore_words).generate(all_text)
+
+plt.figure(figsize=(12, 6))
+plt.imshow(wordcloud, interpolation='bilinear')
+plt.axis('off')
+plt.show()
+
+print(f"Text saved to {filename}")
+
+import pyautogui
+import pyperclip
+import time
+from wordcloud import WordCloud
+import matplotlib.pyplot as plt
+import os
+
+# Function to copy text from the active Chrome tab
+def copy_text_from_tab():
+    # Select all text (Command+A for Mac)
+    pyautogui.hotkey('command', 'a')
+    time.sleep(2)  # Small delay to ensure action is registered
+    # Copy the selected text (Command+C for Mac)
+    pyautogui.hotkey('command', 'c')
+    time.sleep(2)  # Wait for clipboard to update
+    # Get text from clipboard
+    return pyperclip.paste()
+
+# Function to generate a unique filename if the file already exists
+def get_unique_filename(base_name):
+    counter = 1
+    filename = f"{base_name}.txt"
+    while os.path.exists(filename):
+        filename = f"{base_name}_{counter}.txt"
+        counter += 1
+    return filename
+
+# Define words to ignore in the word cloud
+ignore_words = {
+    'the', 'and', 'to', 'of', 'a', 'in', 'that', 'it', 'is', 'was', 'i', 'for', 'on', 
+    'you', 'he', 'with', 'as', 'at', 'his', 'by', 'an', 'be', 'this', 'which', 'or', 
+    'from', 'but', 'not', 'are', 'they', 'we', 'all', 'can', 'one', 'your', 'their', 
+    'has', 'more', 'have', 'will', 'if', 'about', 'no', 'my', 'so', 'what'
+}
+
+# Initialize an empty string to accumulate text from all tabs
+all_text = ""
+
+# Number of tabs you want to process
+num_tabs = 11  # Set to the actual number of tabs you have open
+
+# Ensure Chrome is active window before running the loop
+print("Switch to Chrome and ensure it is the active window. You have 5 seconds...")
+time.sleep(5)
+
+# Iterate over each tab to grab the content
+for i in range(num_tabs):
+    # Copy text from the current tab
+    tab_text = copy_text_from_tab()
+    all_text += tab_text + "\n"
+    # Switch to the next tab (Command + Option + Right Arrow)
+    pyautogui.hotkey('command', 'option', 'right')  # Adjust if needed
+    time.sleep(2)  # Wait a moment to switch tabs
+
+# Save all text to a unique file
+filename = get_unique_filename('collected_text')
+with open(filename, 'w', encoding='utf-8') as f:
+    f.write(all_text)
+
+# Generate and display the word cloud, ignoring specified words
+wordcloud = WordCloud(width=1500, height=900, background_color='white', stopwords=ignore_words).generate(all_text)
+
+plt.figure(figsize=(12, 6))
+plt.imshow(wordcloud, interpolation='bilinear')
+plt.axis('off')
+plt.show()
+
+print(f"Text saved to {filename}")
+
+import pyautogui
+import pyperclip
+import time
+from wordcloud import WordCloud
+import matplotlib.pyplot as plt
+import os
+
+# Function to copy text from the active Chrome tab
+def copy_text_from_tab():
+    # Select all text (Command+A for Mac)
+    pyautogui.hotkey('command', 'a')
+    time.sleep(2)  # Small delay to ensure action is registered
+    # Copy the selected text (Command+C for Mac)
+    pyautogui.hotkey('command', 'c')
+    time.sleep(2)  # Wait for clipboard to update
+    # Get text from clipboard
+    return pyperclip.paste()
+
+# Function to generate a unique filename if the file already exists
+def get_unique_filename(base_name):
+    counter = 1
+    filename = f"{base_name}.txt"
+    while os.path.exists(filename):
+        filename = f"{base_name}_{counter}.txt"
+        counter += 1
+    return filename
+
+# Define words to ignore in the word cloud
+ignore_words = {
+    'the', 'and', 'to', 'of', 'a', 'in', 'that', 'it', 'is', 'was', 'i', 'for', 'on', 
+    'you', 'he', 'with', 'as', 'at', 'his', 'by', 'an', 'be', 'this', 'which', 'or', 
+    'from', 'but', 'not', 'are', 'they', 'we', 'all', 'can', 'one', 'your', 'their', 
+    'has', 'more', 'have', 'will', 'if', 'about', 'no', 'my', 'so', 'what'
+}
+
+# Initialize an empty string to accumulate text from all tabs
+all_text = ""
+
+# Number of tabs you want to process
+num_tabs = 11  # Set to the actual number of tabs you have open
+
+# Ensure Chrome is active window before running the loop
+print("Switch to Chrome and ensure it is the active window. You have 5 seconds...")
+time.sleep(5)
+
+# Iterate over each tab to grab the content
+for i in range(num_tabs):
+    # Copy text from the current tab
+    tab_text = copy_text_from_tab()
+    all_text += tab_text + "\n"
+    # Switch to the next tab (Command + Option + Right Arrow)
+    pyautogui.hotkey('command', 'option', 'right')  # Adjust if needed
+    time.sleep(2)  # Wait a moment to switch tabs
+
+# Save all text to a unique file
+filename = get_unique_filename('collected_text')
+with open(filename, 'w', encoding='utf-8') as f:
+    f.write(all_text)
+
+# Generate and display the word cloud, ignoring specified words
+wordcloud = WordCloud(width=1500, height=900, background_color='white', stopwords=ignore_words).generate(all_text)
+
+plt.figure(figsize=(12, 6))
+plt.imshow(wordcloud, interpolation='bilinear')
+plt.axis('off')
+plt.show()
+
+print(f"Text saved to {filename}")
+
+import pyautogui
+import pyperclip
+import time
+from wordcloud import WordCloud
+import matplotlib.pyplot as plt
+import os
+
+# Function to copy text from the active Chrome tab
+def copy_text_from_tab():
+    # Select all text (Command+A for Mac)
+    pyautogui.hotkey('command', 'a')
+    time.sleep(2)  # Small delay to ensure action is registered
+    # Copy the selected text (Command+C for Mac)
+    pyautogui.hotkey('command', 'c')
+    time.sleep(2)  # Wait for clipboard to update
+    # Get text from clipboard
+    return pyperclip.paste()
+
+# Function to generate a unique filename if the file already exists
+def get_unique_filename(base_name):
+    counter = 1
+    filename = f"{base_name}.txt"
+    while os.path.exists(filename):
+        filename = f"{base_name}_{counter}.txt"
+        counter += 1
+    return filename
+
+# Define words to ignore in the word cloud
+ignore_words = {
+    'the', 'and', 'to', 'of', 'a', 'in', 'that', 'it', 'is', 'was', 'i', 'for', 'on', 
+    'you', 'he', 'with', 'as', 'at', 'his', 'by', 'an', 'be', 'this', 'which', 'or', 
+    'from', 'but', 'not', 'are', 'they', 'we', 'all', 'can', 'one', 'your', 'their', 
+    'has', 'more', 'have', 'will', 'if', 'about', 'no', 'my', 'so', 'what'
+}
+
+# Initialize an empty string to accumulate text from all tabs
+all_text = ""
+
+# Number of tabs you want to process
+num_tabs = 11  # Set to the actual number of tabs you have open
+
+# Ensure Chrome is active window before running the loop
+print("Switch to Chrome and ensure it is the active window. You have 5 seconds...")
+time.sleep(5)
+
+# Iterate over each tab to grab the content
+for i in range(num_tabs):
+    # Copy text from the current tab
+    tab_text = copy_text_from_tab()
+    all_text += tab_text + "\n"
+    # Switch to the next tab (Command + Option + Right Arrow)
+    pyautogui.hotkey('command', 'option', 'right')  # Adjust if needed
+    time.sleep(2)  # Wait a moment to switch tabs
+
+# Save all text to a unique file
+filename = get_unique_filename('collected_text')
+with open(filename, 'w', encoding='utf-8') as f:
+    f.write(all_text)
+
+# Generate and display the word cloud, ignoring specified words
+wordcloud = WordCloud(width=1500, height=900, background_color='white', stopwords=ignore_words).generate(all_text)
+
+plt.figure(figsize=(12, 6))
+plt.imshow(wordcloud, interpolation='bilinear')
+plt.axis('off')
+plt.show()
+
+print(f"Text saved to {filename}")
+
+import pyautogui
+import pyperclip
+import time
+from wordcloud import WordCloud
+import matplotlib.pyplot as plt
+import os
+
+# Function to copy text from the active Chrome tab
+def copy_text_from_tab():
+    # Select all text (Command+A for Mac)
+    pyautogui.hotkey('command', 'a')
+    time.sleep(2)  # Small delay to ensure action is registered
+    # Copy the selected text (Command+C for Mac)
+    pyautogui.hotkey('command', 'c')
+    time.sleep(2)  # Wait for clipboard to update
+    # Get text from clipboard
+    return pyperclip.paste()
+
+# Function to generate a unique filename if the file already exists
+def get_unique_filename(base_name):
+    counter = 1
+    filename = f"{base_name}.txt"
+    while os.path.exists(filename):
+        filename = f"{base_name}_{counter}.txt"
+        counter += 1
+    return filename
+
+# Define words to ignore in the word cloud
+ignore_words = {
+    'the', 'and', 'to', 'of', 'a', 'in', 'that', 'it', 'is', 'was', 'i', 'for', 'on', 
+    'you', 'he', 'with', 'as', 'at', 'his', 'by', 'an', 'be', 'this', 'which', 'or', 
+    'from', 'but', 'not', 'are', 'they', 'we', 'all', 'can', 'one', 'your', 'their', 
+    'has', 'more', 'have', 'will', 'if', 'about', 'no', 'my', 'so', 'what'
+}
+
+# Initialize an empty string to accumulate text from all tabs
+all_text = ""
+
+# Number of tabs you want to process
+num_tabs = 11  # Set to the actual number of tabs you have open
+
+# Ensure Chrome is active window before running the loop
+print("Switch to Chrome and ensure it is the active window. You have 5 seconds...")
+time.sleep(5)
+
+# Iterate over each tab to grab the content
+for i in range(num_tabs):
+    # Copy text from the current tab
+    tab_text = copy_text_from_tab()
+    all_text += tab_text + "\n"
+    # Switch to the next tab (Command + Option + Right Arrow)
+    pyautogui.hotkey('command', 'option', 'right')  # Adjust if needed
+    time.sleep(2)  # Wait a moment to switch tabs
+
+# Save all text to a unique file
+filename = get_unique_filename('collected_text')
+with open(filename, 'w', encoding='utf-8') as f:
+    f.write(all_text)
+
+# Generate and display the word cloud, ignoring specified words
+wordcloud = WordCloud(width=1500, height=900, background_color='white', stopwords=ignore_words).generate(all_text)
+
+plt.figure(figsize=(12, 6))
+plt.imshow(wordcloud, interpolation='bilinear')
+plt.axis('off')
+plt.show()
+
+print(f"Text saved to {filename}")
+
+import pyautogui
+import pyperclip
+import time
+from wordcloud import WordCloud
+import matplotlib.pyplot as plt
+import os
+
+# Function to copy text from the active Chrome tab
+def copy_text_from_tab():
+    # Select all text (Command+A for Mac)
+    pyautogui.hotkey('command', 'a')
+    time.sleep(2)  # Small delay to ensure action is registered
+    # Copy the selected text (Command+C for Mac)
+    pyautogui.hotkey('command', 'c')
+    time.sleep(2)  # Wait for clipboard to update
+    # Get text from clipboard
+    return pyperclip.paste()
+
+# Function to generate a unique filename if the file already exists
+def get_unique_filename(base_name):
+    counter = 1
+    filename = f"{base_name}.txt"
+    while os.path.exists(filename):
+        filename = f"{base_name}_{counter}.txt"
+        counter += 1
+    return filename
+
+# Define words to ignore in the word cloud
+ignore_words = {
+    'the', 'and', 'to', 'of', 'a', 'in', 'that', 'it', 'is', 'was', 'i', 'for', 'on', 
+    'you', 'he', 'with', 'as', 'at', 'his', 'by', 'an', 'be', 'this', 'which', 'or', 
+    'from', 'but', 'not', 'are', 'they', 'we', 'all', 'can', 'one', 'your', 'their', 
+    'has', 'more', 'have', 'will', 'if', 'about', 'no', 'my', 'so', 'what'
+}
+
+# Initialize an empty string to accumulate text from all tabs
+all_text = ""
+
+# Number of tabs you want to process
+num_tabs = 11  # Set to the actual number of tabs you have open
+
+# Ensure Chrome is active window before running the loop
+print("Switch to Chrome and ensure it is the active window. You have 5 seconds...")
+time.sleep(5)
+
+# Iterate over each tab to grab the content
+for i in range(num_tabs):
+    # Copy text from the current tab
+    tab_text = copy_text_from_tab()
+    all_text += tab_text + "\n"
+    # Switch to the next tab (Command + Option + Right Arrow)
+    pyautogui.hotkey('command', 'option', 'right')  # Adjust if needed
+    time.sleep(2)  # Wait a moment to switch tabs
+
+# Save all text to a unique file
+filename = get_unique_filename('collected_text')
+with open(filename, 'w', encoding='utf-8') as f:
+    f.write(all_text)
+
+# Generate and display the word cloud, ignoring specified words
+wordcloud = WordCloud(width=1500, height=900, background_color='white', stopwords=ignore_words).generate(all_text)
+
+plt.figure(figsize=(12, 6))
+plt.imshow(wordcloud, interpolation='bilinear')
+plt.axis('off')
+plt.show()
+
+print(f"Text saved to {filename}")
+
+
+
+Plus IconFilm
+Plus IconTV
+Plus IconWhat To Watch
+Plus IconMusic
+Plus IconDocs
+Plus IconDigital & Gaming
+Plus IconGlobal
+Plus IconAwards Circuit
+Plus IconVideo
+Plus IconWhat To Hear
+VIP
+Plus IconClick to expand the Mega Menu
+Plus IconClick to Expand Search Input
+Got a Tip?
+Newsletters
+Switch edition betweenU.S. Edition 
+Variety
+
+Login 
+Home
+TV
+News
+May 2, 2024 10:00am PT
+‘SNL’ Sets Maya Rudolph and Jake Gyllenhaal as Hosts With Vampire Weekend and Sabrina Carpenter as Musical Guests
+
+By Selome Hailu
+
+Plus Icon
+SNL
+Getty
+“Saturday Night Live” has set Maya Rudolph to host its May 11 episode alongside Vampire Weekend as musical guest, while the May 18 episode will by headlined by Jake Gyllenhaal with performances from Sabrina Carpenter.
+
+Rudolph was an “SNL” cast member for seven seasons from 2000 to 2007 and returns to the late-night sketch show for her third time as host, having previously hosted in 2012 with musical guest Sleigh Bells and in 2021 alongside Jack Harlow. Currently, she stars in and executive produces the Apple TV+ comedy “Loot.” Besides “SNL,” her prominent credits include “Bridesmaids,” “Sisters,” “The Good Place” and “Big Mouth.”
+
+Related Stories
+A film camera with a heart emerging from the lens
+VIP+
+Can Today’s Tech Touchstones Solve Hollywood’s Loneliness Epidemic?
+'And Their Children After Them'
+French Directors Ludovic and Zoran Boukherma on Exploring Teenage Angst With Pop Power in Venice Competition Film 'And Their Children After Them'
+Vampire Weekend is currently touring its fifth album, “Only God Was Above Us.” May 11 will mark the band’s fourth appearance on “SNL.” Their previous albums include “Vampire Weekend,” “Contra,” “Modern Vampires of the City” and “Father of the Bride.”
+
+
+Gyllenhaal will host the “SNL” Season 49 finale as a third-time host, having previously led episodes in 2007 with the Shins as musical guest and in 2022 opposite Camila Cabello. The actor recently starred in Amazon Prime Video’s remake of the 1989 Patrick Swayze film “Road House” and will next be seen in Apple TV+’s “Presumed Innocent,” which he also executive produces. He is best known for films such as “Donnie Darko,” “Brokeback Mountain,” “Zodiac” and “Nightcrawler.”
+
+Popular on Variety
+00:00
+
+02:30
+
+
+
+
+Carpenter will be making her “SNL” debut. She recently released the single “Espresso,” her first to hit the Billboard Top 10. She gained popularity as a musician after first building a career as an actress, most prominently on Disney Channel shows “Girl Meets World.” Her previous albums include “Emails I Can’t Send,” “Singular: Act I,” “Singular: Act II,” “Evolution” and “Eyes Wide Open.”
+
+Read More About:
+Jake Gyllenhaal, Maya Rudolph, Sabrina Carpenter, Snl
+
+
+More from Variety
+Triple Six Eight
+Oscars: Diane Warren to Submit H.E.R. Track ‘The Journey,’ From Tyler Perry’s ‘The Six Triple Eight,’ for Song Race (EXCLUSIVE)
+a DVD cracking down the middle revealing a downward line graph
+Dissatisfied With Its Rate of Erosion, DVD Biz Fast-Forwards 2024 Decline
+ROMANCE IS A BONUS BOOK, (aka ROMAENSEUNEUN BYEOLCHAEKBUROK), WI Ha-joon, (Season 1, aired in US on Feb. 2, 2019/premiered in South Korea on Jan. 26, 2019). photo: ©Netflix / Courtesy: Everett Collection
+Premium Video Approaches 50 Million Subscribers in Southeast Asia, as Netflix Dominates Viewing Time – Report
+NEW YORK, NEW YORK - APRIL 25: Maria Bello attends the 2024 TIME100 Gala at Jazz at Lincoln Center on April 25, 2024 in New York City.  (Photo by Dimitrios Kambouris/Getty Images for TIME)
+Maria Bello Joins Kevin Williamson Netflix Series ‘The Waterfront’
+snapshot of the data contained in the article
+Content Owner Lawsuits Against AI Companies: Complete Updated Index
+Kaos Jeff Goldblum and Janet McTeer
+Creating ‘Kaos’: Writer Charlie Covell and Star Jeff Goldblum Talk Bringing Greek Myths to Life in New Netflix Series
+OneRepublic’s Ryan Tedder Breaks Down Viral Hit 'Counting Stars' and David Guetta-Featuring 'I Don't Wanna Wait' for Variety’s Behind the Song
+MSNBC Anchor Katy Tur Calls Out Trump Press Hypocrisy and the Discomfort of Covering Him on Policy: 'It's Legitimizing a Candidate That Doesn't Feel Legitimate'
+Babamail
+|
+Sponsored LinksHarry Potter Star Is Probably The Prettiest Woman In The World
+Angela Bassett, Kelly Ripa, James Cameron and More Honored as Disney Legends at D23
+Harrison Ford Says Red Hulk Acting in 'Captain America 4' Required 'Not Caring' and 'Being an Idiot for Money, Which I've Done Before. I Don't Mean to Disparage It'
+Skip AdDiscoverRead More
+Philly, Selected To Host LEGO Festival, Get Presale Now! 
+Greater Philadelphia Expo Center on Oct 12 & 13, 2024
+Awesome Family Events
+|
+Sponsored
+Top 10 Smart Scales of 2024: Ultimate Buying Guide
+Uncover the best smart scales for tracking weight and body composition with our comprehensive guide.
+DocReviews
+|
+Sponsored
+Flight Attendant Reveals How To Fly Business Class For The Price of Economy
+Americans, you'll want to check this out ASAP
+Online Shopping Tools
+|
+Sponsored
+A LEGO Fest Is Coming To Philly, Tons Of Fun For All Ages! 
+Greater Philadelphia Expo Center on Oct 12 & 13, 2024
+Awesome Family Events
+|
+Sponsored
+Best Smart Scales of 2024 Reviewed by Experts
+Uncover the best smart scales for tracking weight and body composition with our comprehensive guide.
+DocReviews
+|
+Sponsored
+Shawshank Redemption Cast Explain What Most Fans Never Figured Out
+Shawshank Redemption Cast Explain What Most Fans Never Figured Out
+BeautifulTrendsToday
+|
+Sponsored
+Don't Play This Game If You Are Under 40
+RAID
+|
+Sponsored
+17+ Iconic Songs No Longer Allowed On The Radio
+Magazine.Todo
+|
+Sponsored
+Decades Later Carly Simon Finally Confirms Who "You're So Vain" Is Really About
+Magazine.Todo
+|
+Sponsored
+Jada Spills Her Feelings After Her Son’s Decision
+Jada Pinkett Smith Speaks Out About How She Felt After Her Son's Sudden Decision
+HotPopToday
+|
+Sponsored
+Amazon's Worst Nightmare: Thousands Canceling Prime for This Clever Hack
+This little-known American Shopping Tip is changing the game for families nationwide – find out how.
+Online Shopping Tools
+|
+Sponsored
+Pawn Star Pleads Guilty, Goodbye Pawn Stars
+Fans were surprised to hear this about their favorite pawn star...
+PlayJunkie
+|
+Sponsored
+Game shows what the world without US military interventions would look like
+This strategy games makes you become a player in the crucial situations of history.
+History Strategy Game
+|
+Sponsored
+Trump Pulls Out of ABC Debate With Harris, Makes Pitch for Fox News
+Variety
+Sally Field Reveals Robin Williams Changed 'Mrs. Doubtfire' Filming Order So She Could Leave Set After Her Father Died: 'He Was Very Sensitive and Intuitive'
+Variety
+Vikings Didn't Look Close To What We Thought
+New discovery show us how the Vikings actually lived
+Gingerize
+|
+Sponsored
+Tori Spelling's Inheritance Makes The Headlines
+Babamail
+|
+Sponsored
+The Bed, By Thuma - Our Editors’ First Impressions
+Here’s Why Our Home & Family Editors Recommend Thuma
+Thuma
+|
+Sponsored
+Tori Spelling: "He was the love of my life"
+Tori Spelling: "He was the love of my life"
+TheDancingCucumber
+|
+Sponsored
+THIS 5 Min Quiz Tells You What Your Body Actually Needs To Lose Weight
+Noom
+|
+Sponsored
+MOST POPULAR
+Disney Goes Dark on DirecTV in Contract Fight Over Fees for ESPN, ABC, Disney Channel, Freeform and More
+Variety
+MOST POPULAR
+Brad Pitt and George Clooney Dance to 4-Minute Standing Ovation for ‘Wolfs’ During Chaotic Venice Premiere
+Variety
+Dating For Older Men
+Gorgeous Singles Seeking Mature Partners. Join for Free & Start Chatting
+FlirtForDate
+|
+Sponsored
+This Star of Harry Potter is Probably the Most Beautiful Woman in the World
+Babamail
+|
+Sponsored
+Is Thuma Worth The Hype? Here Are Our Thoughts
+What We Really Think Of Thuma & If It's Worth The Hype
+Thuma
+|
+Sponsored
+Most Popular
+Jude Law Is Officially Back After 7-Minute Standing Ovation at Venice for Fighting White Supremacy in ‘The Order’
+VENICE, ITALY - AUGUST 31: Jude Law attends the "The Order" red carpet during the 81st Venice International Film Festival at Palazzo del Cinema on August 31, 2024 in Venice, Italy. (Photo by Matt Winkelmeyer/Getty Images)
+‘The End’ Review: Tilda Swinton and Michael Shannon Took Shelter, but 20 Years Underground Starts to Get Tedious
+The End
+‘Saturday Night’ Review: Jason Reitman Finds the Right Ensemble to Capture the Lunacy From Which ‘SNL’ Was Born
+Saturday Night
+Sponsored
+Smart Streaming: The Roku Express 4K+ Gets Discounted to Just $29
+
+Harmony Korine Says Hollywood Is Starting to ‘Crumble Creatively’ While Smoking Cigar at Venice Press Conference: ‘Movies Are No Longer the Dominant…
+VENICE, ITALY - AUGUST 31: Director Harmony Korine attends the "Baby Invasion" photocall during the 81st Venice International Film Festival at Palazzo del Casino on August 31, 2024 in Venice, Italy. (Photo by Vittorio Zunino Celotto/Getty Images)
+George R. R. Martin: 'I Don't Look Forward' to Revealing 'Everything That's Gone Wrong' With 'House of the Dragon' but 'I Need to Do That Soon'
+LOS ANGELES, CALIFORNIA - MARCH 07: George R. R. Martin  attends the FYC special screening for HBO Max's "House Of The Dragon" at DGA Theater Complex on March 07, 2023 in Los Angeles, California. (Photo by Jon Kopaloff/Getty Images)
+How Footage From Jerry Lewis' Dark Comedy About a Concentration Camp Came to Be Seen for First Time
+The Day the Clown Cried
+Winona Ryder Gets Frustrated by Her Younger Co-Stars Who ‘Are Not Interested in Movies’: ‘The First Thing They Say’ Is ‘How Long Is It…
+VENICE, ITALY - AUGUST 28: Winona Ryder attends a red carpet for the movie "Beetlejuice Beetlejuice" during the 81st Venice International Film Festival at  on August 28, 2024 in Venice, Italy. (Photo by Vittorio Zunino Celotto/Getty Images)
+‘One Tree Hill’ Sequel Series in Development at Netflix
+ONE TREE HILL, James Lafferty, Bethany Joy galeotti, Hilarie Burton, Chad Michael Murray, Tyler Hilton, Lee Norris, Sophia Bush, Antwon Tanner, 'It Gets Worst at Night', (Season 4, aired May 9, 2007), 2003-,. Photo: Fred Norris / ©THE CW / courtesy everett collection
+Box Office: ‘Deadpool & Wolverine’ Topping Charts in Sixth Weekend as ‘Reagan’ and ‘Afraid’ Post Quiet Opening…
+DEADPOOL & WOLVERINE, (aka DEADPOOL AND WOLVERINE, aka DEADPOOL 3), from left: Ryan Reynolds as Deadpool, Hugh Jackman as Wolverine, 2024. ph: Jay Maidment /© Marvel / © Walt Disney Studios Motion Pictures / Courtesy Everett Collection
+‘Deadpool & Wolverine’ Crossing $600 Million Domestically, Leads Box Office Over Dreary Labor Day Weekend
+DEADPOOL & WOLVERINE, (aka DEADPOOL AND WOLVERINE, aka DEADPOOL 3), from left: Dogpool, Ryan Reynolds as Deadpool, 2024. ph: Jay Maidment /© Marvel / © Walt Disney Studios Motion Pictures / Courtesy Everett Collection
+
+Must Read
+Film
+COVER | Todd Phillips Tells All on Making ‘Joker 2’
+Todd Phillips Variety Cover Story
+Film
+‘Beetlejuice Beetlejuice’ Review: Tim Burton’s Lightweight Sequel Works as Ghostly Fan Service
+BEETLEJUICE BEETLEJUICE, (aka BEETLEJUICE 2), from left: Winona Ryder, Bob, Michael Keaton, 2024. © Warner Bros. /Courtesy Everett Collection
+Film
+Angelina Jolie Weeps Through Rapturous 8-Minute Venice Standing Ovation for 'Maria,' Launching Oscar Buzz
+VENICE, ITALY - AUGUST 29: Angelina Jolie attends a red carpet for the series "Maria" during the 81st Venice International Film Festival at  on August 29, 2024 in Venice, Italy. (Photo by Vittorio Zunino Celotto/Getty Images)
+Film
+‘It Ends With Us’ Sequel in Doubt Amid Blake Lively-Justin Baldoni Feud: ‘There’s Probably No World Where They Work Together Again…
+it ends with us
+TV
+Joe Locke on ‘Heartstopper’ Embracing Sex and Being a Queer Marvel Star in ‘Agatha’
+Joe Locke
+Sign Up for Variety Newsletters
+Enter Your Email Address
+Sign UpSign Up
+By providing your information, you agree to our Terms of Use and our Privacy Policy. We use vendors that may also process your information to help provide our services. // This site is protected by reCAPTCHA Enterprise and the Google Privacy Policy and Terms of Service apply.
+
+
+Variety Confidential
+
+A Variety and iHeartRadio Podcast
+
+More From Our Brands
+Rolling Stone
+‘Saturday Night’ Turns ‘SNL’ Origin Story Into Late-Night ‘Bad News Bears’
+
+Robb Report
+Why Iceland Is Making Some of the Best Skin Care and Colognes You Can Buy
+
+Sportico
+Report: NCAA Proposed Changes Further Empower Athletes
+
+SPY
+The Best Loofahs and Body Scrubbers, According to Dermatologists
+
+TVLine
+Harry Potter’s Bonnie Wright Hopes HBO Series Gives Harry/Ginny’s Story More Time Than the Films Did
+
+About Us
+Newsletter
+Variety Events
+Luminate - Film & TV
+Advertise
+Media Kit
+Careers
+Customer Service
+Legal
+Terms of Use
+Privacy Policy
+AdChoices
+Accessibility
+Variety Magazine
+Subscribe
+Variety Digital Login
+Group Subscriptions
+Variety Archives
+Back Issues
+Help
+VIP+
+Subscribe
+Login
+Learn More
+FAQ
+Connect
+Instagram
+Twitter
+YouTube
+Facebook
+LinkedIn
+Variety
+The Business of Entertainment
+
+Subscribe Today
+Have a News Tip? Let us know
+ad
+Variety is a part of Penske Media Corporation. © 2024 Variety Media, LLC. All Rights Reserved. Variety and the Flying V logos are trademarks of Variety Media, LLC.
+
+Our Sites
+
+
+
+Plus IconFilm
+Plus IconTV
+Plus IconWhat To Watch
+Plus IconMusic
+Plus IconDocs
+Plus IconDigital & Gaming
+Plus IconGlobal
+Plus IconAwards Circuit
+Plus IconVideo
+Plus IconWhat To Hear
+VIP
+Plus IconClick to expand the Mega Menu
+Plus IconClick to Expand Search Input
+Got a Tip?
+Newsletters
+Switch edition betweenU.S. Edition 
+Variety
+
+Login 
+Home
+TV
+News
+May 2, 2024 10:00am PT
+‘SNL’ Sets Maya Rudolph and Jake Gyllenhaal as Hosts With Vampire Weekend and Sabrina Carpenter as Musical Guests
+
+By Selome Hailu
+
+Plus Icon
+SNL
+Getty
+“Saturday Night Live” has set Maya Rudolph to host its May 11 episode alongside Vampire Weekend as musical guest, while the May 18 episode will by headlined by Jake Gyllenhaal with performances from Sabrina Carpenter.
+
+Rudolph was an “SNL” cast member for seven seasons from 2000 to 2007 and returns to the late-night sketch show for her third time as host, having previously hosted in 2012 with musical guest Sleigh Bells and in 2021 alongside Jack Harlow. Currently, she stars in and executive produces the Apple TV+ comedy “Loot.” Besides “SNL,” her prominent credits include “Bridesmaids,” “Sisters,” “The Good Place” and “Big Mouth.”
+
+Related Stories
+A film camera with a heart emerging from the lens
+VIP+
+Can Today’s Tech Touchstones Solve Hollywood’s Loneliness Epidemic?
+'And Their Children After Them'
+French Directors Ludovic and Zoran Boukherma on Exploring Teenage Angst With Pop Power in Venice Competition Film 'And Their Children After Them'
+Vampire Weekend is currently touring its fifth album, “Only God Was Above Us.” May 11 will mark the band’s fourth appearance on “SNL.” Their previous albums include “Vampire Weekend,” “Contra,” “Modern Vampires of the City” and “Father of the Bride.”
+
+
+Gyllenhaal will host the “SNL” Season 49 finale as a third-time host, having previously led episodes in 2007 with the Shins as musical guest and in 2022 opposite Camila Cabello. The actor recently starred in Amazon Prime Video’s remake of the 1989 Patrick Swayze film “Road House” and will next be seen in Apple TV+’s “Presumed Innocent,” which he also executive produces. He is best known for films such as “Donnie Darko,” “Brokeback Mountain,” “Zodiac” and “Nightcrawler.”
+
+Popular on Variety
+00:00
+
+02:30
+
+
+
+
+Carpenter will be making her “SNL” debut. She recently released the single “Espresso,” her first to hit the Billboard Top 10. She gained popularity as a musician after first building a career as an actress, most prominently on Disney Channel shows “Girl Meets World.” Her previous albums include “Emails I Can’t Send,” “Singular: Act I,” “Singular: Act II,” “Evolution” and “Eyes Wide Open.”
+
+Read More About:
+Jake Gyllenhaal, Maya Rudolph, Sabrina Carpenter, Snl
+
+
+More from Variety
+Triple Six Eight
+Oscars: Diane Warren to Submit H.E.R. Track ‘The Journey,’ From Tyler Perry’s ‘The Six Triple Eight,’ for Song Race (EXCLUSIVE)
+a DVD cracking down the middle revealing a downward line graph
+Dissatisfied With Its Rate of Erosion, DVD Biz Fast-Forwards 2024 Decline
+ROMANCE IS A BONUS BOOK, (aka ROMAENSEUNEUN BYEOLCHAEKBUROK), WI Ha-joon, (Season 1, aired in US on Feb. 2, 2019/premiered in South Korea on Jan. 26, 2019). photo: ©Netflix / Courtesy: Everett Collection
+Premium Video Approaches 50 Million Subscribers in Southeast Asia, as Netflix Dominates Viewing Time – Report
+NEW YORK, NEW YORK - APRIL 25: Maria Bello attends the 2024 TIME100 Gala at Jazz at Lincoln Center on April 25, 2024 in New York City.  (Photo by Dimitrios Kambouris/Getty Images for TIME)
+Maria Bello Joins Kevin Williamson Netflix Series ‘The Waterfront’
+snapshot of the data contained in the article
+Content Owner Lawsuits Against AI Companies: Complete Updated Index
+Kaos Jeff Goldblum and Janet McTeer
+Creating ‘Kaos’: Writer Charlie Covell and Star Jeff Goldblum Talk Bringing Greek Myths to Life in New Netflix Series
+OneRepublic’s Ryan Tedder Breaks Down Viral Hit 'Counting Stars' and David Guetta-Featuring 'I Don't Wanna Wait' for Variety’s Behind the Song
+MSNBC Anchor Katy Tur Calls Out Trump Press Hypocrisy and the Discomfort of Covering Him on Policy: 'It's Legitimizing a Candidate That Doesn't Feel Legitimate'
+Babamail
+|
+Sponsored LinksHarry Potter Star Is Probably The Prettiest Woman In The World
+Angela Bassett, Kelly Ripa, James Cameron and More Honored as Disney Legends at D23
+Harrison Ford Says Red Hulk Acting in 'Captain America 4' Required 'Not Caring' and 'Being an Idiot for Money, Which I've Done Before. I Don't Mean to Disparage It'
+Skip AdDiscoverRead More
+Philly, Selected To Host LEGO Festival, Get Presale Now! 
+Greater Philadelphia Expo Center on Oct 12 & 13, 2024
+Awesome Family Events
+|
+Sponsored
+Top 10 Smart Scales of 2024: Ultimate Buying Guide
+Uncover the best smart scales for tracking weight and body composition with our comprehensive guide.
+DocReviews
+|
+Sponsored
+Flight Attendant Reveals How To Fly Business Class For The Price of Economy
+Americans, you'll want to check this out ASAP
+Online Shopping Tools
+|
+Sponsored
+A LEGO Fest Is Coming To Philly, Tons Of Fun For All Ages! 
+Greater Philadelphia Expo Center on Oct 12 & 13, 2024
+Awesome Family Events
+|
+Sponsored
+Best Smart Scales of 2024 Reviewed by Experts
+Uncover the best smart scales for tracking weight and body composition with our comprehensive guide.
+DocReviews
+|
+Sponsored
+Shawshank Redemption Cast Explain What Most Fans Never Figured Out
+Shawshank Redemption Cast Explain What Most Fans Never Figured Out
+BeautifulTrendsToday
+|
+Sponsored
+Don't Play This Game If You Are Under 40
+RAID
+|
+Sponsored
+17+ Iconic Songs No Longer Allowed On The Radio
+Magazine.Todo
+|
+Sponsored
+Decades Later Carly Simon Finally Confirms Who "You're So Vain" Is Really About
+Magazine.Todo
+|
+Sponsored
+Jada Spills Her Feelings After Her Son’s Decision
+Jada Pinkett Smith Speaks Out About How She Felt After Her Son's Sudden Decision
+HotPopToday
+|
+Sponsored
+Amazon's Worst Nightmare: Thousands Canceling Prime for This Clever Hack
+This little-known American Shopping Tip is changing the game for families nationwide – find out how.
+Online Shopping Tools
+|
+Sponsored
+Pawn Star Pleads Guilty, Goodbye Pawn Stars
+Fans were surprised to hear this about their favorite pawn star...
+PlayJunkie
+|
+Sponsored
+Game shows what the world without US military interventions would look like
+This strategy games makes you become a player in the crucial situations of history.
+History Strategy Game
+|
+Sponsored
+Trump Pulls Out of ABC Debate With Harris, Makes Pitch for Fox News
+Variety
+Sally Field Reveals Robin Williams Changed 'Mrs. Doubtfire' Filming Order So She Could Leave Set After Her Father Died: 'He Was Very Sensitive and Intuitive'
+Variety
+Vikings Didn't Look Close To What We Thought
+New discovery show us how the Vikings actually lived
+Gingerize
+|
+Sponsored
+Tori Spelling's Inheritance Makes The Headlines
+Babamail
+|
+Sponsored
+The Bed, By Thuma - Our Editors’ First Impressions
+Here’s Why Our Home & Family Editors Recommend Thuma
+Thuma
+|
+Sponsored
+Tori Spelling: "He was the love of my life"
+Tori Spelling: "He was the love of my life"
+TheDancingCucumber
+|
+Sponsored
+THIS 5 Min Quiz Tells You What Your Body Actually Needs To Lose Weight
+Noom
+|
+Sponsored
+MOST POPULAR
+Disney Goes Dark on DirecTV in Contract Fight Over Fees for ESPN, ABC, Disney Channel, Freeform and More
+Variety
+MOST POPULAR
+Brad Pitt and George Clooney Dance to 4-Minute Standing Ovation for ‘Wolfs’ During Chaotic Venice Premiere
+Variety
+Dating For Older Men
+Gorgeous Singles Seeking Mature Partners. Join for Free & Start Chatting
+FlirtForDate
+|
+Sponsored
+This Star of Harry Potter is Probably the Most Beautiful Woman in the World
+Babamail
+|
+Sponsored
+Is Thuma Worth The Hype? Here Are Our Thoughts
+What We Really Think Of Thuma & If It's Worth The Hype
+Thuma
+|
+Sponsored
+Most Popular
+Jude Law Is Officially Back After 7-Minute Standing Ovation at Venice for Fighting White Supremacy in ‘The Order’
+VENICE, ITALY - AUGUST 31: Jude Law attends the "The Order" red carpet during the 81st Venice International Film Festival at Palazzo del Cinema on August 31, 2024 in Venice, Italy. (Photo by Matt Winkelmeyer/Getty Images)
+‘The End’ Review: Tilda Swinton and Michael Shannon Took Shelter, but 20 Years Underground Starts to Get Tedious
+The End
+‘Saturday Night’ Review: Jason Reitman Finds the Right Ensemble to Capture the Lunacy From Which ‘SNL’ Was Born
+Saturday Night
+Sponsored
+Smart Streaming: The Roku Express 4K+ Gets Discounted to Just $29
+
+Harmony Korine Says Hollywood Is Starting to ‘Crumble Creatively’ While Smoking Cigar at Venice Press Conference: ‘Movies Are No Longer the Dominant…
+VENICE, ITALY - AUGUST 31: Director Harmony Korine attends the "Baby Invasion" photocall during the 81st Venice International Film Festival at Palazzo del Casino on August 31, 2024 in Venice, Italy. (Photo by Vittorio Zunino Celotto/Getty Images)
+George R. R. Martin: 'I Don't Look Forward' to Revealing 'Everything That's Gone Wrong' With 'House of the Dragon' but 'I Need to Do That Soon'
+LOS ANGELES, CALIFORNIA - MARCH 07: George R. R. Martin  attends the FYC special screening for HBO Max's "House Of The Dragon" at DGA Theater Complex on March 07, 2023 in Los Angeles, California. (Photo by Jon Kopaloff/Getty Images)
+How Footage From Jerry Lewis' Dark Comedy About a Concentration Camp Came to Be Seen for First Time
+The Day the Clown Cried
+Winona Ryder Gets Frustrated by Her Younger Co-Stars Who ‘Are Not Interested in Movies’: ‘The First Thing They Say’ Is ‘How Long Is It…
+VENICE, ITALY - AUGUST 28: Winona Ryder attends a red carpet for the movie "Beetlejuice Beetlejuice" during the 81st Venice International Film Festival at  on August 28, 2024 in Venice, Italy. (Photo by Vittorio Zunino Celotto/Getty Images)
+‘One Tree Hill’ Sequel Series in Development at Netflix
+ONE TREE HILL, James Lafferty, Bethany Joy galeotti, Hilarie Burton, Chad Michael Murray, Tyler Hilton, Lee Norris, Sophia Bush, Antwon Tanner, 'It Gets Worst at Night', (Season 4, aired May 9, 2007), 2003-,. Photo: Fred Norris / ©THE CW / courtesy everett collection
+Box Office: ‘Deadpool & Wolverine’ Topping Charts in Sixth Weekend as ‘Reagan’ and ‘Afraid’ Post Quiet Opening…
+DEADPOOL & WOLVERINE, (aka DEADPOOL AND WOLVERINE, aka DEADPOOL 3), from left: Ryan Reynolds as Deadpool, Hugh Jackman as Wolverine, 2024. ph: Jay Maidment /© Marvel / © Walt Disney Studios Motion Pictures / Courtesy Everett Collection
+‘Deadpool & Wolverine’ Crossing $600 Million Domestically, Leads Box Office Over Dreary Labor Day Weekend
+DEADPOOL & WOLVERINE, (aka DEADPOOL AND WOLVERINE, aka DEADPOOL 3), from left: Dogpool, Ryan Reynolds as Deadpool, 2024. ph: Jay Maidment /© Marvel / © Walt Disney Studios Motion Pictures / Courtesy Everett Collection
+
+Must Read
+Film
+COVER | Todd Phillips Tells All on Making ‘Joker 2’
+Todd Phillips Variety Cover Story
+Film
+‘Beetlejuice Beetlejuice’ Review: Tim Burton’s Lightweight Sequel Works as Ghostly Fan Service
+BEETLEJUICE BEETLEJUICE, (aka BEETLEJUICE 2), from left: Winona Ryder, Bob, Michael Keaton, 2024. © Warner Bros. /Courtesy Everett Collection
+Film
+Angelina Jolie Weeps Through Rapturous 8-Minute Venice Standing Ovation for 'Maria,' Launching Oscar Buzz
+VENICE, ITALY - AUGUST 29: Angelina Jolie attends a red carpet for the series "Maria" during the 81st Venice International Film Festival at  on August 29, 2024 in Venice, Italy. (Photo by Vittorio Zunino Celotto/Getty Images)
+Film
+‘It Ends With Us’ Sequel in Doubt Amid Blake Lively-Justin Baldoni Feud: ‘There’s Probably No World Where They Work Together Again…
+it ends with us
+TV
+Joe Locke on ‘Heartstopper’ Embracing Sex and Being a Queer Marvel Star in ‘Agatha’
+Joe Locke
+Sign Up for Variety Newsletters
+Enter Your Email Address
+Sign UpSign Up
+By providing your information, you agree to our Terms of Use and our Privacy Policy. We use vendors that may also process your information to help provide our services. // This site is protected by reCAPTCHA Enterprise and the Google Privacy Policy and Terms of Service apply.
+
+
+Variety Confidential
+
+A Variety and iHeartRadio Podcast
+
+More From Our Brands
+Rolling Stone
+‘Saturday Night’ Turns ‘SNL’ Origin Story Into Late-Night ‘Bad News Bears’
+
+Robb Report
+Why Iceland Is Making Some of the Best Skin Care and Colognes You Can Buy
+
+Sportico
+Report: NCAA Proposed Changes Further Empower Athletes
+
+SPY
+The Best Loofahs and Body Scrubbers, According to Dermatologists
+
+TVLine
+Harry Potter’s Bonnie Wright Hopes HBO Series Gives Harry/Ginny’s Story More Time Than the Films Did
+
+About Us
+Newsletter
+Variety Events
+Luminate - Film & TV
+Advertise
+Media Kit
+Careers
+Customer Service
+Legal
+Terms of Use
+Privacy Policy
+AdChoices
+Accessibility
+Variety Magazine
+Subscribe
+Variety Digital Login
+Group Subscriptions
+Variety Archives
+Back Issues
+Help
+VIP+
+Subscribe
+Login
+Learn More
+FAQ
+Connect
+Instagram
+Twitter
+YouTube
+Facebook
+LinkedIn
+Variety
+The Business of Entertainment
+
+Subscribe Today
+Have a News Tip? Let us know
+ad
+Variety is a part of Penske Media Corporation. © 2024 Variety Media, LLC. All Rights Reserved. Variety and the Flying V logos are trademarks of Variety Media, LLC.
+
+Our Sites
+
+
+
+Plus IconFilm
+Plus IconTV
+Plus IconWhat To Watch
+Plus IconMusic
+Plus IconDocs
+Plus IconDigital & Gaming
+Plus IconGlobal
+Plus IconAwards Circuit
+Plus IconVideo
+Plus IconWhat To Hear
+VIP
+Plus IconClick to expand the Mega Menu
+Plus IconClick to Expand Search Input
+Got a Tip?
+Newsletters
+Switch edition betweenU.S. Edition 
+Variety
+
+Login 
+Home
+TV
+News
+May 2, 2024 10:00am PT
+‘SNL’ Sets Maya Rudolph and Jake Gyllenhaal as Hosts With Vampire Weekend and Sabrina Carpenter as Musical Guests
+
+By Selome Hailu
+
+Plus Icon
+SNL
+Getty
+“Saturday Night Live” has set Maya Rudolph to host its May 11 episode alongside Vampire Weekend as musical guest, while the May 18 episode will by headlined by Jake Gyllenhaal with performances from Sabrina Carpenter.
+
+Rudolph was an “SNL” cast member for seven seasons from 2000 to 2007 and returns to the late-night sketch show for her third time as host, having previously hosted in 2012 with musical guest Sleigh Bells and in 2021 alongside Jack Harlow. Currently, she stars in and executive produces the Apple TV+ comedy “Loot.” Besides “SNL,” her prominent credits include “Bridesmaids,” “Sisters,” “The Good Place” and “Big Mouth.”
+
+Related Stories
+A film camera with a heart emerging from the lens
+VIP+
+Can Today’s Tech Touchstones Solve Hollywood’s Loneliness Epidemic?
+'And Their Children After Them'
+French Directors Ludovic and Zoran Boukherma on Exploring Teenage Angst With Pop Power in Venice Competition Film 'And Their Children After Them'
+Vampire Weekend is currently touring its fifth album, “Only God Was Above Us.” May 11 will mark the band’s fourth appearance on “SNL.” Their previous albums include “Vampire Weekend,” “Contra,” “Modern Vampires of the City” and “Father of the Bride.”
+
+
+Gyllenhaal will host the “SNL” Season 49 finale as a third-time host, having previously led episodes in 2007 with the Shins as musical guest and in 2022 opposite Camila Cabello. The actor recently starred in Amazon Prime Video’s remake of the 1989 Patrick Swayze film “Road House” and will next be seen in Apple TV+’s “Presumed Innocent,” which he also executive produces. He is best known for films such as “Donnie Darko,” “Brokeback Mountain,” “Zodiac” and “Nightcrawler.”
+
+Popular on Variety
+00:00
+
+02:30
+
+
+
+
+Carpenter will be making her “SNL” debut. She recently released the single “Espresso,” her first to hit the Billboard Top 10. She gained popularity as a musician after first building a career as an actress, most prominently on Disney Channel shows “Girl Meets World.” Her previous albums include “Emails I Can’t Send,” “Singular: Act I,” “Singular: Act II,” “Evolution” and “Eyes Wide Open.”
+
+Read More About:
+Jake Gyllenhaal, Maya Rudolph, Sabrina Carpenter, Snl
+
+
+More from Variety
+Triple Six Eight
+Oscars: Diane Warren to Submit H.E.R. Track ‘The Journey,’ From Tyler Perry’s ‘The Six Triple Eight,’ for Song Race (EXCLUSIVE)
+a DVD cracking down the middle revealing a downward line graph
+Dissatisfied With Its Rate of Erosion, DVD Biz Fast-Forwards 2024 Decline
+ROMANCE IS A BONUS BOOK, (aka ROMAENSEUNEUN BYEOLCHAEKBUROK), WI Ha-joon, (Season 1, aired in US on Feb. 2, 2019/premiered in South Korea on Jan. 26, 2019). photo: ©Netflix / Courtesy: Everett Collection
+Premium Video Approaches 50 Million Subscribers in Southeast Asia, as Netflix Dominates Viewing Time – Report
+NEW YORK, NEW YORK - APRIL 25: Maria Bello attends the 2024 TIME100 Gala at Jazz at Lincoln Center on April 25, 2024 in New York City.  (Photo by Dimitrios Kambouris/Getty Images for TIME)
+Maria Bello Joins Kevin Williamson Netflix Series ‘The Waterfront’
+snapshot of the data contained in the article
+Content Owner Lawsuits Against AI Companies: Complete Updated Index
+Kaos Jeff Goldblum and Janet McTeer
+Creating ‘Kaos’: Writer Charlie Covell and Star Jeff Goldblum Talk Bringing Greek Myths to Life in New Netflix Series
+OneRepublic’s Ryan Tedder Breaks Down Viral Hit 'Counting Stars' and David Guetta-Featuring 'I Don't Wanna Wait' for Variety’s Behind the Song
+MSNBC Anchor Katy Tur Calls Out Trump Press Hypocrisy and the Discomfort of Covering Him on Policy: 'It's Legitimizing a Candidate That Doesn't Feel Legitimate'
+Babamail
+|
+Sponsored LinksHarry Potter Star Is Probably The Prettiest Woman In The World
+Angela Bassett, Kelly Ripa, James Cameron and More Honored as Disney Legends at D23
+Harrison Ford Says Red Hulk Acting in 'Captain America 4' Required 'Not Caring' and 'Being an Idiot for Money, Which I've Done Before. I Don't Mean to Disparage It'
+Skip AdDiscoverRead More
+Philly, Selected To Host LEGO Festival, Get Presale Now! 
+Greater Philadelphia Expo Center on Oct 12 & 13, 2024
+Awesome Family Events
+|
+Sponsored
+Top 10 Smart Scales of 2024: Ultimate Buying Guide
+Uncover the best smart scales for tracking weight and body composition with our comprehensive guide.
+DocReviews
+|
+Sponsored
+Flight Attendant Reveals How To Fly Business Class For The Price of Economy
+Americans, you'll want to check this out ASAP
+Online Shopping Tools
+|
+Sponsored
+A LEGO Fest Is Coming To Philly, Tons Of Fun For All Ages! 
+Greater Philadelphia Expo Center on Oct 12 & 13, 2024
+Awesome Family Events
+|
+Sponsored
+Best Smart Scales of 2024 Reviewed by Experts
+Uncover the best smart scales for tracking weight and body composition with our comprehensive guide.
+DocReviews
+|
+Sponsored
+Shawshank Redemption Cast Explain What Most Fans Never Figured Out
+Shawshank Redemption Cast Explain What Most Fans Never Figured Out
+BeautifulTrendsToday
+|
+Sponsored
+Don't Play This Game If You Are Under 40
+RAID
+|
+Sponsored
+17+ Iconic Songs No Longer Allowed On The Radio
+Magazine.Todo
+|
+Sponsored
+Decades Later Carly Simon Finally Confirms Who "You're So Vain" Is Really About
+Magazine.Todo
+|
+Sponsored
+Jada Spills Her Feelings After Her Son’s Decision
+Jada Pinkett Smith Speaks Out About How She Felt After Her Son's Sudden Decision
+HotPopToday
+|
+Sponsored
+Amazon's Worst Nightmare: Thousands Canceling Prime for This Clever Hack
+This little-known American Shopping Tip is changing the game for families nationwide – find out how.
+Online Shopping Tools
+|
+Sponsored
+Pawn Star Pleads Guilty, Goodbye Pawn Stars
+Fans were surprised to hear this about their favorite pawn star...
+PlayJunkie
+|
+Sponsored
+Game shows what the world without US military interventions would look like
+This strategy games makes you become a player in the crucial situations of history.
+History Strategy Game
+|
+Sponsored
+Trump Pulls Out of ABC Debate With Harris, Makes Pitch for Fox News
+Variety
+Sally Field Reveals Robin Williams Changed 'Mrs. Doubtfire' Filming Order So She Could Leave Set After Her Father Died: 'He Was Very Sensitive and Intuitive'
+Variety
+Vikings Didn't Look Close To What We Thought
+New discovery show us how the Vikings actually lived
+Gingerize
+|
+Sponsored
+Tori Spelling's Inheritance Makes The Headlines
+Babamail
+|
+Sponsored
+The Bed, By Thuma - Our Editors’ First Impressions
+Here’s Why Our Home & Family Editors Recommend Thuma
+Thuma
+|
+Sponsored
+Tori Spelling: "He was the love of my life"
+Tori Spelling: "He was the love of my life"
+TheDancingCucumber
+|
+Sponsored
+THIS 5 Min Quiz Tells You What Your Body Actually Needs To Lose Weight
+Noom
+|
+Sponsored
+MOST POPULAR
+Disney Goes Dark on DirecTV in Contract Fight Over Fees for ESPN, ABC, Disney Channel, Freeform and More
+Variety
+MOST POPULAR
+Brad Pitt and George Clooney Dance to 4-Minute Standing Ovation for ‘Wolfs’ During Chaotic Venice Premiere
+Variety
+Dating For Older Men
+Gorgeous Singles Seeking Mature Partners. Join for Free & Start Chatting
+FlirtForDate
+|
+Sponsored
+This Star of Harry Potter is Probably the Most Beautiful Woman in the World
+Babamail
+|
+Sponsored
+Is Thuma Worth The Hype? Here Are Our Thoughts
+What We Really Think Of Thuma & If It's Worth The Hype
+Thuma
+|
+Sponsored
+Most Popular
+Jude Law Is Officially Back After 7-Minute Standing Ovation at Venice for Fighting White Supremacy in ‘The Order’
+VENICE, ITALY - AUGUST 31: Jude Law attends the "The Order" red carpet during the 81st Venice International Film Festival at Palazzo del Cinema on August 31, 2024 in Venice, Italy. (Photo by Matt Winkelmeyer/Getty Images)
+‘The End’ Review: Tilda Swinton and Michael Shannon Took Shelter, but 20 Years Underground Starts to Get Tedious
+The End
+‘Saturday Night’ Review: Jason Reitman Finds the Right Ensemble to Capture the Lunacy From Which ‘SNL’ Was Born
+Saturday Night
+Sponsored
+Smart Streaming: The Roku Express 4K+ Gets Discounted to Just $29
+
+Harmony Korine Says Hollywood Is Starting to ‘Crumble Creatively’ While Smoking Cigar at Venice Press Conference: ‘Movies Are No Longer the Dominant…
+VENICE, ITALY - AUGUST 31: Director Harmony Korine attends the "Baby Invasion" photocall during the 81st Venice International Film Festival at Palazzo del Casino on August 31, 2024 in Venice, Italy. (Photo by Vittorio Zunino Celotto/Getty Images)
+George R. R. Martin: 'I Don't Look Forward' to Revealing 'Everything That's Gone Wrong' With 'House of the Dragon' but 'I Need to Do That Soon'
+LOS ANGELES, CALIFORNIA - MARCH 07: George R. R. Martin  attends the FYC special screening for HBO Max's "House Of The Dragon" at DGA Theater Complex on March 07, 2023 in Los Angeles, California. (Photo by Jon Kopaloff/Getty Images)
+How Footage From Jerry Lewis' Dark Comedy About a Concentration Camp Came to Be Seen for First Time
+The Day the Clown Cried
+Winona Ryder Gets Frustrated by Her Younger Co-Stars Who ‘Are Not Interested in Movies’: ‘The First Thing They Say’ Is ‘How Long Is It…
+VENICE, ITALY - AUGUST 28: Winona Ryder attends a red carpet for the movie "Beetlejuice Beetlejuice" during the 81st Venice International Film Festival at  on August 28, 2024 in Venice, Italy. (Photo by Vittorio Zunino Celotto/Getty Images)
+‘One Tree Hill’ Sequel Series in Development at Netflix
+ONE TREE HILL, James Lafferty, Bethany Joy galeotti, Hilarie Burton, Chad Michael Murray, Tyler Hilton, Lee Norris, Sophia Bush, Antwon Tanner, 'It Gets Worst at Night', (Season 4, aired May 9, 2007), 2003-,. Photo: Fred Norris / ©THE CW / courtesy everett collection
+Box Office: ‘Deadpool & Wolverine’ Topping Charts in Sixth Weekend as ‘Reagan’ and ‘Afraid’ Post Quiet Opening…
+DEADPOOL & WOLVERINE, (aka DEADPOOL AND WOLVERINE, aka DEADPOOL 3), from left: Ryan Reynolds as Deadpool, Hugh Jackman as Wolverine, 2024. ph: Jay Maidment /© Marvel / © Walt Disney Studios Motion Pictures / Courtesy Everett Collection
+‘Deadpool & Wolverine’ Crossing $600 Million Domestically, Leads Box Office Over Dreary Labor Day Weekend
+DEADPOOL & WOLVERINE, (aka DEADPOOL AND WOLVERINE, aka DEADPOOL 3), from left: Dogpool, Ryan Reynolds as Deadpool, 2024. ph: Jay Maidment /© Marvel / © Walt Disney Studios Motion Pictures / Courtesy Everett Collection
+
+Must Read
+Film
+COVER | Todd Phillips Tells All on Making ‘Joker 2’
+Todd Phillips Variety Cover Story
+Film
+‘Beetlejuice Beetlejuice’ Review: Tim Burton’s Lightweight Sequel Works as Ghostly Fan Service
+BEETLEJUICE BEETLEJUICE, (aka BEETLEJUICE 2), from left: Winona Ryder, Bob, Michael Keaton, 2024. © Warner Bros. /Courtesy Everett Collection
+Film
+Angelina Jolie Weeps Through Rapturous 8-Minute Venice Standing Ovation for 'Maria,' Launching Oscar Buzz
+VENICE, ITALY - AUGUST 29: Angelina Jolie attends a red carpet for the series "Maria" during the 81st Venice International Film Festival at  on August 29, 2024 in Venice, Italy. (Photo by Vittorio Zunino Celotto/Getty Images)
+Film
+‘It Ends With Us’ Sequel in Doubt Amid Blake Lively-Justin Baldoni Feud: ‘There’s Probably No World Where They Work Together Again…
+it ends with us
+TV
+Joe Locke on ‘Heartstopper’ Embracing Sex and Being a Queer Marvel Star in ‘Agatha’
+Joe Locke
+Sign Up for Variety Newsletters
+Enter Your Email Address
+Sign UpSign Up
+By providing your information, you agree to our Terms of Use and our Privacy Policy. We use vendors that may also process your information to help provide our services. // This site is protected by reCAPTCHA Enterprise and the Google Privacy Policy and Terms of Service apply.
+
+
+Variety Confidential
+
+A Variety and iHeartRadio Podcast
+
+More From Our Brands
+Rolling Stone
+‘Saturday Night’ Turns ‘SNL’ Origin Story Into Late-Night ‘Bad News Bears’
+
+Robb Report
+Why Iceland Is Making Some of the Best Skin Care and Colognes You Can Buy
+
+Sportico
+Report: NCAA Proposed Changes Further Empower Athletes
+
+SPY
+The Best Loofahs and Body Scrubbers, According to Dermatologists
+
+TVLine
+Harry Potter’s Bonnie Wright Hopes HBO Series Gives Harry/Ginny’s Story More Time Than the Films Did
+
+About Us
+Newsletter
+Variety Events
+Luminate - Film & TV
+Advertise
+Media Kit
+Careers
+Customer Service
+Legal
+Terms of Use
+Privacy Policy
+AdChoices
+Accessibility
+Variety Magazine
+Subscribe
+Variety Digital Login
+Group Subscriptions
+Variety Archives
+Back Issues
+Help
+VIP+
+Subscribe
+Login
+Learn More
+FAQ
+Connect
+Instagram
+Twitter
+YouTube
+Facebook
+LinkedIn
+Variety
+The Business of Entertainment
+
+Subscribe Today
+Have a News Tip? Let us know
+ad
+Variety is a part of Penske Media Corporation. © 2024 Variety Media, LLC. All Rights Reserved. Variety and the Flying V logos are trademarks of Variety Media, LLC.
+
+Our Sites
+
+
+
+Plus IconFilm
+Plus IconTV
+Plus IconWhat To Watch
+Plus IconMusic
+Plus IconDocs
+Plus IconDigital & Gaming
+Plus IconGlobal
+Plus IconAwards Circuit
+Plus IconVideo
+Plus IconWhat To Hear
+VIP
+Plus IconClick to expand the Mega Menu
+Plus IconClick to Expand Search Input
+Got a Tip?
+Newsletters
+Switch edition betweenU.S. Edition 
+Variety
+
+Login 
+Home
+TV
+News
+May 2, 2024 10:00am PT
+‘SNL’ Sets Maya Rudolph and Jake Gyllenhaal as Hosts With Vampire Weekend and Sabrina Carpenter as Musical Guests
+
+By Selome Hailu
+
+Plus Icon
+SNL
+Getty
+“Saturday Night Live” has set Maya Rudolph to host its May 11 episode alongside Vampire Weekend as musical guest, while the May 18 episode will by headlined by Jake Gyllenhaal with performances from Sabrina Carpenter.
+
+Rudolph was an “SNL” cast member for seven seasons from 2000 to 2007 and returns to the late-night sketch show for her third time as host, having previously hosted in 2012 with musical guest Sleigh Bells and in 2021 alongside Jack Harlow. Currently, she stars in and executive produces the Apple TV+ comedy “Loot.” Besides “SNL,” her prominent credits include “Bridesmaids,” “Sisters,” “The Good Place” and “Big Mouth.”
+
+Related Stories
+A film camera with a heart emerging from the lens
+VIP+
+Can Today’s Tech Touchstones Solve Hollywood’s Loneliness Epidemic?
+'And Their Children After Them'
+French Directors Ludovic and Zoran Boukherma on Exploring Teenage Angst With Pop Power in Venice Competition Film 'And Their Children After Them'
+Vampire Weekend is currently touring its fifth album, “Only God Was Above Us.” May 11 will mark the band’s fourth appearance on “SNL.” Their previous albums include “Vampire Weekend,” “Contra,” “Modern Vampires of the City” and “Father of the Bride.”
+
+
+Gyllenhaal will host the “SNL” Season 49 finale as a third-time host, having previously led episodes in 2007 with the Shins as musical guest and in 2022 opposite Camila Cabello. The actor recently starred in Amazon Prime Video’s remake of the 1989 Patrick Swayze film “Road House” and will next be seen in Apple TV+’s “Presumed Innocent,” which he also executive produces. He is best known for films such as “Donnie Darko,” “Brokeback Mountain,” “Zodiac” and “Nightcrawler.”
+
+Popular on Variety
+00:00
+
+02:30
+
+
+
+
+Carpenter will be making her “SNL” debut. She recently released the single “Espresso,” her first to hit the Billboard Top 10. She gained popularity as a musician after first building a career as an actress, most prominently on Disney Channel shows “Girl Meets World.” Her previous albums include “Emails I Can’t Send,” “Singular: Act I,” “Singular: Act II,” “Evolution” and “Eyes Wide Open.”
+
+Read More About:
+Jake Gyllenhaal, Maya Rudolph, Sabrina Carpenter, Snl
+
+
+More from Variety
+Triple Six Eight
+Oscars: Diane Warren to Submit H.E.R. Track ‘The Journey,’ From Tyler Perry’s ‘The Six Triple Eight,’ for Song Race (EXCLUSIVE)
+a DVD cracking down the middle revealing a downward line graph
+Dissatisfied With Its Rate of Erosion, DVD Biz Fast-Forwards 2024 Decline
+ROMANCE IS A BONUS BOOK, (aka ROMAENSEUNEUN BYEOLCHAEKBUROK), WI Ha-joon, (Season 1, aired in US on Feb. 2, 2019/premiered in South Korea on Jan. 26, 2019). photo: ©Netflix / Courtesy: Everett Collection
+Premium Video Approaches 50 Million Subscribers in Southeast Asia, as Netflix Dominates Viewing Time – Report
+NEW YORK, NEW YORK - APRIL 25: Maria Bello attends the 2024 TIME100 Gala at Jazz at Lincoln Center on April 25, 2024 in New York City.  (Photo by Dimitrios Kambouris/Getty Images for TIME)
+Maria Bello Joins Kevin Williamson Netflix Series ‘The Waterfront’
+snapshot of the data contained in the article
+Content Owner Lawsuits Against AI Companies: Complete Updated Index
+Kaos Jeff Goldblum and Janet McTeer
+Creating ‘Kaos’: Writer Charlie Covell and Star Jeff Goldblum Talk Bringing Greek Myths to Life in New Netflix Series
+OneRepublic’s Ryan Tedder Breaks Down Viral Hit 'Counting Stars' and David Guetta-Featuring 'I Don't Wanna Wait' for Variety’s Behind the Song
+MSNBC Anchor Katy Tur Calls Out Trump Press Hypocrisy and the Discomfort of Covering Him on Policy: 'It's Legitimizing a Candidate That Doesn't Feel Legitimate'
+Babamail
+|
+Sponsored LinksHarry Potter Star Is Probably The Prettiest Woman In The World
+Angela Bassett, Kelly Ripa, James Cameron and More Honored as Disney Legends at D23
+Harrison Ford Says Red Hulk Acting in 'Captain America 4' Required 'Not Caring' and 'Being an Idiot for Money, Which I've Done Before. I Don't Mean to Disparage It'
+Skip AdDiscoverRead More
+Philly, Selected To Host LEGO Festival, Get Presale Now! 
+Greater Philadelphia Expo Center on Oct 12 & 13, 2024
+Awesome Family Events
+|
+Sponsored
+Top 10 Smart Scales of 2024: Ultimate Buying Guide
+Uncover the best smart scales for tracking weight and body composition with our comprehensive guide.
+DocReviews
+|
+Sponsored
+Flight Attendant Reveals How To Fly Business Class For The Price of Economy
+Americans, you'll want to check this out ASAP
+Online Shopping Tools
+|
+Sponsored
+A LEGO Fest Is Coming To Philly, Tons Of Fun For All Ages! 
+Greater Philadelphia Expo Center on Oct 12 & 13, 2024
+Awesome Family Events
+|
+Sponsored
+Best Smart Scales of 2024 Reviewed by Experts
+Uncover the best smart scales for tracking weight and body composition with our comprehensive guide.
+DocReviews
+|
+Sponsored
+Shawshank Redemption Cast Explain What Most Fans Never Figured Out
+Shawshank Redemption Cast Explain What Most Fans Never Figured Out
+BeautifulTrendsToday
+|
+Sponsored
+Don't Play This Game If You Are Under 40
+RAID
+|
+Sponsored
+17+ Iconic Songs No Longer Allowed On The Radio
+Magazine.Todo
+|
+Sponsored
+Decades Later Carly Simon Finally Confirms Who "You're So Vain" Is Really About
+Magazine.Todo
+|
+Sponsored
+Jada Spills Her Feelings After Her Son’s Decision
+Jada Pinkett Smith Speaks Out About How She Felt After Her Son's Sudden Decision
+HotPopToday
+|
+Sponsored
+Amazon's Worst Nightmare: Thousands Canceling Prime for This Clever Hack
+This little-known American Shopping Tip is changing the game for families nationwide – find out how.
+Online Shopping Tools
+|
+Sponsored
+Pawn Star Pleads Guilty, Goodbye Pawn Stars
+Fans were surprised to hear this about their favorite pawn star...
+PlayJunkie
+|
+Sponsored
+Game shows what the world without US military interventions would look like
+This strategy games makes you become a player in the crucial situations of history.
+History Strategy Game
+|
+Sponsored
+Trump Pulls Out of ABC Debate With Harris, Makes Pitch for Fox News
+Variety
+Sally Field Reveals Robin Williams Changed 'Mrs. Doubtfire' Filming Order So She Could Leave Set After Her Father Died: 'He Was Very Sensitive and Intuitive'
+Variety
+Vikings Didn't Look Close To What We Thought
+New discovery show us how the Vikings actually lived
+Gingerize
+|
+Sponsored
+Tori Spelling's Inheritance Makes The Headlines
+Babamail
+|
+Sponsored
+The Bed, By Thuma - Our Editors’ First Impressions
+Here’s Why Our Home & Family Editors Recommend Thuma
+Thuma
+|
+Sponsored
+Tori Spelling: "He was the love of my life"
+Tori Spelling: "He was the love of my life"
+TheDancingCucumber
+|
+Sponsored
+THIS 5 Min Quiz Tells You What Your Body Actually Needs To Lose Weight
+Noom
+|
+Sponsored
+MOST POPULAR
+Disney Goes Dark on DirecTV in Contract Fight Over Fees for ESPN, ABC, Disney Channel, Freeform and More
+Variety
+MOST POPULAR
+Brad Pitt and George Clooney Dance to 4-Minute Standing Ovation for ‘Wolfs’ During Chaotic Venice Premiere
+Variety
+Dating For Older Men
+Gorgeous Singles Seeking Mature Partners. Join for Free & Start Chatting
+FlirtForDate
+|
+Sponsored
+This Star of Harry Potter is Probably the Most Beautiful Woman in the World
+Babamail
+|
+Sponsored
+Is Thuma Worth The Hype? Here Are Our Thoughts
+What We Really Think Of Thuma & If It's Worth The Hype
+Thuma
+|
+Sponsored
+Most Popular
+Jude Law Is Officially Back After 7-Minute Standing Ovation at Venice for Fighting White Supremacy in ‘The Order’
+VENICE, ITALY - AUGUST 31: Jude Law attends the "The Order" red carpet during the 81st Venice International Film Festival at Palazzo del Cinema on August 31, 2024 in Venice, Italy. (Photo by Matt Winkelmeyer/Getty Images)
+‘The End’ Review: Tilda Swinton and Michael Shannon Took Shelter, but 20 Years Underground Starts to Get Tedious
+The End
+‘Saturday Night’ Review: Jason Reitman Finds the Right Ensemble to Capture the Lunacy From Which ‘SNL’ Was Born
+Saturday Night
+Sponsored
+Smart Streaming: The Roku Express 4K+ Gets Discounted to Just $29
+
+Harmony Korine Says Hollywood Is Starting to ‘Crumble Creatively’ While Smoking Cigar at Venice Press Conference: ‘Movies Are No Longer the Dominant…
+VENICE, ITALY - AUGUST 31: Director Harmony Korine attends the "Baby Invasion" photocall during the 81st Venice International Film Festival at Palazzo del Casino on August 31, 2024 in Venice, Italy. (Photo by Vittorio Zunino Celotto/Getty Images)
+George R. R. Martin: 'I Don't Look Forward' to Revealing 'Everything That's Gone Wrong' With 'House of the Dragon' but 'I Need to Do That Soon'
+LOS ANGELES, CALIFORNIA - MARCH 07: George R. R. Martin  attends the FYC special screening for HBO Max's "House Of The Dragon" at DGA Theater Complex on March 07, 2023 in Los Angeles, California. (Photo by Jon Kopaloff/Getty Images)
+How Footage From Jerry Lewis' Dark Comedy About a Concentration Camp Came to Be Seen for First Time
+The Day the Clown Cried
+Winona Ryder Gets Frustrated by Her Younger Co-Stars Who ‘Are Not Interested in Movies’: ‘The First Thing They Say’ Is ‘How Long Is It…
+VENICE, ITALY - AUGUST 28: Winona Ryder attends a red carpet for the movie "Beetlejuice Beetlejuice" during the 81st Venice International Film Festival at  on August 28, 2024 in Venice, Italy. (Photo by Vittorio Zunino Celotto/Getty Images)
+‘One Tree Hill’ Sequel Series in Development at Netflix
+ONE TREE HILL, James Lafferty, Bethany Joy galeotti, Hilarie Burton, Chad Michael Murray, Tyler Hilton, Lee Norris, Sophia Bush, Antwon Tanner, 'It Gets Worst at Night', (Season 4, aired May 9, 2007), 2003-,. Photo: Fred Norris / ©THE CW / courtesy everett collection
+Box Office: ‘Deadpool & Wolverine’ Topping Charts in Sixth Weekend as ‘Reagan’ and ‘Afraid’ Post Quiet Opening…
+DEADPOOL & WOLVERINE, (aka DEADPOOL AND WOLVERINE, aka DEADPOOL 3), from left: Ryan Reynolds as Deadpool, Hugh Jackman as Wolverine, 2024. ph: Jay Maidment /© Marvel / © Walt Disney Studios Motion Pictures / Courtesy Everett Collection
+‘Deadpool & Wolverine’ Crossing $600 Million Domestically, Leads Box Office Over Dreary Labor Day Weekend
+DEADPOOL & WOLVERINE, (aka DEADPOOL AND WOLVERINE, aka DEADPOOL 3), from left: Dogpool, Ryan Reynolds as Deadpool, 2024. ph: Jay Maidment /© Marvel / © Walt Disney Studios Motion Pictures / Courtesy Everett Collection
+
+Must Read
+Film
+COVER | Todd Phillips Tells All on Making ‘Joker 2’
+Todd Phillips Variety Cover Story
+Film
+‘Beetlejuice Beetlejuice’ Review: Tim Burton’s Lightweight Sequel Works as Ghostly Fan Service
+BEETLEJUICE BEETLEJUICE, (aka BEETLEJUICE 2), from left: Winona Ryder, Bob, Michael Keaton, 2024. © Warner Bros. /Courtesy Everett Collection
+Film
+Angelina Jolie Weeps Through Rapturous 8-Minute Venice Standing Ovation for 'Maria,' Launching Oscar Buzz
+VENICE, ITALY - AUGUST 29: Angelina Jolie attends a red carpet for the series "Maria" during the 81st Venice International Film Festival at  on August 29, 2024 in Venice, Italy. (Photo by Vittorio Zunino Celotto/Getty Images)
+Film
+‘It Ends With Us’ Sequel in Doubt Amid Blake Lively-Justin Baldoni Feud: ‘There’s Probably No World Where They Work Together Again…
+it ends with us
+TV
+Joe Locke on ‘Heartstopper’ Embracing Sex and Being a Queer Marvel Star in ‘Agatha’
+Joe Locke
+Sign Up for Variety Newsletters
+Enter Your Email Address
+Sign UpSign Up
+By providing your information, you agree to our Terms of Use and our Privacy Policy. We use vendors that may also process your information to help provide our services. // This site is protected by reCAPTCHA Enterprise and the Google Privacy Policy and Terms of Service apply.
+
+
+Variety Confidential
+
+A Variety and iHeartRadio Podcast
+
+More From Our Brands
+Rolling Stone
+‘Saturday Night’ Turns ‘SNL’ Origin Story Into Late-Night ‘Bad News Bears’
+
+Robb Report
+Why Iceland Is Making Some of the Best Skin Care and Colognes You Can Buy
+
+Sportico
+Report: NCAA Proposed Changes Further Empower Athletes
+
+SPY
+The Best Loofahs and Body Scrubbers, According to Dermatologists
+
+TVLine
+Harry Potter’s Bonnie Wright Hopes HBO Series Gives Harry/Ginny’s Story More Time Than the Films Did
+
+About Us
+Newsletter
+Variety Events
+Luminate - Film & TV
+Advertise
+Media Kit
+Careers
+Customer Service
+Legal
+Terms of Use
+Privacy Policy
+AdChoices
+Accessibility
+Variety Magazine
+Subscribe
+Variety Digital Login
+Group Subscriptions
+Variety Archives
+Back Issues
+Help
+VIP+
+Subscribe
+Login
+Learn More
+FAQ
+Connect
+Instagram
+Twitter
+YouTube
+Facebook
+LinkedIn
+Variety
+The Business of Entertainment
+
+Subscribe Today
+Have a News Tip? Let us know
+ad
+Variety is a part of Penske Media Corporation. © 2024 Variety Media, LLC. All Rights Reserved. Variety and the Flying V logos are trademarks of Variety Media, LLC.
+
+Our Sites
+
+Skip to Content
+
+Logo
+Fashion
+Beauty
+Culture
+Horoscopes
+News & Politics
+Subscribe
+sign in
+Sabrina Carpenter’s 35 Best Looks of All Time
+The “Espresso” singer has been doing red carpets for over a decade.
+
+By Michelle HochschildPublished: Jun 17, 2024 4:03 PM EDT
+sabrina carpenter at the 2024 governors ball
+Scroll For More
+Chevron Down Icon
+Astrida Valigorsky
+Throughout her career as an actress and singer, Sabrina Carpenter has inspired fans with her ultra feminine style. Carpenter got her start early, beginning her career on the Disney Channel’s Girl Meets World in 2014. Fast-forward a decade later, and Carpenter is now a bona fide pop star, with a stage-ready wardrobe full of flirty minidresses and two-piece sets. Scroll below to see all her best looks and how her style has evolved over the last decade.
+
+new york, new york june 08 sabrina carpenter performs during the 2024 governors ball at flushing meadows corona park on june 08, 2024 in new york city photo by marleen moisegetty images
+1 of 35
+June 8, 2024
+Show More
+Marleen Moise
+luton, england may 26 sabrina carpenter performs at bbc radio 1s big weekend 2024 on may 26, 2024 in luton, england photo by joseph okpakowireimage
+2 of 35
+May 26, 2024
+Show More
+Joseph Okpako
+Advertisement - Continue Reading Below
+new york, new york may 18 sabrina carpenter arrives at saturday night live at 30 rock on may 18, 2024 in new york city photo by gothamgc images
+3 of 35
+May 18, 2024
+Show More
+Gotham
+saturday night live episode 1864 pictured l r musical guest sabrina carpenter, host jake gyllenhaal, and bowen yang during promos in studio 8h on thursday, may 16, 2024 photo by rosalind oconnornbc via getty images
+4 of 35
+May 16, 2024
+Show More
+NBC
+Advertisement - Continue Reading Below
+new york, new york may 06 sabrina carpenter attends the 2024 met gala celebrating sleeping beauties reawakening fashion at the metropolitan museum of art on may 06, 2024 in new york city photo by jamie mccarthygetty images
+5 of 35
+May 6, 2024
+Show More
+Jamie McCarthy
+beverly hills, california march 10 sabrina carpenter attends the 2024 vanity fair oscar party hosted by radhika jones at wallis annenberg center for the performing arts on march 10, 2024 in beverly hills, california photo by amy sussmangetty images
+6 of 35
+March 10, 2024
+Show More
+Amy Sussman
+Advertisement - Continue Reading Below
+beverly hills, california february 03 for editorial use only sabrina carpenter attends the 66th grammy awards pre grammy gala  grammy salute to industry icons honoring jon platt at the beverly hilton on february 03, 2024 in beverly hills, california photo by jeff kravitzfilmmagic
+7 of 35
+Feb. 3, 2024
+Show More
+Jeff Kravitz
+los angeles, california february 02 for editorial use only sabrina carpenter attends the 2024 musicares person of the year honoring jon bon jovi at los angeles convention center on february 02, 2024 in los angeles, california photo by frazer harrisongetty images
+8 of 35
+Feb. 2, 2024
+Show More
+Frazer Harrison
+Advertisement - Continue Reading Below
+new york, new york december 31 sabrina carpenter performs during new years eve in times square on december 31, 2023 in new york city photo by taylor hillwireimage
+9 of 35
+Dec. 31, 2023
+Show More
+Taylor Hill
+atlanta, georgia december 14 sabrina carpenter performs onstage during iheartradio power 961s jingle ball 2023 at state farm arena on december 14, 2023 in atlanta, georgia photo by paras griffingetty images for iheartradio
+10 of 35
+Dec. 14, 2023
+Show More
+Paras Griffin
+Advertisement - Continue Reading Below
+new york, new york december 08 sabrina carpenter attends iheartradio z100s jingle ball 2023 presented by capital one at madison square garden on december 08, 2023 in new york city photo by dave kotinskygetty images for iheartradio
+11 of 35
+Dec. 8, 2023
+Show More
+Dave Kotinsky
+beverly hills, california march 12 sabrina carpenter attends the 2023 vanity fair oscar party hosted by radhika jones at wallis annenberg center for the performing arts on march 12, 2023 in beverly hills, california photo by amy sussmangetty images
+12 of 35
+March 12, 2023
+Show More
+Amy Sussman
+Advertisement - Continue Reading Below
+west hollywood, california february 02 sabrina carpenter attends spotifys 2023 best new artist party at pacific design center on february 02, 2023 in west hollywood, california photo by matt winkelmeyergetty images for spotify 
+13 of 35
+Feb. 2, 2023
+Show More
+Matt Winkelmeyer
+london, england december 05 sabrina carpenter attends the fashion awards 2022 at the royal albert hall on december 05, 2022 in london, england photo by samir husseinwireimage
+14 of 35
+Dec. 5, 2022
+Show More
+Samir Hussein
+Advertisement - Continue Reading Below
+los angeles, california may 12 sabrina carpenter attends the los angeles premiere of amazons emergency at directors guild of america on may 12, 2022 in los angeles, california photo by alberto e rodriguezgetty images
+15 of 35
+May 12, 2022
+Show More
+Alberto E. Rodriguez
+west hollywood, california march 27 sabrina carpenter attends the elton john aids foundations 30th annual academy awards viewing party on march 27, 2022 in west hollywood, california photo by amy sussmangetty images for elton john aids foundation
+16 of 35
+March 27, 2022
+Show More
+Amy Sussman
+Advertisement - Continue Reading Below
+unspecified december 6 in this image released on december 6, sabrina carpenter attends the 2020 mtv movie  tv awards greatest of all time broadcast on december 6, 2020 photo by kevin mazur2020 mtv movie  tv awardsgetty images for mtv communications photo by kevin mazur2020 mtv movie  tv awardsgetty images
+17 of 35
+Dec. 6, 2020
+Show More
+Kevin Mazur/2020 MTV Movie &amp; TV Awards
+santa monica, california october 12 sabrina carpenter attends the world premiere screening of the disney original movie clouds at the disney drive in festival at barker hangar on october 12, 2020 in santa monica, california photo by alberto e rodriguezgetty images for disney
+18 of 35
+Oct. 12, 2020
+Show More
+Alberto E. Rodriguez
+Advertisement - Continue Reading Below
+los angeles, california september 09 actress sabrina carpenter attends the premiere of netflixs tall girl at netflix home theater on september 09, 2019 in los angeles, california photo by jc oliveragetty images
+19 of 35
+Sept. 9, 2019
+Show More
+JC Olivera
+las vegas, nv may 01 sabrina carpenter attends the 2019 billboard music awards at mgm grand garden arena on may 1, 2019 in las vegas, nevada photo by emma mcintyregetty images for dcp
+20 of 35
+May 1, 2019
+Show More
+Emma McIntyre
+Headshot of Michelle Hochschild
+Michelle Hochschild
+Digital Intern
+Michelle Hochschild is a digital intern at ELLE Magazine, where she helps with culture, beauty, and fashion coverage. She is currently studying art history at Stanford University. During her free time, she is an avid runner who loves to stay active, explore new wellness and beauty practices, travel to new places, and learn about different philosophies.
+Watch Next
+ 
+Play Iconpreview for Elle Fashion
+Advertisement - Continue Reading Below
+Stars' Best Looks
+rose in new york city on may 2, 2024
+Rosé’s 25 Best Outfits of All Time
+
+zendaya at the 2024 sag awards
+Zendaya’s Best Awards Show and After-Party Looks
+
+paris, france june 06 olivia cooke attends the house of the dragon season 2 premiere at theatre du chatelet on june 06, 2024 in paris, france photo by stephane cardinale corbiscorbis via getty images
+Olivia Cooke’s Best Looks
+
+new york, new york may 13 nicola coughlan attends netflixs bridgerton season 3 world premiere after party at tavern on the green on may 13, 2024 in new york city photo by jamie mccarthygathe hollywood reporter via getty images
+Nicola Coughlan’s 26 Best Looks of All Time
+
+Advertisement - Continue Reading Below
+beyonce
+All of Beyoncé's Best Fashion Moments
+
+the 56th annual golden globe awards red carpet
+Scroll Through Christina Ricci's Style Evolution
+
+zendaya at the 2024 green carpet fashion awards
+Presented by Prada Candy
+Zendaya’s Style Evolution
+
+taylor swift at the 81st annual golden globe awards
+Taylor Swift’s Best Looks of All Time
+
+blue crush premiere
+Kate Bosworth’s Stunning Style Evolution
+
+red eye los angeles premiere
+Rachel McAdams’ Style Evolution Through the Years
+
+blue ivy models for icy park campaign
+Blue Ivy Carter's Best Looks
+
+premiere of universal pictures' "dolittle"   arrivals
+Selena Gomez's Best Looks
+
+Advertisement - Continue Reading Below
+Logo
+x
+tiktok
+youtube
+facebook
+instagram
+pinterest
+Newsletter
+Contact Us
+Media Kit
+Press Room
+Site Map
+Community Guidelines
+Advertise Online
+Customer Service
+Subscribe
+Give a Gift
+Events & Promotions
+Other Hearst Subscriptions
+Giveaways
+Hearst Fashion and Luxury Collection - A Part of Hearst Digital Media
+A Part of Hearst Digital Media
+
+We may earn commission from links on this page, but we only recommend products we back.
+
+©2024 Hearst Magazine Media, Inc. All Rights Reserved.
+
+Privacy NoticeCA Notice at CollectionYour CA Privacy Rights/Shine the LightDAA Industry Opt OutTerms of UseSite Map
+Opt-Out IconYour Privacy Choices: Opt Out of Sale/Targeted Ads
+
