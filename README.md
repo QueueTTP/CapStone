@@ -24,6 +24,7 @@ Technologies Used
 Python: The core programming language used for the application.
 Flask: A lightweight web framework for building the Starmeter web application.
 Flask-SocketIO: Enables real-time event updates to the dashboard.
+MySQL: An open-source relational database management system for storing processed data.
 SQLite: A lightweight database for storing processed data.
 SQLAlchemy: ORM (Object-Relational Mapping) to interact with the SQLite database.
 JavaScript & Plotly.js: For real-time, interactive data visualizations in the dashboard.
@@ -32,6 +33,7 @@ Getting Started
 To get started with Starmeter, ensure you have the following installed:
 
 Python 3.8+
+MySQL
 SQLite (already bundled with Python)
 SQLAlchemy
 Flask
