@@ -1,8 +1,12 @@
 # Starmeter
 Starmeter is a dynamic web application designed for agents, promoters, and managers to track and analyze the impact of various events on a celebrity's public image in real-time. By inputting data related to a celebrity's social media posts, news mentions, and public appearances, users can monitor how these events affect popularity metrics and public sentiment through an intuitive dashboard.
 
+![Image](E:/Users/timl/Downloads/Screen Shot 2024-09-12 at 2.21.54 PM.png)
+
 # Overview
 Managing a celebrity's public image is crucial, and Starmeter provides real-time insights into events that influence public sentiment. Whether it's a new release, a public controversy, or a major appearance, Starmeter tracks these events and displays their impact through real-time visualizations.
+
+![Image](E:/Users/timl/Downloads/Screen Shot 2024-09-12 at 2.21.54 PM.png)
 
 With this information, you can:
 
@@ -16,6 +20,9 @@ Sentiment Analysis: Analyzes public sentiment surrounding the celebrity, identif
 Interactive Dashboard: Visualizes KPIs and event logs, offering a comprehensive view of the celebrity's current standing.
 Event Impact Analysis: Tracks how specific events affect the celebrity's popularity and sentiment over time.
 Publicity Strategy Optimization: Provides real-time feedback, enabling you to adjust strategies to maintain or improve the celebrity's public image.
+
+![Image](E:/Users/timl/Downloads/Screen Shot 2024-09-12 at 2.23.17 PM.png)
+
 Minimum Viable Product (MVP)
 Data Pipeline: Integrate and process data from various sources (social media, news, etc.) in real time.
 Dashboard: Display key performance indicators and event logs with visualizations to track popularity trends.
