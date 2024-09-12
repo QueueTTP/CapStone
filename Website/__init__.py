@@ -1,3 +1,6 @@
+import eventlet
+eventlet.monkey_patch()  # Monkey patching must happen first
+
 import logging
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy

@@ -5,7 +5,7 @@ import os
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from EventSim import EventSim
+from EventSim import EventSimSQLA2
 
 # create a consumer object
 consumer = KafkaConsumer('event-simulation',
@@ -25,21 +25,21 @@ def update_db_kafka(connection, event):
     event_description = event['event_description']
     print(f'Processing {event_type} for {celebrity} : {event_description}')
 
-    if event_type in EventSim.category_1_events: 
-        EventSim.situation_category_1_event(connection, event_type,celebrity)
-    elif event_type in EventSim.category_2_events:
-        EventSim.situation_category_2_event(connection, event_type,celebrity)
-    elif event_type in EventSim.category_3_events:
-        EventSim.situation_category_3_event(connection, event_type,celebrity)
-    elif event_type in EventSim.category_4_events:
-        EventSim.situation_category_4_event(connection, event_type,celebrity)
+    if event_type in EventSimSQLA2.category_1_events: 
+        EventSimSQLA2.situation_category_1_event(connection, event_type,celebrity)
+    elif event_type in EventSimSQLA2.category_2_events:
+        EventSimSQLA2.situation_category_2_event(connection, event_type,celebrity)
+    elif event_type in EventSimSQLA2.category_3_events:
+        EventSimSQLA2.situation_category_3_event(connection, event_type,celebrity)
+    elif event_type in EventSimSQLA2.category_4_events:
+        EventSimSQLA2.situation_category_4_event(connection, event_type,celebrity)
 
     connection.commit()
     cursor.close()
 
 # consume messages from kafka
 def consume_events():
-    connection = EventSim.create_connection()
+    connection = EventSimSQLA2.create_connection()
     if connection is None or not connection.is_connected():
         print('Failed to MySQL database connection. Exiting...')
         return
@@ -51,7 +51,7 @@ def consume_events():
             
             if not connection.is_connected():
                 print('Lost connection to MySQL database. Reconnect...')
-                connection = EventSim.create_connection()
+                connection = EventSimSQLA2.create_connection()
                 if connection is None or not connection.is_connected():
                     print('Failed to MySQL database connection. Exiting...')
                     return

@@ -11,7 +11,16 @@
     </marquee>
 </div>
 
-<div id="fan-count-plot" style="width: 100%; height: 600px;"></div>
+<!-- Fan count plot for real-time updates -->
+<div id="fan-count-plot" style="width: 100%; height: 800px;"></div>
+
+<!-- Stock ticker for real-time event logs -->
+<div id="event-log-ticker" style="width: 100%; font-size: 1.5rem; white-space: nowrap; overflow: hidden; background-color: #f8f9fa; padding: 10px; border: 1px solid #ccc; margin-bottom: 20px;">
+    <marquee behavior="scroll" direction="left" id="event-log-marquee" style="width: 100%; display: inline-block;">
+        <!-- Event log marquee content will be updated dynamically via JavaScript -->
+        Fetching event log updates...
+    </marquee>
+</div>
 
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
@@ -33,8 +42,22 @@
         'LeBron James': {x: [], y: [], name: 'LeBron James', mode: 'lines'}
     };
 
+    var layout = {
+        autosize: true,
+        margin: {
+          l: 100,
+          r: 50,
+          b: 150,
+          t: 75,
+          pad: 4
+        },
+        font: {
+            size: 24
+        },
+      };
+
     // Create the initial empty plot
-    Plotly.newPlot('fan-count-plot', Object.values(plotData));
+    Plotly.newPlot('fan-count-plot', Object.values(plotData), layout);
 
     // Listen for 'updateFanCounts' event from the server
     socket.on('updateFanCounts', function(fanCounts) {
@@ -67,6 +90,27 @@
 
         // Update the stock ticker text
         document.getElementById('fan-count-marquee').innerHTML = tickerText;
+    });
+
+    // Listen for 'updateEventLog' event from the server
+    socket.on('updateEventLog', function(eventLog) {
+        console.log('Received event log:', eventLog);  // Debug: log the received data
+
+        var eventLogText = "";  // To update the event log ticker text
+
+        eventLog.forEach(function(event) {
+            // Extract data from the event log
+            var eventDate = new Date(event.event_date).toLocaleDateString();  // Format the date
+            var celebrity = event.celebrity;  // Celebrity name
+            var description = event.event_description;  // Event description
+            var fanCount = event.current_fan_count;  // Current fan count for this event
+
+            // Append event information to the ticker text
+            eventLogText += `${eventDate} - ${celebrity}: ${description} (Fans: ${fanCount}) | `;
+        });
+
+        // Update the event log ticker text
+        document.getElementById('event-log-marquee').innerHTML = eventLogText;
     });
 </script>
 {% endblock %}
