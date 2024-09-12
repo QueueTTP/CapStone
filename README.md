@@ -1,8 +1,19 @@
+### Authors
+- **Peter Van Beever:** [GitHub](https://github.com/PeterVanBeever)
+- **Teddy Archibald:** [GitHub](https://github.com/teddyvere)
+- **Qian Wang:** [GitHub](https://github.com/CITATS928)
+- **Tim Linkous:** [GitHub](https://github.com/TimLinkous)
+
+
 # Starmeter
 Starmeter is a dynamic web application designed for agents, promoters, and managers to track and analyze the impact of various events on a celebrity's public image in real-time. By inputting data related to a celebrity's social media posts, news mentions, and public appearances, users can monitor how these events affect popularity metrics and public sentiment through an intuitive dashboard.
 
+![Real-Time chart](images/Real-time_chart.png)
+
 # Overview
 Managing a celebrity's public image is crucial, and Starmeter provides real-time insights into events that influence public sentiment. Whether it's a new release, a public controversy, or a major appearance, Starmeter tracks these events and displays their impact through real-time visualizations.
+
+![StarMeter Future](images/StarMeter_Future.png)
 
 With this information, you can:
 
@@ -20,6 +31,9 @@ Minimum Viable Product (MVP)
 Data Pipeline: Integrate and process data from various sources (social media, news, etc.) in real time.
 Dashboard: Display key performance indicators and event logs with visualizations to track popularity trends.
 Event Tracking: Monitor how different events impact public sentiment and popularity metrics.
+
+![Website](images/Website.png)
+
 Technologies Used
 Python: The core programming language used for the application.
 Flask: A lightweight web framework for building the Starmeter web application.
@@ -28,11 +42,14 @@ SQLite: A lightweight database for storing processed data.
 SQLAlchemy: ORM (Object-Relational Mapping) to interact with the SQLite database.
 JavaScript & Plotly.js: For real-time, interactive data visualizations in the dashboard.
 Jupyter Notebook: Used for prototyping and exploring data insights.
+
+![Pipeline](images/Pipeline.png)
+
 Getting Started
 To get started with Starmeter, ensure you have the following installed:
 
 Python 3.8+
-SQLite (already bundled with Python)
+MySQL
 SQLAlchemy
 Flask
 Flask-SocketIO
@@ -66,7 +83,6 @@ source venv/bin/activate
 
 # Install requirements
 
-pip install -r requirements.txt
 
 # Run Docker Container
 
@@ -89,6 +105,9 @@ pip3 install -r requirements.txt
 
 # Demo
 For a quick demo, check out our Google Slides presentation: Starmeter Presentation
+
+# Contributing
+We welcome contributions! Please read our CONTRIBUTING.md for more information on how to get involved.
 
 # License
 This project is licensed under the MIT License - see the LICENSE file for details.
