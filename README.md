@@ -45,3 +45,10 @@ Jupyter Notebook: Used for prototyping and exploring data insights.
 
 ![Pipeline](images/Pipeline.png)
 
+
+
+For this project, we designed and implemented two main database tables: one for storing user default settings and another for tracking changes in user preferences with dynamic probability. These tables are connected to the Amazon Relational Database Service.
+
+We used Python and MySQL-connector to develop the Event Sim module, which simulates real-world events that affect user preferences in real-time, dynamically modeling changes in public opinion.
+
+We used Apache Kafka to build data pipelines, allowing producers to send data and consumers to process it, enabling real-time event processing. Kafka facilitates the flow of event data into the system, where user preferences are updated based on these events. 
