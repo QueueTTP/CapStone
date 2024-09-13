@@ -1,4 +1,4 @@
-### Authors
+# Authors
 - **Peter Van Beever:** [GitHub](https://github.com/PeterVanBeever)
 - **Teddy Archibald:** [GitHub](https://github.com/teddyvere)
 - **Qian Wang:** [GitHub](https://github.com/CITATS928)
@@ -45,32 +45,3 @@ Jupyter Notebook: Used for prototyping and exploring data insights.
 
 ![Pipeline](images/Pipeline.png)
 
-Getting Started
-To get started with Starmeter, ensure you have the following installed:
-
-Python 3.8+
-MySQL
-SQLAlchemy
-Flask
-Flask-SocketIO
-Jupyter Notebook
-Installation
-Clone the repository and install the required dependencies:
-
-bash
-Copy code
-git clone https://github.com/yourusername/starmeter.git
-cd starmeter
-pip install -r requirements.txt
-Usage
-Data Input: Input data related to celebrity events (social media posts, news articles, public appearances).
-Real-Time Tracking: The Flask-SocketIO server processes and visualizes the input data in real-time.
-Dashboard: Monitor the dashboard to see the impact of events on the celebrity’s public image and sentiment.
-Decision-Making: Use the insights from the dashboard to make informed decisions about publicity strategies.
-Running the Application
-To run the Starmeter application, use the following command:
-
-bash
-Copy code
-python main.py
-This will start the Flask server, and you can view the dashboard in your browser by navigating to http://localhost:5000.
